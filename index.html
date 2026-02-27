@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yoode Price Calculator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.4.21/vue.global.prod.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Poppins:wght@600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* ============================================================
+   YOODE PRICE CALCULATOR — LIGHT-FIRST DESIGN
+   Brand: Blue #2937cc | Orange #f65e21
+   ============================================================ */
+
+        :root {
+            /* Light mode (default/preferred) */
+            --bg: #f5f6fb;
+            --surface: #ffffff;
+            --surface2: #f0f1f9;
+            --surface3: #e8eaf5;
+            --border: #dde0f0;
+            --border2: #c8cce8;
+            --text: #12141f;
+            --text2: #3a3d55;
+            --muted: #7b7fa0;
+            --yblue: #2937cc;
+            --yblue-lt: #eceffe;
+            --yblue-mid: rgba(41, 55, 204, 0.12);
+            --yorange: #f65e21;
+            --yor-lt: #fff1ec;
+            --yor-mid: rgba(246, 94, 33, 0.12);
+            --shadow-sm: 0 1px 4px rgba(41, 55, 204, 0.06), 0 2px 16px rgba(41, 55, 204, 0.04);
+            --shadow-md: 0 4px 24px rgba(41, 55, 204, 0.10), 0 1px 4px rgba(41, 55, 204, 0.06);
+            --shadow-lg: 0 8px 40px rgba(41, 55, 204, 0.13);
+            --ring: rgba(41, 55, 204, 0.18);
+            --ring-or: rgba(246, 94, 33, 0.20);
+            --radius: 16px;
+            --tog-bg: #e4e7f8;
+        }
+
+        /* Dark mode */
+        body.dark {
+            --bg: #0d0e14;
+            --surface: #13151f;
+            --surface2: #1a1c2a;
+            --surface3: #22253a;
+            --border: #272b3f;
+            --border2: #323660;
+            --text: #edeef8;
+            --text2: #a8aacc;
+            --muted: #5d6082;
+            --yblue: #4c5ef5;
+            --yblue-lt: rgba(76, 94, 245, 0.12);
+            --yblue-mid: rgba(76, 94, 245, 0.18);
+            --yorange: #ff7340;
+            --yor-lt: rgba(255, 115, 64, 0.10);
+            --yor-mid: rgba(255, 115, 64, 0.16);
+            --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.35);
+            --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.45);
+            --ring: rgba(76, 94, 245, 0.22);
+            --ring-or: rgba(255, 115, 64, 0.22);
+            --tog-bg: #1e2038;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            min-height: 100vh;
+            transition: background .4s ease, color .4s ease;
+        }
+
+        /* ─── SCROLLBAR ─────────────────────────────────────────── */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border2);
+            border-radius: 3px;
+        }
+
+        /* ─── ANIMATIONS ────────────────────────────────────────── */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulseDot {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.7);
+                opacity: .5;
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -400px 0;
+            }
+
+            100% {
+                background-position: 400px 0;
+            }
+        }
+
+        @keyframes slideRight {
+            from {
+                transform: scaleX(0);
+            }
+
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(.88);
+            }
+
+            70% {
+                transform: scale(1.04);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ─── HEADER ────────────────────────────────────────────── */
+        .header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 0 40px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            box-shadow: var(--shadow-sm);
+            transition: background .4s, border-color .4s, box-shadow .4s;
+        }
+
+        /* accent bar at very top */
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--yblue) 0%, var(--yorange) 100%);
+        }
+
+        .logo-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .header-logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -.5px;
+            line-height: 1;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .logo-img {
+            height: 24px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+            transition: filter .4s;
+        }
+
+        body.dark .logo-img {
+            filter: brightness(0) invert(1);
+        }
+
+        .logo-dot-anim {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--yorange);
+            margin-left: 3px;
+            vertical-align: middle;
+            animation: pulseDot 2.2s ease-in-out infinite;
+        }
+
+        .header-sub {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* ─── THEME TOGGLE ──────────────────────────────────────── */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            border-radius: 50px;
+            padding: 6px 14px 6px 7px;
+            cursor: pointer;
+            user-select: none;
+            transition: border-color .25s, box-shadow .25s, background .4s, transform .15s;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--yblue);
+            box-shadow: 0 0 0 3px var(--ring);
+        }
+
+        .theme-toggle:active {
+            transform: scale(.96);
+        }
+
+        .tog-track {
+            width: 36px;
+            height: 20px;
+            border-radius: 10px;
+            background: var(--tog-bg);
+            position: relative;
+            flex-shrink: 0;
+            transition: background .4s;
+        }
+
+        body.dark .tog-track {
+            background: #2a2e50;
+        }
+
+        .tog-thumb {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: transform .35s cubic-bezier(.34, 1.56, .64, 1), background .3s, box-shadow .3s;
+        }
+
+        /* Light = sun on right */
+        body:not(.dark) .tog-thumb {
+            transform: translateX(16px);
+            background: var(--yorange);
+            box-shadow: 0 0 8px var(--ring-or);
+        }
+
+        /* Dark = moon on left */
+        body.dark .tog-thumb {
+            transform: translateX(0);
+            background: #9ba4f5;
+            box-shadow: 0 0 8px rgba(155, 164, 245, .5);
+        }
+
+        .tog-icon {
+            font-size: 14px;
+            line-height: 1;
+            transition: opacity .3s;
+        }
+
+        .tog-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--muted);
+            white-space: nowrap;
+            transition: color .4s;
+        }
+
+        /* ─── STEP TRAIL ────────────────────────────────────────── */
+        .step-trail {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .step-node {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            border: 2px solid var(--border);
+            color: var(--muted);
+            background: var(--surface);
+            transition: all .3s;
+            position: relative;
+        }
+
+        .step-node.active {
+            border-color: var(--yblue);
+            color: var(--yblue);
+            box-shadow: 0 0 0 4px var(--ring);
+        }
+
+        .step-node.done {
+            background: var(--yblue);
+            border-color: var(--yblue);
+            color: #fff;
+            box-shadow: none;
+        }
+
+        .step-node.done::after {
+            content: '✓';
+            font-size: 13px;
+        }
+
+        .step-node.done {
+            font-size: 0;
+        }
+
+        .step-line {
+            width: 28px;
+            height: 2px;
+            background: var(--border);
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-line.filled::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--yblue);
+            border-radius: 2px;
+            animation: slideRight .4s ease forwards;
+            transform-origin: left;
+        }
+
+        /* ─── LAYOUT ────────────────────────────────────────────── */
+        .container {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 36px 40px 80px;
+        }
+
+        /* ─── CARDS ─────────────────────────────────────────────── */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 32px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow-sm);
+            animation: fadeUp .35s ease both;
+            transition: box-shadow .3s, border-color .3s, background .4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: transparent;
+            border-radius: 3px 0 0 3px;
+            transition: background .3s;
+        }
+
+        .card.active::before {
+            background: var(--yblue);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0;
+            text-transform: none;
+            color: var(--text);
+            margin-bottom: 22px;
+            transition: color .4s;
+        }
+
+        .card-title .num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--yblue);
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        /* ─── SEGMENTED CONTROL ─────────────────────────────────── */
+        .seg-ctrl {
+            display: inline-flex;
+            background: var(--surface2);
+            border-radius: 12px;
+            padding: 5px;
+            gap: 4px;
+            border: 1px solid var(--border);
+        }
+
+        .seg-btn {
+            padding: 10px 30px;
+            border-radius: 9px;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .22s;
+        }
+
+        .seg-btn:hover:not(.active) {
+            background: var(--yblue-lt);
+            color: var(--yblue);
+        }
+
+        .seg-btn.active {
+            background: var(--yblue);
+            color: #fff;
+            box-shadow: 0 3px 12px var(--ring);
+        }
+
+        /* ─── SELECT ────────────────────────────────────────────── */
+        .custom-select {
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            color: var(--text);
+            border-radius: 12px;
+            padding: 12px 40px 12px 16px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            outline: none;
+            cursor: pointer;
+            min-width: 300px;
+            transition: border-color .2s, box-shadow .2s, background .4s;
+            -webkit-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237b7fa0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-attachment: scroll;
+        }
+
+        .custom-select:focus {
+            border-color: var(--yblue);
+            box-shadow: 0 0 0 3px var(--ring);
+        }
+
+        /* ─── SIZE & QTY ────────────────────────────────────────── */
+        .size-group-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .size-group-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .size-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .size-cell {
+            text-align: center;
+        }
+
+        .size-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text2);
+            margin-bottom: 6px;
+            letter-spacing: .5px;
+        }
+
+        .qty-input {
+            width: 100%;
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            color: var(--text);
+            border-radius: 10px;
+            padding: 10px 4px;
+            text-align: center;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s, background .2s;
+            -moz-appearance: textfield;
+        }
+
+        .qty-input::-webkit-outer-spin-button,
+        .qty-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+
+        .qty-input:focus {
+            border-color: var(--yblue);
+            box-shadow: 0 0 0 3px var(--ring);
+            background: var(--yblue-lt);
+        }
+
+        .qty-input:not([value='0']):not(:placeholder-shown) {
+            border-color: var(--yblue);
+        }
+
+        .total-qty-bar {
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: var(--yblue-lt);
+            border-radius: 12px;
+            border: 1px solid var(--ring);
+        }
+
+        body.dark .total-qty-bar {
+            background: var(--yblue-mid);
+        }
+
+        .tq-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--yblue);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .tq-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--yblue);
+            line-height: 1;
+        }
+
+        .tq-unit {
+            font-size: 14px;
+            color: var(--muted);
+            margin-left: 4px;
+        }
+
+        /* ─── WARNING ───────────────────────────────────────────── */
+        .warning {
+            margin-top: 12px;
+            background: var(--yor-lt);
+            border: 1.5px solid var(--ring-or);
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--yorange);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .warning::before {
+            content: '⚠';
+            font-size: 16px;
+        }
+
+        /* ─── ADDONS ─────────────────────────────────────────────── */
+        .addons-section {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .addon-location {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: background .4s, border-color .4s;
+            animation: fadeUp .3s ease both;
+        }
+
+        .addon-loc-header {
+            padding: 11px 20px;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--yblue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--yblue-lt);
+            border-bottom: 1px solid var(--ring);
+            transition: background .4s;
+        }
+
+        body.dark .addon-loc-header {
+            background: var(--yblue-mid);
+        }
+
+        .addon-loc-header::before {
+            content: '';
+            width: 3px;
+            height: 14px;
+            background: var(--yblue);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .addon-rows {
+            padding: 4px 16px 14px;
+        }
+
+        .addon-row {
+            display: grid;
+            grid-template-columns: 200px 110px 110px 90px 100px 100px 130px;
+            gap: 10px;
+            align-items: center;
+            padding: 11px 6px;
+            border-bottom: 1px solid var(--border);
+            transition: background .2s;
+            border-radius: 8px;
+        }
+
+        .addon-row:last-child {
+            border-bottom: none;
+        }
+
+        .addon-row:hover {
+            background: var(--surface3);
+        }
+
+        .addon-type {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Column labels in addons */
+        .col-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-val {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+            padding: 4px 0;
+        }
+
+        .info-orange {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--yorange);
+        }
+
+        /* ─── TOGGLE SWITCH ─────────────────────────────────────── */
+        .toggle-wrap {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .tog-sw {
+            width: 38px;
+            height: 21px;
+            background: var(--border2);
+            border-radius: 10.5px;
+            position: relative;
+            transition: background .25s, box-shadow .25s;
+            flex-shrink: 0;
+        }
+
+        .tog-sw.on {
+            background: var(--yorange);
+            box-shadow: 0 0 0 3px var(--ring-or);
+        }
+
+        .tog-sw::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #fff;
+            top: 3px;
+            left: 3px;
+            transition: transform .28s cubic-bezier(.34, 1.56, .64, 1);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+        }
+
+        .tog-sw.on::after {
+            transform: translateX(17px);
+        }
+
+        /* ─── NUM INPUT ─────────────────────────────────────────── */
+        .num-input {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            color: var(--text);
+            border-radius: 9px;
+            padding: 8px 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            outline: none;
+            width: 100%;
+            -moz-appearance: textfield;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .num-input::-webkit-outer-spin-button,
+        .num-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+
+        .num-input:focus {
+            border-color: var(--yblue);
+            box-shadow: 0 0 0 3px var(--ring);
+        }
+
+        .num-input:disabled {
+            opacity: .38;
+            cursor: not-allowed;
+        }
+
+        /* ─── COMPLEXITY SELECT ─────────────────────────────────── */
+        .complexity-select {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            color: var(--text);
+            border-radius: 9px;
+            padding: 7px 24px 7px 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            outline: none;
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%237b7fa0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            transition: border-color .2s, box-shadow .2s;
+            cursor: pointer;
+        }
+
+        .complexity-select:focus {
+            border-color: var(--yblue);
+            box-shadow: 0 0 0 3px var(--ring);
+        }
+
+        .complexity-select:disabled {
+            opacity: .38;
+            cursor: not-allowed;
+        }
+
+        /* ─── SUMMARY SECTION ───────────────────────────────────── */
+        .summary-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px 32px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+            animation: fadeUp .35s ease both;
+        }
+
+        .summary-card::after {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--yblue-mid) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .kpi-box {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px 22px;
+            transition: background .4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-box::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .kpi-box.blue-kpi::before {
+            background: var(--yblue);
+        }
+
+        .kpi-box.orange-kpi::before {
+            background: var(--yorange);
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .kpi-val {
+            font-family: 'Poppins', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1;
+        }
+
+        .kpi-val.blue {
+            color: var(--yblue);
+        }
+
+        .kpi-val.orange {
+            color: var(--yorange);
+        }
+
+        .kpi-unit {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            color: var(--muted);
+            font-weight: 400;
+        }
+
+        /* Shipping row */
+        .shipping-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 15px 18px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            transition: background .4s;
+        }
+
+        .shipping-row label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text2);
+            flex: 1;
+        }
+
+        .shipping-input {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            color: var(--text);
+            border-radius: 10px;
+            padding: 9px 14px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            outline: none;
+            width: 160px;
+            -moz-appearance: textfield;
+            transition: border-color .2s, box-shadow .2s;
+            text-align: right;
+        }
+
+        .shipping-input::-webkit-outer-spin-button,
+        .shipping-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+
+        .shipping-input:focus {
+            border-color: var(--yblue);
+            box-shadow: 0 0 0 3px var(--ring);
+        }
+
+        /* Breakdown table */
+        .breakdown-wrap {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 22px;
+        }
+
+        .breakdown-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .breakdown-table th {
+            text-align: left;
+            padding: 10px 16px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            background: var(--surface2);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .breakdown-table th:not(:first-child) {
+            text-align: right;
+        }
+
+        .breakdown-table td {
+            padding: 13px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text2);
+            font-weight: 500;
+            transition: color .4s;
+        }
+
+        .breakdown-table td:not(:first-child) {
+            text-align: right;
+        }
+
+        .breakdown-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .breakdown-table tr:hover td {
+            background: var(--surface3);
+        }
+
+        .breakdown-table .grand-row td {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--yorange);
+            background: var(--yor-lt);
+            border-top: 2px solid var(--ring-or);
+        }
+
+        body.dark .breakdown-table .grand-row td {
+            background: var(--yor-mid);
+        }
+
+        /* Final price heroes */
+        .final-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .final-hero {
+            border-radius: 16px;
+            padding: 24px 26px;
+            position: relative;
+            overflow: hidden;
+            animation: popIn .4s cubic-bezier(.34, 1.56, .64, 1) both;
+        }
+
+        .final-hero.blue-hero {
+            background: var(--yblue);
+            box-shadow: 0 6px 28px var(--ring);
+        }
+
+        .final-hero.orange-hero {
+            background: var(--yorange);
+            box-shadow: 0 6px 28px var(--ring-or);
+        }
+
+        .final-hero::after {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .08);
+        }
+
+        .final-hero .f-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .65);
+            margin-bottom: 8px;
+        }
+
+        .final-hero .f-val {
+            font-family: 'Poppins', sans-serif;
+            font-size: 40px;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .final-hero .f-unit {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, .6);
+            margin-left: 3px;
+        }
+
+        /* ─── RESPONSIVE ─────────────────────────────────────────── */
+        @media (max-width: 960px) {
+            .header {
+                padding: 0 20px;
+            }
+
+            .container {
+                padding: 24px 16px 60px;
+            }
+
+            .addon-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .kpi-grid,
+            .final-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .size-row {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .tog-label {
+                display: none;
+            }
+
+            .seg-btn {
+                padding: 10px 18px;
+            }
+        }
+
+        /* Stagger cards */
+        .card:nth-child(1) {
+            animation-delay: .05s;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: .10s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: .15s;
+        }
+
+        .card:nth-child(4) {
+            animation-delay: .20s;
+        }
+
+        .addon-location:nth-child(1) {
+            animation-delay: .05s;
+        }
+
+        .addon-location:nth-child(2) {
+            animation-delay: .10s;
+        }
+
+        .addon-location:nth-child(3) {
+            animation-delay: .15s;
+        }
+
+        .addon-location:nth-child(4) {
+            animation-delay: .20s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- ═══ HEADER ═══════════════════════════════════════════ -->
+        <div class="header">
+            <div class="logo-wrap">
+                <div class="header-logo">
+                    <img src="logo-clr.png" alt="Yoode" class="logo-img" /><span class="logo-dot-anim"></span>
+                </div>
+                <div class="header-sub">Product Price Calculator</div>
+            </div>
+
+            <!-- Theme Toggle -->
+            <div class="theme-toggle" @click="toggleTheme" :title="isDark ? 'Switch to Light' : 'Switch to Dark'">
+                <div class="tog-track">
+                    <div class="tog-thumb"></div>
+                </div>
+                <span class="tog-icon">{{isDark ? '🌙' : '☀️'}}</span>
+                <span class="tog-label">{{isDark ? 'Dark' : 'Light'}}</span>
+            </div>
+
+            <!-- Step Trail -->
+            <div class="step-trail">
+                <div class="step-node" :class="{active: step===1, done: step>1}">{{step>1?'':1}}</div>
+                <div class="step-line" :class="{filled: step>1}"></div>
+                <div class="step-node" :class="{active: step===2, done: step>2}">{{step>2?'':2}}</div>
+                <div class="step-line" :class="{filled: step>2}"></div>
+                <div class="step-node" :class="{active: step===3, done: step>3}">{{step>3?'':3}}</div>
+                <div class="step-line" :class="{filled: step>3}"></div>
+                <div class="step-node" :class="{active: step===4}">4</div>
+            </div>
+        </div>
+
+        <!-- ═══ CONTAINER ════════════════════════════════════════ -->
+        <div class="container">
+
+            <!-- STEP 1 — Customer Type -->
+            <div class="card" :class="{active: step===1}">
+                <div class="card-title"><span class="num">1</span>Customer Type</div>
+                <div class="seg-ctrl">
+                    <button v-for="ct in customerTypes" :key="ct" class="seg-btn" :class="{active: customerType===ct}"
+                        @click="setCustomerType(ct)">{{ct}}</button>
+                </div>
+            </div>
+
+            <!-- STEP 2 — Product Style -->
+            <div class="card" :class="{active: step===2}">
+                <div class="card-title"><span class="num">2</span>Product Style</div>
+                <select class="custom-select" v-model="selectedProduct" @change="onProductChange">
+                    <option value="">— Select a Product —</option>
+                    <option v-for="p in products" :key="p" :value="p">{{p}}</option>
+                </select>
+            </div>
+
+            <!-- STEP 3 — Size & Quantity -->
+            <div class="card" :class="{active: step===3}" v-if="selectedProduct">
+                <div class="card-title"><span class="num">3</span>Size &amp; Quantity</div>
+
+                <!-- Row 1: 36–44 -->
+                <div class="size-group-label">Sizes 36 – 44</div>
+                <div class="size-row">
+                    <div class="size-cell" v-for="s in sizesRow1" :key="s">
+                        <div class="size-label">{{s}}</div>
+                        <input type="number" class="qty-input" min="0" :value="quantities[s]"
+                            @input="quantities[s] = +$event.target.value || 0" />
+                    </div>
+                </div>
+
+                <!-- Row 2: 46–54 -->
+                <div class="size-group-label">Sizes 46 – 54</div>
+                <div class="size-row" style="margin-bottom:20px;">
+                    <div class="size-cell" v-for="s in sizesRow2" :key="s">
+                        <div class="size-label">{{s}}</div>
+                        <input type="number" class="qty-input" min="0" :value="quantities[s]"
+                            @input="quantities[s] = +$event.target.value || 0" />
+                    </div>
+                </div>
+
+                <!-- Total Qty Bar -->
+                <div class="total-qty-bar">
+                    <span class="tq-label">Total Qty</span>
+                    <span class="tq-value">{{totalQty}}</span>
+                    <span class="tq-unit">pieces</span>
+                    <span style="flex:1"></span>
+                    <span v-if="pricePerItem > 0" style="font-size:13px;color:var(--muted);font-weight:600;">
+                        Base: ₹{{fmt(pricePerItem)}} / pc
+                    </span>
+                </div>
+
+                <div class="warning" v-if="pricePerItem === 0 && totalQty > 0">
+                    No pricing tier found for this product &amp; quantity combination.
+                </div>
+            </div>
+
+            <!-- STEP 4 — Add-ons -->
+            <div class="card" :class="{active: step===4}" v-if="totalQty > 0">
+                <div class="card-title"><span class="num">4</span>Decoration &amp; Add-ons</div>
+                <div class="addons-section">
+                    <div class="addon-location" v-for="loc in addonLocations" :key="loc.name">
+                        <div class="addon-loc-header">{{loc.name}}</div>
+                        <div class="addon-rows">
+                            <div v-for="addon in loc.addons" :key="addon.type" class="addon-row">
+
+                                <!-- Toggle + Name -->
+                                <div class="addon-type">
+                                    <div class="toggle-wrap" @click="toggleAddon(loc.name, addon.type)">
+                                        <div class="tog-sw" :class="{on: isAddonEnabled(loc.name, addon.type)}"></div>
+                                    </div>
+                                    <span>{{addon.type}}</span>
+                                </div>
+
+                                <!-- Setup Charge -->
+                                <div class="field-group">
+                                    <div class="col-label">Setup Charge</div>
+                                    <div class="info-val">{{getSetupCharge(addon.type) > 0 ? '₹' +
+                                        getSetupCharge(addon.type) : '—'}}</div>
+                                </div>
+
+                                <!-- Rate -->
+                                <div class="field-group" v-if="['DTG','DTF','Screen Print'].includes(addon.type)">
+                                    <div class="col-label">Rate/cm²</div>
+                                    <div class="info-val">₹{{getRate(addon.type)}}</div>
+                                </div>
+                                <div class="field-group" v-else-if="addon.type.startsWith('Embroidery')">
+                                    <div class="col-label">Rate/1k stitch</div>
+                                    <div class="info-val">₹{{getRate(addon.type)}}</div>
+                                </div>
+                                <div class="field-group" v-else>
+                                    <div class="col-label">Rate/pc</div>
+                                    <div class="info-val">₹{{getRate(addon.type)}}</div>
+                                </div>
+
+                                <!-- Colours (Screen Print only) -->
+                                <div class="field-group" v-if="addon.type === 'Screen Print'">
+                                    <div class="col-label">Colours</div>
+                                    <input type="number" class="num-input" min="1"
+                                        :disabled="!isAddonEnabled(loc.name, addon.type)"
+                                        v-model.number="getAddonState(loc.name, addon.type).colours" />
+                                </div>
+                                <div v-else></div>
+
+                                <!-- Width -->
+                                <div class="field-group"
+                                    v-if="['DTG','DTF','Screen Print'].includes(addon.type) || addon.type.startsWith('Embroidery')">
+                                    <div class="col-label">W (cm)</div>
+                                    <input type="number" class="num-input" min="0.1" step="0.1"
+                                        :disabled="!isAddonEnabled(loc.name, addon.type)"
+                                        v-model.number="getAddonState(loc.name, addon.type).width" />
+                                </div>
+                                <div v-else></div>
+
+                                <!-- Height -->
+                                <div class="field-group"
+                                    v-if="['DTG','DTF','Screen Print'].includes(addon.type) || addon.type.startsWith('Embroidery')">
+                                    <div class="col-label">H (cm)</div>
+                                    <input type="number" class="num-input" min="0.1" step="0.1"
+                                        :disabled="!isAddonEnabled(loc.name, addon.type)"
+                                        v-model.number="getAddonState(loc.name, addon.type).height" />
+                                </div>
+                                <div v-else></div>
+
+                                <!-- Complexity (Embroidery only) -->
+                                <div class="field-group" v-if="addon.type.startsWith('Embroidery')">
+                                    <div class="col-label">Complexity</div>
+                                    <select class="complexity-select" :disabled="!isAddonEnabled(loc.name, addon.type)"
+                                        v-model="getAddonState(loc.name, addon.type).complexity">
+                                        <option v-for="c in complexityOptions" :key="c" :value="c">{{c}}</option>
+                                    </select>
+                                </div>
+                                <div v-else></div>
+
+                                <!-- Total/item -->
+                                <div class="field-group">
+                                    <div class="col-label">Total / item</div>
+                                    <div class="info-orange">
+                                        {{getAddonTotal(loc.name, addon.type) > 0 ? '₹' + fmt(getAddonTotal(loc.name,
+                                        addon.type)) : '—'}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ PRICE SUMMARY ═══════════════════════════════════ -->
+            <div class="summary-card" v-if="totalQty > 0">
+                <div class="card-title" style="margin-bottom:22px;"><span class="num"
+                        style="background:var(--yorange)">5</span>Price Summary</div>
+
+                <!-- KPI Grid -->
+                <div class="kpi-grid">
+                    <div class="kpi-box blue-kpi">
+                        <div class="kpi-label">Base Price / Item</div>
+                        <div class="kpi-val blue">₹{{fmt(pricePerItem)}}</div>
+                    </div>
+                    <div class="kpi-box orange-kpi">
+                        <div class="kpi-label">Total Quantity</div>
+                        <div class="kpi-val orange">{{totalQty}}<span class="kpi-unit"> pcs</span></div>
+                    </div>
+                </div>
+
+                <!-- Shipping -->
+                <div class="shipping-row">
+                    <label>Shipping &amp; Other Charges (₹)</label>
+                    <input type="number" class="shipping-input" v-model.number="shippingCharges" min="0"
+                        placeholder="0" />
+                </div>
+
+                <!-- Breakdown Table -->
+                <div class="breakdown-wrap">
+                    <table class="breakdown-table">
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Per Item (₹)</th>
+                                <th>Total (₹)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Base Product Price</td>
+                                <td>{{fmt(pricePerItem)}}</td>
+                                <td>{{fmt(pricePerItem * totalQty)}}</td>
+                            </tr>
+                            <tr v-for="row in addonBreakdown" :key="row.label">
+                                <td>{{row.label}}</td>
+                                <td>{{fmt(row.perItem)}}</td>
+                                <td>{{fmt(row.total)}}</td>
+                            </tr>
+                            <tr>
+                                <td>Setup Charges</td>
+                                <td>—</td>
+                                <td>{{fmt(totalSetupCharges)}}</td>
+                            </tr>
+                            <tr>
+                                <td>Shipping &amp; Other</td>
+                                <td>—</td>
+                                <td>{{fmt(shippingCharges || 0)}}</td>
+                            </tr>
+                            <tr class="grand-row">
+                                <td>Grand Total</td>
+                                <td>{{fmt(finalPricePerItem)}}</td>
+                                <td>{{fmt(grandTotal)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Final Heroes -->
+                <div class="final-grid">
+                    <div class="final-hero blue-hero">
+                        <div class="f-label">Final Price Per Item</div>
+                        <div class="f-val">₹{{fmt(finalPricePerItem)}}</div>
+                    </div>
+                    <div class="final-hero orange-hero">
+                        <div class="f-label">Grand Total</div>
+                        <div class="f-val">₹{{fmt(grandTotal)}}</div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /container -->
+    </div><!-- /app -->
+
+    <script>
+        const { createApp, reactive, ref, computed } = Vue;
+
+        // ═══════════════════════════════════════════════════════════
+        // PRODUCT_DATA  — from Product_Data sheet (updated)
+        // [product, min, max, retail, corporate, reseller]
+        // Tiers now use 1-9 / 10-49 / 50-99 / 100+ breakpoints
+        // ═══════════════════════════════════════════════════════════
+        const PRODUCT_DATA = [
+            ['Men Plain Crew Neck', 1, 9, 449, 349, 249],
+            ['Men Plain Crew Neck', 10, 49, 429, 329, 249],
+            ['Men Plain Crew Neck', 50, 99, 399, 299, 249],
+            ['Men Plain Crew Neck', 100, null, 369, 269, 249],
+            ['Men Amid Crew Neck', 1, 9, 499, 399, 299],
+            ['Men Amid Crew Neck', 10, 49, 479, 379, 299],
+            ['Men Amid Crew Neck', 50, 99, 449, 349, 299],
+            ['Men Amid Crew Neck', 100, null, 419, 319, 299],
+            ['Men SoftTouch Crew Neck', 1, 9, 599, 499, 399],
+            ['Men SoftTouch Crew Neck', 10, 49, 579, 479, 399],
+            ['Men SoftTouch Crew Neck', 50, 99, 549, 449, 399],
+            ['Men SoftTouch Crew Neck', 100, null, 519, 419, 399],
+            ['Men SoftTouch Oversized', 1, 9, 699, 599, 499],
+            ['Men SoftTouch Oversized', 10, 49, 679, 579, 499],
+            ['Men SoftTouch Oversized', 50, 99, 649, 549, 499],
+            ['Men SoftTouch Oversized', 100, null, 619, 519, 499],
+            ['Men Brisk Polo', 1, 9, 549, 449, 349],
+            ['Men Brisk Polo', 10, 49, 529, 429, 349],
+            ['Men Brisk Polo', 50, 99, 499, 399, 349],
+            ['Men Brisk Polo', 100, null, 469, 369, 349],
+            ['Men Plain Polo', 1, 9, 599, 499, 399],
+            ['Men Plain Polo', 10, 49, 579, 479, 399],
+            ['Men Plain Polo', 50, 99, 549, 449, 399],
+            ['Men Plain Polo', 100, null, 519, 419, 399],
+            ['Men Performance Polo', 1, 9, 649, 549, 449],
+            ['Men Performance Polo', 10, 49, 629, 529, 449],
+            ['Men Performance Polo', 50, 99, 599, 499, 449],
+            ['Men Performance Polo', 100, null, 569, 469, 449],
+            ['Men Flexi Polo', 1, 9, 699, 599, 499],
+            ['Men Flexi Polo', 10, 49, 679, 579, 499],
+            ['Men Flexi Polo', 50, 99, 649, 549, 499],
+            ['Men Flexi Polo', 100, null, 619, 519, 499],
+            ['Men SoftTouch Polo', 1, 9, 749, 649, 549],
+            ['Men SoftTouch Polo', 10, 49, 729, 629, 549],
+            ['Men SoftTouch Polo', 50, 99, 699, 599, 549],
+            ['Men SoftTouch Polo', 100, null, 669, 569, 549],
+            ['Men Printed Collar SoftTouch Polo', 1, 9, 799, 699, 599],
+            ['Men Printed Collar SoftTouch Polo', 10, 49, 779, 679, 599],
+            ['Men Printed Collar SoftTouch Polo', 50, 99, 749, 649, 599],
+            ['Men Printed Collar SoftTouch Polo', 100, null, 719, 619, 599],
+            ['Men Cozy Hoodie', 1, 9, 499, 424.15, 349.3],
+            ['Men Cozy Hoodie', 10, 49, 449, 381.65, 314.3],
+            ['Men Cozy Hoodie', 50, 99, 399, 339.15, 279.3],
+            ['Men Cozy Hoodie', 100, null, 349, 296.65, 244.3],
+            ['Men Cozy Zipper Hoodie', 1, 9, 499, 424.15, 349.3],
+            ['Men Cozy Zipper Hoodie', 10, 49, 449, 381.65, 314.3],
+            ['Men Cozy Zipper Hoodie', 50, 99, 399, 339.15, 279.3],
+            ['Men Cozy Zipper Hoodie', 100, null, 349, 296.65, 244.3],
+            ['Men Cozy Sweatshirt', 1, 9, 499, 424.15, 349.3],
+            ['Men Cozy Sweatshirt', 10, 49, 449, 381.65, 314.3],
+            ['Men Cozy Sweatshirt', 50, 99, 399, 339.15, 279.3],
+            ['Men Cozy Sweatshirt', 100, null, 349, 296.65, 244.3],
+            ['Men Cozy Varsity Jacket', 1, 9, 499, 424.15, 349.3],
+            ['Men Cozy Varsity Jacket', 10, 49, 449, 381.65, 314.3],
+            ['Men Cozy Varsity Jacket', 50, 99, 399, 339.15, 279.3],
+            ['Men Cozy Varsity Jacket', 100, null, 349, 296.65, 244.3],
+            ['Men Cozy Joggers', 1, 9, 499, 424.15, 349.3],
+            ['Men Cozy Joggers', 10, 49, 449, 381.65, 314.3],
+            ['Men Cozy Joggers', 50, 99, 399, 339.15, 279.3],
+            ['Men Cozy Joggers', 100, null, 349, 296.65, 244.3],
+            ['Men Cozy Shorts', 1, 9, 499, 424.15, 349.3],
+            ['Men Cozy Shorts', 10, 49, 449, 381.65, 314.3],
+            ['Men Cozy Shorts', 50, 99, 399, 339.15, 279.3],
+            ['Men Cozy Shorts', 100, null, 349, 296.65, 244.3],
+            ['Women Plain Crew Neck', 1, 9, 449, 349, 249],
+            ['Women Plain Crew Neck', 10, 49, 429, 329, 249],
+            ['Women Plain Crew Neck', 50, 99, 399, 299, 249],
+            ['Women Plain Crew Neck', 100, null, 369, 269, 249],
+            ['Women Amid Crop Top', 1, 9, 499, 399, 299],
+            ['Women Amid Crop Top', 10, 49, 479, 379, 299],
+            ['Women Amid Crop Top', 50, 99, 449, 349, 299],
+            ['Women Amid Crop Top', 100, null, 419, 319, 299],
+            ['Women Amid Crew Neck', 1, 9, 699, 560, 532],
+            ['Women Amid Crew Neck', 10, 49, 629, 504, 476],
+            ['Women Amid Crew Neck', 50, 99, 615, 493, 465],
+            ['Women Amid Crew Neck', 100, null, 594, 476, 448],
+            ['Women SoftTouch Crew Neck', 1, 9, 699, 560, 532],
+            ['Women SoftTouch Crew Neck', 10, 49, 629, 504, 476],
+            ['Women SoftTouch Crew Neck', 50, 99, 615, 493, 465],
+            ['Women SoftTouch Crew Neck', 100, null, 594, 476, 448],
+            ['Women SoftTouch Oversized', 1, 9, 699, 599, 499],
+            ['Women SoftTouch Oversized', 10, 49, 679, 579, 499],
+            ['Women SoftTouch Oversized', 50, 99, 649, 549, 499],
+            ['Women SoftTouch Oversized', 100, null, 619, 519, 499],
+        ];
+
+        // ═══════════════════════════════════════════════════════════
+        // RATES — from Data sheet (updated)
+        // Key changes:
+        //   • Embroidery (Standard) setup: 200/100/0/0 (was 300/250/200)
+        //   • Embroidery rates now 8/6/5/4 (Standard) and 10/8/6/6 (Coloreel)
+        //   • Loop Label & Hang Tag REMOVED — only Textile Patch remains
+        //   • Textile Patch MOQ = 100
+        // [style, addon, min, max, retail, corporate, reseller]
+        // ═══════════════════════════════════════════════════════════
+        const RATES = [
+            // Setup Charges
+            ['Setup Charge', 'Screen Print', 1, 9, 1200, 1100, 1000],
+            ['Setup Charge', 'Screen Print', 10, 49, 500, 500, 500],
+            ['Setup Charge', 'Screen Print', 50, 99, 500, 500, 500],
+            ['Setup Charge', 'Screen Print', 100, null, 500, 500, 500],
+            ['Setup Charge', 'Embroidery (Standard)', 1, 9, 200, 200, 200],
+            ['Setup Charge', 'Embroidery (Standard)', 10, 49, 100, 100, 100],
+            ['Setup Charge', 'Embroidery (Standard)', 50, 99, 0, 0, 0],
+            ['Setup Charge', 'Embroidery (Standard)', 100, null, 0, 0, 0],
+            ['Setup Charge', 'Embroidery (Coloreel)', 1, 9, 400, 350, 300],
+            ['Setup Charge', 'Embroidery (Coloreel)', 10, 49, 400, 350, 300],
+            ['Setup Charge', 'Embroidery (Coloreel)', 50, 99, 400, 350, 300],
+            ['Setup Charge', 'Embroidery (Coloreel)', 100, null, 400, 350, 300],
+            // Rates
+            ['Rate', 'DTG', 1, 9, 1.2, 1.1, 1],
+            ['Rate', 'DTG', 10, 49, 1.2, 1.1, 1],
+            ['Rate', 'DTG', 50, 99, 1.2, 1.1, 1],
+            ['Rate', 'DTG', 100, null, 1.2, 1.1, 1],
+            ['Rate', 'DTF', 1, 9, 0.5, 0.5, 0.5],
+            ['Rate', 'DTF', 10, 49, 0.5, 0.5, 0.5],
+            ['Rate', 'DTF', 50, 99, 0.5, 0.5, 0.5],
+            ['Rate', 'DTF', 100, null, 0.5, 0.5, 0.5],
+            ['Rate', 'Screen Print', 1, 9, 4, 4, 4],
+            ['Rate', 'Screen Print', 10, 49, 4, 4, 4],
+            ['Rate', 'Screen Print', 50, 99, 4, 4, 4],
+            ['Rate', 'Screen Print', 100, null, 4, 4, 4],
+            ['Rate', 'Embroidery (Standard)', 1, 9, 8, 8, 8],
+            ['Rate', 'Embroidery (Standard)', 10, 49, 6, 6, 6],
+            ['Rate', 'Embroidery (Standard)', 50, 99, 5, 5, 5],
+            ['Rate', 'Embroidery (Standard)', 100, null, 4, 4, 4],
+            ['Rate', 'Embroidery (Coloreel)', 1, 9, 10, 10, 10],
+            ['Rate', 'Embroidery (Coloreel)', 10, 49, 8, 8, 8],
+            ['Rate', 'Embroidery (Coloreel)', 50, 99, 6, 6, 6],
+            ['Rate', 'Embroidery (Coloreel)', 100, null, 6, 6, 6],
+            ['Rate', 'Textile Patch', 1, 9, 25, 23, 20],
+            ['Rate', 'Textile Patch', 10, 49, 20, 18, 16],
+            ['Rate', 'Textile Patch', 50, 99, 15, 13, 11],
+            ['Rate', 'Textile Patch', 100, null, 10, 8, 6],
+        ];
+
+        // ═══════════════════════════════════════════════════════════
+        // COMPLEXITY — from Data!J:K
+        // Used for Embroidery stitch count: Stitches = Area × 1000 × CoverageFactor
+        // Formula: =N*1000*VLOOKUP(Complexity, Data!J1:K5, 2, FALSE)
+        // ═══════════════════════════════════════════════════════════
+        const COMPLEXITY = {
+            'Light (text/outline)': 0.7,
+            'Medium (logo)': 0.85,
+            'Full Fill': 1.0,
+            'Patch/Badge Heavy': 1.2,
+        };
+
+        // ═══════════════════════════════════════════════════════════
+        // PRODUCT_ADDONS — from Product_Addon sheet (updated)
+        // Removed: Loop Label, Hang Tag
+        // Removed products: Men Plain Crew Neck, Women Plain Crew Neck (not in Product_Addon)
+        // ═══════════════════════════════════════════════════════════
+        const PRODUCT_ADDONS = {
+            'Men Amid Crew Neck': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Men SoftTouch Crew Neck': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Men SoftTouch Oversized': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Men Brisk Polo': ['DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Men Plain Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Men Performance Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Men Flexi Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Men SoftTouch Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Men Printed Collar SoftTouch Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Men Cozy Hoodie': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Men Cozy Zipper Hoodie': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Men Cozy Sweatshirt': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Men Cozy Varsity Jacket': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Men Cozy Joggers': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Men Cozy Shorts': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Women Amid Crew Neck': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Women SoftTouch Crew Neck': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Women SoftTouch Oversized': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Women Amid Crop Top': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+        };
+
+        const LOCATIONS = ['FRONT', 'BACK', 'LEFT SLEEVE', 'RIGHT SLEEVE'];
+
+        createApp({
+            setup() {
+                // ── Theme ──────────────────────────────────────
+                const isDark = ref(false);
+                function toggleTheme() {
+                    isDark.value = !isDark.value;
+                    document.body.classList.toggle('dark', isDark.value);
+                }
+
+                // ── State ──────────────────────────────────────
+                const customerTypes = ['Retail', 'Corporate', 'Reseller'];
+                const customerType = ref('Retail');
+
+                // Sizes: Row1 = 36,38,40,42,44 | Row2 = 46,48,50,52,54
+                // totalQty = SUM(K2:O2, K5:O5) — both rows combined
+                const sizesRow1 = [36, 38, 40, 42, 44];
+                const sizesRow2 = [46, 48, 50, 52, 54];
+                const sizes = [...sizesRow1, ...sizesRow2];
+
+                const products = Object.keys(PRODUCT_ADDONS);
+                const selectedProduct = ref('');
+                const quantities = reactive({});
+                sizes.forEach(s => quantities[s] = 0);
+
+                const shippingCharges = ref(0);
+                const addonStates = reactive({});
+
+                // Complexity options from Data!J:K
+                const complexityOptions = Object.keys(COMPLEXITY);
+
+                // ── Computed ───────────────────────────────────
+                const totalQty = computed(() =>
+                    sizes.reduce((sum, s) => sum + (quantities[s] || 0), 0)
+                );
+
+                const step = computed(() => {
+                    if (!selectedProduct.value) return 2;
+                    if (totalQty.value === 0) return 3;
+                    return 4;
+                });
+
+                function ctIdx() {
+                    return customerType.value === 'Retail' ? 0 : customerType.value === 'Corporate' ? 1 : 2;
+                }
+
+                function lookupRate(style, addon, qty) {
+                    const ci = ctIdx();
+                    const rows = RATES.filter(r => r[0] === style && r[1] === addon);
+                    for (const r of rows) {
+                        const [, , min, max, ret, corp, res] = r;
+                        if (qty >= min && (max === null || qty <= max))
+                            return [ret, corp, res][ci];
+                    }
+                    return 0;
+                }
+
+                const pricePerItem = computed(() => {
+                    if (!selectedProduct.value || totalQty.value === 0) return 0;
+                    const ci = ctIdx();
+                    for (const r of PRODUCT_DATA.filter(r => r[0] === selectedProduct.value)) {
+                        const [, min, max, ret, corp, res] = r;
+                        if (totalQty.value >= min && (max === null || totalQty.value <= max))
+                            return [ret, corp, res][ci];
+                    }
+                    return 0;
+                });
+
+                const addonLocations = computed(() => {
+                    if (!selectedProduct.value) return [];
+                    const addons = PRODUCT_ADDONS[selectedProduct.value] || [];
+                    return LOCATIONS.map(loc => ({ name: loc, addons: addons.map(type => ({ type })) }));
+                });
+
+                function addonKey(loc, type) { return `${loc}||${type}`; }
+
+                function getAddonState(loc, type) {
+                    const k = addonKey(loc, type);
+                    if (!addonStates[k])
+                        addonStates[k] = reactive({
+                            enabled: false,
+                            width: 4,
+                            height: 4,
+                            colours: 1,
+                            // Default complexity = 'Light (text/outline)' (first in Data!J:K)
+                            complexity: 'Light (text/outline)'
+                        });
+                    return addonStates[k];
+                }
+
+                function isAddonEnabled(loc, type) { return getAddonState(loc, type).enabled; }
+                function toggleAddon(loc, type) { getAddonState(loc, type).enabled ^= 1; }
+
+                function getSetupCharge(type) { return lookupRate('Setup Charge', type, totalQty.value); }
+                function getRate(type) { return lookupRate('Rate', type, totalQty.value); }
+
+                function getAddonTotal(loc, type) {
+                    const s = getAddonState(loc, type);
+                    if (!s.enabled) return 0;
+                    const rate = getRate(type);
+                    const w = s.width || 4, h = s.height || 4;
+                    const area = w * h;  // cm²
+
+                    if (type === 'DTG') {
+                        // =IF((N*F)<80, 80, (N*F))
+                        return Math.max(80, area * rate);
+                    }
+                    if (type === 'DTF') {
+                        // =IF((N*F)<40, 40, (N*F))
+                        return Math.max(40, area * rate);
+                    }
+                    if (type === 'Screen Print') {
+                        // =IF((N*F)<20, 20, (N*F))
+                        return Math.max(20, area * rate);
+                    }
+                    if (type === 'Embroidery (Standard)') {
+                        // Stitches = N*1000*VLOOKUP(Complexity, Data!J1:K5, 2, FALSE)
+                        // Total = IF(((Stitches/1000)*F)<30, 30, ((Stitches/1000)*F))
+                        const cf = COMPLEXITY[s.complexity] || 0.7;
+                        const stitches = area * 1000 * cf;
+                        return Math.max(30, (stitches / 1000) * rate);
+                    }
+                    if (type === 'Embroidery (Coloreel)') {
+                        // Same formula as Standard, min = 40
+                        const cf = COMPLEXITY[s.complexity] || 0.7;
+                        const stitches = area * 1000 * cf;
+                        return Math.max(40, (stitches / 1000) * rate);
+                    }
+                    // Textile Patch: flat rate per piece
+                    return rate;
+                }
+
+                const addonBreakdown = computed(() => {
+                    const rows = [];
+                    for (const loc of LOCATIONS)
+                        for (const type of (PRODUCT_ADDONS[selectedProduct.value] || [])) {
+                            const t = getAddonTotal(loc, type);
+                            if (t > 0) rows.push({ label: `${loc} — ${type}`, perItem: t, total: t * totalQty.value });
+                        }
+                    return rows;
+                });
+
+                const totalAddonPerItem = computed(() =>
+                    addonBreakdown.value.reduce((s, r) => s + r.perItem, 0)
+                );
+
+                const totalSetupCharges = computed(() => {
+                    let total = 0;
+                    for (const loc of LOCATIONS)
+                        for (const type of (PRODUCT_ADDONS[selectedProduct.value] || [])) {
+                            const s = getAddonState(loc, type);
+                            if (s.enabled) {
+                                const sc = getSetupCharge(type);
+                                // Screen Print: setup × colours; others: flat setup
+                                total += type === 'Screen Print' ? sc * (s.colours || 1) : sc;
+                            }
+                        }
+                    return total;
+                });
+
+                const grandTotal = computed(() =>
+                    pricePerItem.value * totalQty.value
+                    + totalAddonPerItem.value * totalQty.value
+                    + totalSetupCharges.value
+                    + (shippingCharges.value || 0)
+                );
+
+                const finalPricePerItem = computed(() =>
+                    totalQty.value === 0 ? 0 : grandTotal.value / totalQty.value
+                );
+
+                function setCustomerType(ct) { customerType.value = ct; }
+
+                function onProductChange() {
+                    Object.keys(addonStates).forEach(k => delete addonStates[k]);
+                }
+
+                function fmt(val) {
+                    if (!val || val === 0) return '0';
+                    const n = Number(val);
+                    return n % 1 === 0 ? n.toLocaleString('en-IN') : n.toFixed(2);
+                }
+
+                return {
+                    isDark, toggleTheme,
+                    customerTypes, customerType, setCustomerType,
+                    sizesRow1, sizesRow2, sizes, quantities,
+                    products, selectedProduct, onProductChange,
+                    step, totalQty, pricePerItem,
+                    addonLocations, complexityOptions,
+                    isAddonEnabled, toggleAddon, getAddonState,
+                    getSetupCharge, getRate, getAddonTotal,
+                    addonBreakdown, totalAddonPerItem, totalSetupCharges,
+                    shippingCharges, grandTotal, finalPricePerItem,
+                    fmt,
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
