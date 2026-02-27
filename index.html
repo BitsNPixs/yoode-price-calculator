@@ -34,6 +34,10 @@
             --ring-or: rgba(246, 94, 33, 0.20);
             --radius: 16px;
             --tog-bg: #e4e7f8;
+            --glass-bg: rgba(255, 255, 255, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.45);
+            --glass-shadow: 0 8px 32px rgba(41, 55, 204, 0.08);
+            --blur: 16px;
         }
 
         body.dark {
@@ -58,6 +62,10 @@
             --ring: rgba(76, 94, 245, 0.22);
             --ring-or: rgba(255, 115, 64, 0.22);
             --tog-bg: #1e2038;
+            --glass-bg: rgba(19, 21, 31, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --blur: 16px;
         }
 
         * {
@@ -67,12 +75,17 @@
         }
 
         body {
-            background: var(--bg);
+            background: linear-gradient(135deg, #e8eaf6 0%, #f5f6fb 40%, #fef0ec 100%);
             color: var(--text);
             font-family: 'DM Sans', sans-serif;
-            font-size: 15px;
+            font-size: 16px;
             min-height: 100vh;
             transition: background .4s ease, color .4s ease;
+            overflow-x: hidden;
+        }
+
+        body.dark {
+            background: linear-gradient(135deg, #0d0e14 0%, #12132a 40%, #1a0f14 100%);
         }
 
         ::-webkit-scrollbar {
@@ -91,12 +104,12 @@
         @keyframes fadeUp {
             from {
                 opacity: 0;
-                transform: translateY(18px);
+                transform: translateY(18px) scale(0.98);
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
@@ -140,10 +153,103 @@
             }
         }
 
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(80px, -60px) scale(1.1); }
+            50% { transform: translate(-40px, -120px) scale(0.95); }
+            75% { transform: translate(-80px, 40px) scale(1.05); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(-70px, 80px) scale(1.08); }
+            50% { transform: translate(60px, 40px) scale(0.92); }
+            75% { transform: translate(40px, -60px) scale(1.04); }
+        }
+
+        @keyframes float3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(100px, 60px) scale(1.06); }
+            66% { transform: translate(-60px, -80px) scale(0.97); }
+        }
+
+        /* ─── BACKGROUND ORBS ─── */
+        .bg-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(76, 94, 245, 0.35) 0%, transparent 70%);
+            top: -10%;
+            left: -5%;
+            animation: float1 20s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, transparent 70%);
+            top: 40%;
+            right: -8%;
+            animation: float2 25s ease-in-out infinite;
+        }
+
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(246, 94, 33, 0.25) 0%, transparent 70%);
+            bottom: -5%;
+            left: 30%;
+            animation: float3 22s ease-in-out infinite;
+        }
+
+        .orb-4 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(41, 55, 204, 0.2) 0%, transparent 70%);
+            top: 60%;
+            left: -10%;
+            animation: float2 18s ease-in-out infinite reverse;
+        }
+
+        body.dark .orb-1 {
+            background: radial-gradient(circle, rgba(76, 94, 245, 0.3) 0%, transparent 70%);
+        }
+
+        body.dark .orb-2 {
+            background: radial-gradient(circle, rgba(128, 60, 220, 0.28) 0%, transparent 70%);
+        }
+
+        body.dark .orb-3 {
+            background: radial-gradient(circle, rgba(255, 115, 64, 0.22) 0%, transparent 70%);
+        }
+
+        body.dark .orb-4 {
+            background: radial-gradient(circle, rgba(76, 94, 245, 0.18) 0%, transparent 70%);
+        }
+
         /* ─── HEADER ─── */
         .header {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+            border-bottom: 1px solid var(--glass-border);
             padding: 0 48px;
             height: 64px;
             display: flex;
@@ -152,8 +258,8 @@
             position: sticky;
             top: 0;
             z-index: 200;
-            box-shadow: var(--shadow-sm);
-            transition: background .4s, border-color .4s, box-shadow .4s;
+            box-shadow: var(--glass-shadow);
+            transition: background .4s, border-color .4s, box-shadow .4s, backdrop-filter .4s;
         }
 
         .header::before {
@@ -220,10 +326,13 @@
             display: flex;
             align-items: center;
             gap: 9px;
-            background: var(--surface2);
-            border: 1.5px solid var(--border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1.5px solid var(--glass-border);
             border-radius: 50px;
-            padding: 6px 14px 6px 7px;
+            padding: 8px 16px 8px 9px;
+            min-height: 44px;
             cursor: pointer;
             user-select: none;
             transition: border-color .25s, box-shadow .25s, background .4s, transform .15s;
@@ -239,9 +348,9 @@
         }
 
         .tog-track {
-            width: 36px;
-            height: 20px;
-            border-radius: 10px;
+            width: 44px;
+            height: 24px;
+            border-radius: 12px;
             background: var(--tog-bg);
             position: relative;
             flex-shrink: 0;
@@ -254,8 +363,8 @@
 
         .tog-thumb {
             position: absolute;
-            width: 14px;
-            height: 14px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             top: 3px;
             left: 3px;
@@ -263,7 +372,7 @@
         }
 
         body:not(.dark) .tog-thumb {
-            transform: translateX(16px);
+            transform: translateX(20px);
             background: var(--yorange);
             box-shadow: 0 0 8px var(--ring-or);
         }
@@ -296,17 +405,19 @@
         }
 
         .step-node {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 14px;
             font-weight: 700;
-            border: 2px solid var(--border);
+            border: 2px solid var(--glass-border);
             color: var(--muted);
-            background: var(--surface);
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             transition: all .3s;
         }
 
@@ -353,18 +464,22 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 36px 48px 80px;
+            position: relative;
+            z-index: 1;
         }
 
         /* ─── CARDS ─── */
         .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+            border: 1px solid var(--glass-border);
             border-radius: var(--radius);
             padding: 28px 32px;
             margin-bottom: 18px;
-            box-shadow: var(--shadow-sm);
-            animation: fadeUp .35s ease both;
-            transition: box-shadow .3s, border-color .3s, background .4s;
+            box-shadow: var(--glass-shadow);
+            animation: fadeUp .45s ease both;
+            transition: box-shadow .3s, border-color .3s, background .4s, transform .3s;
             position: relative;
             overflow: hidden;
         }
@@ -386,18 +501,20 @@
         }
 
         .card:hover {
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 12px 40px rgba(41, 55, 204, 0.12);
+            transform: translateY(-2px);
         }
 
         .card-title {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--text);
             margin-bottom: 22px;
             transition: color .4s;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
         }
 
         .card-title .num {
@@ -426,13 +543,14 @@
         }
 
         .seg-btn {
-            padding: 10px 30px;
-            border-radius: 9px;
+            padding: 14px 32px;
+            min-height: 48px;
+            border-radius: 10px;
             border: none;
             background: transparent;
             color: var(--muted);
             font-family: 'DM Sans', sans-serif;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all .22s;
@@ -456,9 +574,10 @@
             border: 1.5px solid var(--border);
             color: var(--text);
             border-radius: 12px;
-            padding: 12px 40px 12px 16px;
+            padding: 15px 44px 15px 18px;
+            min-height: 52px;
             font-family: 'DM Sans', sans-serif;
-            font-size: 15px;
+            font-size: 16px;
             outline: none;
             cursor: pointer;
             width: 100%;
@@ -503,7 +622,8 @@
             border: 1.5px solid var(--border);
             color: var(--text);
             border-radius: 12px;
-            padding: 14px 20px;
+            padding: 16px 20px;
+            min-height: 52px;
             text-align: center;
             font-family: 'DM Sans', sans-serif;
             font-size: 28px;
@@ -647,11 +767,9 @@
         }
 
         .addon-location {
-            background: var(--surface2);
-            border: 1px solid var(--border);
             border-radius: 14px;
             overflow: hidden;
-            transition: background .4s, border-color .4s;
+            transition: background .4s, border-color .4s, backdrop-filter .4s;
             animation: fadeUp .3s ease both;
         }
 
@@ -779,10 +897,10 @@
         }
 
         .tog-sw {
-            width: 38px;
-            height: 21px;
+            width: 48px;
+            height: 28px;
             background: var(--border2);
-            border-radius: 10.5px;
+            border-radius: 14px;
             position: relative;
             transition: background .25s, box-shadow .25s;
             flex-shrink: 0;
@@ -796,18 +914,18 @@
         .tog-sw::after {
             content: '';
             position: absolute;
-            width: 15px;
-            height: 15px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             background: #fff;
-            top: 3px;
-            left: 3px;
+            top: 4px;
+            left: 4px;
             transition: transform .28s cubic-bezier(.34, 1.56, .64, 1);
             box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
         }
 
         .tog-sw.on::after {
-            transform: translateX(17px);
+            transform: translateX(20px);
         }
 
         /* ─── NUM INPUT ─── */
@@ -815,10 +933,11 @@
             background: var(--surface);
             border: 1.5px solid var(--border);
             color: var(--text);
-            border-radius: 9px;
-            padding: 7px 6px;
+            border-radius: 10px;
+            padding: 10px 8px;
+            min-height: 44px;
             font-family: 'DM Sans', sans-serif;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 600;
             outline: none;
             width: 100%;
@@ -847,10 +966,11 @@
             background: var(--surface);
             border: 1.5px solid var(--border);
             color: var(--text);
-            border-radius: 9px;
-            padding: 7px 20px 7px 8px;
+            border-radius: 10px;
+            padding: 10px 24px 10px 10px;
+            min-height: 44px;
             font-family: 'DM Sans', sans-serif;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             outline: none;
             width: 100%;
@@ -875,15 +995,17 @@
 
         /* ─── SUMMARY ─── */
         .summary-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+            border: 1px solid var(--glass-border);
             border-radius: var(--radius);
             padding: 30px 32px;
             margin-bottom: 18px;
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--glass-shadow);
             position: relative;
             overflow: hidden;
-            animation: fadeUp .35s ease both;
+            animation: fadeUp .45s ease both;
         }
 
         .summary-card::after {
@@ -990,12 +1112,13 @@
             border: 1.5px solid var(--border);
             color: var(--text);
             border-radius: 10px;
-            padding: 9px 14px;
+            padding: 12px 16px;
+            min-height: 48px;
             font-family: 'DM Sans', sans-serif;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             outline: none;
-            width: 160px;
+            width: 170px;
             -moz-appearance: textfield;
             transition: border-color .2s, box-shadow .2s;
             text-align: right;
@@ -1212,8 +1335,9 @@
             }
 
             .seg-btn {
-                padding: 9px 18px;
-                font-size: 13px;
+                padding: 12px 20px;
+                min-height: 48px;
+                font-size: 15px;
             }
 
             .tog-label {
@@ -1292,14 +1416,62 @@
 
             .seg-btn {
                 flex: 1;
-                padding: 10px 10px;
-                font-size: 13px;
+                padding: 12px 10px;
+                min-height: 48px;
+                font-size: 15px;
                 text-align: center;
             }
 
             .shipping-input {
-                width: 130px;
+                width: 100%;
             }
+
+            .shipping-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+
+        /* ─── APP Z-INDEX ─── */
+        #app {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ─── GLASS TEXT READABILITY ─── */
+        .kpi-label,
+        .qty-field-label,
+        .col-label,
+        .addon-type span,
+        .info-val,
+        .shipping-row label {
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+        }
+
+        body.dark .kpi-label,
+        body.dark .qty-field-label,
+        body.dark .col-label,
+        body.dark .addon-type span,
+        body.dark .info-val,
+        body.dark .shipping-row label {
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+        }
+
+        /* ─── ADDON LOCATION GLASS ─── */
+        .addon-location {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+        }
+
+        body.dark .addon-location {
+            background: rgba(19, 21, 31, 0.4);
+        }
+
+        /* ─── SMOOTH MOMENTUM SCROLLING ─── */
+        .addon-rows-wrap {
+            scroll-behavior: smooth;
         }
 
         .card:nth-child(1) {
@@ -1337,6 +1509,14 @@
 </head>
 
 <body>
+    <!-- Background Orbs -->
+    <div class="bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+    </div>
+
     <div id="app">
 
         <!-- HEADER -->
@@ -1518,8 +1698,8 @@
 
             <!-- No addons notice -->
             <div class="card" v-if="quantity > 0 && selectedProduct && addonLocations.length === 0"
-                style="background: var(--surface2);">
-                <div style="color: var(--muted); font-size: 14px; font-weight: 500;">
+                style="background: rgba(255,255,255,0.35);">
+                <div style="color: var(--muted); font-size: 15px; font-weight: 500;">
                     ℹ No decoration add-ons available for this product.
                 </div>
             </div>
