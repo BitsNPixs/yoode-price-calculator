@@ -4,19 +4,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Yoode Price Calculator</title>
+    <title>Yoode Price Estimator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.4.21/vue.global.prod.min.js"></script>
+
     <link
         href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Poppins:wght@600;700;800&display=swap"
         rel="stylesheet" />
     <style>
-        /* ============================================================
-   YOODE PRICE CALCULATOR — LIGHT-FIRST DESIGN
-   Brand: Blue #2937cc | Orange #f65e21
-   ============================================================ */
-
         :root {
-            /* Light mode (default/preferred) */
             --bg: #f5f6fb;
             --surface: #ffffff;
             --surface2: #f0f1f9;
@@ -41,7 +36,6 @@
             --tog-bg: #e4e7f8;
         }
 
-        /* Dark mode */
         body.dark {
             --bg: #0d0e14;
             --surface: #13151f;
@@ -81,7 +75,6 @@
             transition: background .4s ease, color .4s ease;
         }
 
-        /* ─── SCROLLBAR ─────────────────────────────────────────── */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -95,7 +88,6 @@
             border-radius: 3px;
         }
 
-        /* ─── ANIMATIONS ────────────────────────────────────────── */
         @keyframes fadeUp {
             from {
                 opacity: 0;
@@ -105,16 +97,6 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
             }
         }
 
@@ -129,16 +111,6 @@
             50% {
                 transform: scale(1.7);
                 opacity: .5;
-            }
-        }
-
-        @keyframes shimmer {
-            0% {
-                background-position: -400px 0;
-            }
-
-            100% {
-                background-position: 400px 0;
             }
         }
 
@@ -168,11 +140,11 @@
             }
         }
 
-        /* ─── HEADER ────────────────────────────────────────────── */
+        /* ─── HEADER ─── */
         .header {
             background: var(--surface);
             border-bottom: 1px solid var(--border);
-            padding: 0 40px;
+            padding: 0 48px;
             height: 64px;
             display: flex;
             align-items: center;
@@ -184,7 +156,6 @@
             transition: background .4s, border-color .4s, box-shadow .4s;
         }
 
-        /* accent bar at very top */
         .header::before {
             content: '';
             position: absolute;
@@ -244,7 +215,7 @@
             color: var(--muted);
         }
 
-        /* ─── THEME TOGGLE ──────────────────────────────────────── */
+        /* ─── THEME TOGGLE ─── */
         .theme-toggle {
             display: flex;
             align-items: center;
@@ -291,14 +262,12 @@
             transition: transform .35s cubic-bezier(.34, 1.56, .64, 1), background .3s, box-shadow .3s;
         }
 
-        /* Light = sun on right */
         body:not(.dark) .tog-thumb {
             transform: translateX(16px);
             background: var(--yorange);
             box-shadow: 0 0 8px var(--ring-or);
         }
 
-        /* Dark = moon on left */
         body.dark .tog-thumb {
             transform: translateX(0);
             background: #9ba4f5;
@@ -308,7 +277,6 @@
         .tog-icon {
             font-size: 14px;
             line-height: 1;
-            transition: opacity .3s;
         }
 
         .tog-label {
@@ -319,7 +287,7 @@
             transition: color .4s;
         }
 
-        /* ─── STEP TRAIL ────────────────────────────────────────── */
+        /* ─── STEP TRAIL ─── */
         .step-trail {
             margin-left: auto;
             display: flex;
@@ -340,7 +308,6 @@
             color: var(--muted);
             background: var(--surface);
             transition: all .3s;
-            position: relative;
         }
 
         .step-node.active {
@@ -353,16 +320,13 @@
             background: var(--yblue);
             border-color: var(--yblue);
             color: #fff;
+            font-size: 0;
             box-shadow: none;
         }
 
         .step-node.done::after {
             content: '✓';
             font-size: 13px;
-        }
-
-        .step-node.done {
-            font-size: 0;
         }
 
         .step-line {
@@ -384,14 +348,14 @@
             transform-origin: left;
         }
 
-        /* ─── LAYOUT ────────────────────────────────────────────── */
+        /* ─── LAYOUT ─── */
         .container {
-            max-width: 1160px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 36px 40px 80px;
+            padding: 36px 48px 80px;
         }
 
-        /* ─── CARDS ─────────────────────────────────────────────── */
+        /* ─── CARDS ─── */
         .card {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -431,8 +395,6 @@
             gap: 10px;
             font-size: 18px;
             font-weight: 700;
-            letter-spacing: 0;
-            text-transform: none;
             color: var(--text);
             margin-bottom: 22px;
             transition: color .4s;
@@ -452,9 +414,10 @@
             flex-shrink: 0;
         }
 
-        /* ─── SEGMENTED CONTROL ─────────────────────────────────── */
+        /* ─── SEGMENTED CONTROL ─── */
         .seg-ctrl {
             display: inline-flex;
+            flex-wrap: wrap;
             background: var(--surface2);
             border-radius: 12px;
             padding: 5px;
@@ -473,6 +436,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all .22s;
+            white-space: nowrap;
         }
 
         .seg-btn:hover:not(.active) {
@@ -486,7 +450,7 @@
             box-shadow: 0 3px 12px var(--ring);
         }
 
-        /* ─── SELECT ────────────────────────────────────────────── */
+        /* ─── SELECT ─── */
         .custom-select {
             background: var(--surface2);
             border: 1.5px solid var(--border);
@@ -497,14 +461,14 @@
             font-size: 15px;
             outline: none;
             cursor: pointer;
-            min-width: 300px;
+            width: 100%;
+            max-width: 480px;
             transition: border-color .2s, box-shadow .2s, background .4s;
             -webkit-appearance: none;
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237b7fa0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 16px center;
-            background-attachment: scroll;
         }
 
         .custom-select:focus {
@@ -512,116 +476,131 @@
             box-shadow: 0 0 0 3px var(--ring);
         }
 
-        /* ─── SIZE & QTY ────────────────────────────────────────── */
-        .size-group-label {
+        /* ─── QUANTITY FIELD ─── */
+        .qty-wrap {
+            display: flex;
+            align-items: stretch;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .qty-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .qty-field-label {
             font-size: 12px;
             font-weight: 700;
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--muted);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        .size-group-label::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
-
-        .size-row {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .size-cell {
-            text-align: center;
-        }
-
-        .size-label {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text2);
-            margin-bottom: 6px;
-            letter-spacing: .5px;
-        }
-
-        .qty-input {
-            width: 100%;
+        .qty-input-large {
             background: var(--surface2);
             border: 1.5px solid var(--border);
             color: var(--text);
-            border-radius: 10px;
-            padding: 10px 4px;
+            border-radius: 12px;
+            padding: 14px 20px;
             text-align: center;
             font-family: 'DM Sans', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
+            font-size: 28px;
+            font-weight: 800;
             outline: none;
+            width: 180px;
             transition: border-color .2s, box-shadow .2s, background .2s;
             -moz-appearance: textfield;
         }
 
-        .qty-input::-webkit-outer-spin-button,
-        .qty-input::-webkit-inner-spin-button {
+        .qty-input-large::-webkit-outer-spin-button,
+        .qty-input-large::-webkit-inner-spin-button {
             -webkit-appearance: none;
         }
 
-        .qty-input:focus {
+        .qty-input-large:focus {
             border-color: var(--yblue);
             box-shadow: 0 0 0 3px var(--ring);
             background: var(--yblue-lt);
         }
 
-        .qty-input:not([value='0']):not(:placeholder-shown) {
-            border-color: var(--yblue);
-        }
-
-        .total-qty-bar {
-            margin-top: 4px;
+        .qty-info-box {
             display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 14px 18px;
+            flex-direction: column;
+            justify-content: center;
+            gap: 4px;
+            padding: 16px 22px;
             background: var(--yblue-lt);
-            border-radius: 12px;
             border: 1px solid var(--ring);
+            border-radius: 12px;
+            min-width: 160px;
+            transition: background .4s;
         }
 
-        body.dark .total-qty-bar {
+        body.dark .qty-info-box {
             background: var(--yblue-mid);
         }
 
-        .tq-label {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--yblue);
-            letter-spacing: 1px;
+        .qty-info-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
+            color: var(--yblue);
         }
 
-        .tq-value {
+        .qty-info-val {
             font-family: 'Poppins', sans-serif;
-            font-size: 32px;
+            font-size: 26px;
             font-weight: 800;
             color: var(--yblue);
             line-height: 1;
         }
 
-        .tq-unit {
-            font-size: 14px;
+        .qty-info-sub {
+            font-size: 12px;
             color: var(--muted);
-            margin-left: 4px;
+            font-weight: 500;
         }
 
-        /* ─── WARNING ───────────────────────────────────────────── */
+        /* MRP box */
+        .mrp-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 4px;
+            padding: 16px 22px;
+            background: var(--yor-lt);
+            border: 1px solid var(--ring-or);
+            border-radius: 12px;
+            min-width: 140px;
+            transition: background .4s;
+        }
+
+        body.dark .mrp-box {
+            background: var(--yor-mid);
+        }
+
+        .mrp-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--yorange);
+        }
+
+        .mrp-val {
+            font-family: 'Poppins', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--yorange);
+            line-height: 1;
+        }
+
+        /* ─── WARNING / NOTICE ─── */
         .warning {
-            margin-top: 12px;
+            margin-top: 14px;
             background: var(--yor-lt);
             border: 1.5px solid var(--ring-or);
             border-radius: 10px;
@@ -637,9 +616,30 @@
         .warning::before {
             content: '⚠';
             font-size: 16px;
+            flex-shrink: 0;
         }
 
-        /* ─── ADDONS ─────────────────────────────────────────────── */
+        .moq-notice {
+            margin-top: 14px;
+            background: var(--yblue-lt);
+            border: 1.5px solid var(--ring);
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--yblue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .moq-notice::before {
+            content: 'ℹ';
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        /* ─── ADDONS ─── */
         .addons-section {
             display: flex;
             flex-direction: column;
@@ -656,10 +656,10 @@
         }
 
         .addon-loc-header {
-            padding: 11px 20px;
-            font-size: 16px;
+            padding: 12px 20px;
+            font-size: 13px;
             font-weight: 800;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--yblue);
             display: flex;
@@ -683,16 +683,33 @@
             flex-shrink: 0;
         }
 
-        .addon-rows {
-            padding: 4px 16px 14px;
+        /* Scrollable addon table wrapper */
+        .addon-rows-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
+        .addon-rows-wrap::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .addon-rows-wrap::-webkit-scrollbar-thumb {
+            background: var(--border2);
+            border-radius: 2px;
+        }
+
+        .addon-rows {
+            padding: 4px 16px 16px;
+            min-width: 900px;
+        }
+
+        /* Fixed column widths that won't collapse */
         .addon-row {
             display: grid;
-            grid-template-columns: 200px 110px 110px 90px 100px 100px 130px;
-            gap: 10px;
+            grid-template-columns: 210px 90px 120px 76px 76px 76px 152px 115px;
+            gap: 8px;
             align-items: center;
-            padding: 11px 6px;
+            padding: 12px 8px;
             border-bottom: 1px solid var(--border);
             transition: background .2s;
             border-radius: 8px;
@@ -708,46 +725,57 @@
 
         .addon-type {
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--text);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            min-width: 0;
         }
 
-        /* Column labels in addons */
+        .addon-type span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         .col-label {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
-            letter-spacing: 1.5px;
+            letter-spacing: 0.8px;
             text-transform: uppercase;
-            color: var(--muted);
+            color: var(--text2);
             margin-bottom: 4px;
+            white-space: nowrap;
         }
 
         .field-group {
             display: flex;
             flex-direction: column;
+            min-width: 0;
         }
 
         .info-val {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             color: var(--text);
             padding: 4px 0;
+            white-space: nowrap;
         }
 
         .info-orange {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             color: var(--yorange);
+            white-space: nowrap;
         }
 
-        /* ─── TOGGLE SWITCH ─────────────────────────────────────── */
+        /* ─── TOGGLE SWITCH ─── */
         .toggle-wrap {
             display: flex;
             align-items: center;
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         .tog-sw {
@@ -782,20 +810,21 @@
             transform: translateX(17px);
         }
 
-        /* ─── NUM INPUT ─────────────────────────────────────────── */
+        /* ─── NUM INPUT ─── */
         .num-input {
             background: var(--surface);
             border: 1.5px solid var(--border);
             color: var(--text);
             border-radius: 9px;
-            padding: 8px 10px;
+            padding: 7px 6px;
             font-family: 'DM Sans', sans-serif;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             outline: none;
             width: 100%;
             -moz-appearance: textfield;
             transition: border-color .2s, box-shadow .2s;
+            text-align: center;
         }
 
         .num-input::-webkit-outer-spin-button,
@@ -809,29 +838,29 @@
         }
 
         .num-input:disabled {
-            opacity: .38;
+            opacity: .35;
             cursor: not-allowed;
         }
 
-        /* ─── COMPLEXITY SELECT ─────────────────────────────────── */
+        /* ─── COMPLEXITY SELECT ─── */
         .complexity-select {
             background: var(--surface);
             border: 1.5px solid var(--border);
             color: var(--text);
             border-radius: 9px;
-            padding: 7px 24px 7px 10px;
+            padding: 7px 20px 7px 8px;
             font-family: 'DM Sans', sans-serif;
-            font-size: 12px;
-            font-weight: 500;
+            font-size: 13px;
+            font-weight: 600;
             outline: none;
             width: 100%;
+            cursor: pointer;
             -webkit-appearance: none;
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%237b7fa0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 8px center;
+            background-position: right 6px center;
             transition: border-color .2s, box-shadow .2s;
-            cursor: pointer;
         }
 
         .complexity-select:focus {
@@ -840,11 +869,11 @@
         }
 
         .complexity-select:disabled {
-            opacity: .38;
+            opacity: .35;
             cursor: not-allowed;
         }
 
-        /* ─── SUMMARY SECTION ───────────────────────────────────── */
+        /* ─── SUMMARY ─── */
         .summary-card {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -935,7 +964,6 @@
             font-weight: 400;
         }
 
-        /* Shipping row */
         .shipping-row {
             display: flex;
             align-items: center;
@@ -946,6 +974,7 @@
             border-radius: 12px;
             margin-bottom: 20px;
             transition: background .4s;
+            flex-wrap: wrap;
         }
 
         .shipping-row label {
@@ -953,6 +982,7 @@
             font-weight: 500;
             color: var(--text2);
             flex: 1;
+            min-width: 160px;
         }
 
         .shipping-input {
@@ -981,11 +1011,10 @@
             box-shadow: 0 0 0 3px var(--ring);
         }
 
-        /* Breakdown table */
         .breakdown-wrap {
             border: 1px solid var(--border);
             border-radius: 12px;
-            overflow: hidden;
+            overflow: auto;
             margin-bottom: 22px;
         }
 
@@ -993,18 +1022,20 @@
             width: 100%;
             border-collapse: collapse;
             font-size: 14px;
+            min-width: 400px;
         }
 
         .breakdown-table th {
             text-align: left;
             padding: 10px 16px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 800;
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--muted);
             background: var(--surface2);
             border-bottom: 1px solid var(--border);
+            white-space: nowrap;
         }
 
         .breakdown-table th:not(:first-child) {
@@ -1012,7 +1043,7 @@
         }
 
         .breakdown-table td {
-            padding: 13px 16px;
+            padding: 12px 16px;
             border-bottom: 1px solid var(--border);
             color: var(--text2);
             font-weight: 500;
@@ -1021,6 +1052,7 @@
 
         .breakdown-table td:not(:first-child) {
             text-align: right;
+            white-space: nowrap;
         }
 
         .breakdown-table tr:last-child td {
@@ -1043,7 +1075,6 @@
             background: var(--yor-mid);
         }
 
-        /* Final price heroes */
         .final-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1096,47 +1127,181 @@
             line-height: 1;
         }
 
-        .final-hero .f-unit {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 18px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, .6);
-            margin-left: 3px;
-        }
-
-        /* ─── RESPONSIVE ─────────────────────────────────────────── */
-        @media (max-width: 960px) {
-            .header {
-                padding: 0 20px;
-            }
-
+        /* ─── RESPONSIVE ─── */
+        /* Large screens — wider layout */
+        @media (min-width: 1200px) {
             .container {
-                padding: 24px 16px 60px;
+                padding: 40px 60px 80px;
             }
 
             .addon-row {
+                grid-template-columns: 230px 100px 130px 82px 82px 82px 162px 125px;
+            }
+        }
+
+        /* Medium screens */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 28px 28px 70px;
+            }
+
+            .header {
+                padding: 0 24px;
+            }
+        }
+
+        /* Tablet */
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 16px;
+                height: auto;
+                min-height: 64px;
+                flex-wrap: wrap;
+                padding-top: 8px;
+                padding-bottom: 8px;
+                gap: 10px;
+            }
+
+            .step-trail {
+                margin-left: 0;
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                padding-bottom: 4px;
+            }
+
+            .container {
+                padding: 20px 16px 60px;
+            }
+
+            .card {
+                padding: 20px 18px;
+            }
+
+            .summary-card {
+                padding: 20px 18px;
+            }
+
+            .card-title {
+                font-size: 16px;
+            }
+
+            .kpi-grid {
                 grid-template-columns: 1fr 1fr;
             }
 
-            .kpi-grid,
-            .final-grid {
-                grid-template-columns: 1fr;
+            .kpi-val {
+                font-size: 28px;
             }
 
-            .size-row {
-                grid-template-columns: repeat(5, 1fr);
+            .final-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .final-hero .f-val {
+                font-size: 30px;
+            }
+
+            .qty-wrap {
+                gap: 12px;
+            }
+
+            .qty-input-large {
+                width: 140px;
+                font-size: 24px;
+            }
+
+            .seg-btn {
+                padding: 9px 18px;
+                font-size: 13px;
             }
 
             .tog-label {
                 display: none;
             }
+        }
+
+        /* Mobile */
+        @media (max-width: 480px) {
+            .header {
+                padding: 8px 12px;
+                gap: 8px;
+            }
+
+            .header-logo {
+                font-size: 18px;
+            }
+
+            .header-sub {
+                font-size: 10px;
+                letter-spacing: 1px;
+            }
+
+            .container {
+                padding: 14px 12px 50px;
+            }
+
+            .card {
+                padding: 16px 14px;
+            }
+
+            .summary-card {
+                padding: 16px 14px;
+            }
+
+            .kpi-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .final-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .kpi-val {
+                font-size: 32px;
+            }
+
+            .final-hero .f-val {
+                font-size: 34px;
+            }
+
+            .qty-wrap {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .qty-input-large {
+                width: 100%;
+            }
+
+            .qty-info-box,
+            .mrp-box {
+                min-width: unset;
+                width: 100%;
+            }
+
+            .custom-select {
+                max-width: 100%;
+            }
+
+            .seg-ctrl {
+                width: 100%;
+            }
 
             .seg-btn {
-                padding: 10px 18px;
+                flex: 1;
+                padding: 10px 10px;
+                font-size: 13px;
+                text-align: center;
+            }
+
+            .shipping-input {
+                width: 130px;
             }
         }
 
-        /* Stagger cards */
         .card:nth-child(1) {
             animation-delay: .05s;
         }
@@ -1174,16 +1339,15 @@
 <body>
     <div id="app">
 
-        <!-- ═══ HEADER ═══════════════════════════════════════════ -->
+        <!-- HEADER -->
         <div class="header">
             <div class="logo-wrap">
                 <div class="header-logo">
                     <img src="logo-clr.png" alt="Yoode" class="logo-img" /><span class="logo-dot-anim"></span>
                 </div>
-                <div class="header-sub">Product Price Calculator</div>
+                <div class="header-sub">Price Estimator</div>
             </div>
 
-            <!-- Theme Toggle -->
             <div class="theme-toggle" @click="toggleTheme" :title="isDark ? 'Switch to Light' : 'Switch to Dark'">
                 <div class="tog-track">
                     <div class="tog-thumb"></div>
@@ -1192,7 +1356,6 @@
                 <span class="tog-label">{{isDark ? 'Dark' : 'Light'}}</span>
             </div>
 
-            <!-- Step Trail -->
             <div class="step-trail">
                 <div class="step-node" :class="{active: step===1, done: step>1}">{{step>1?'':1}}</div>
                 <div class="step-line" :class="{filled: step>1}"></div>
@@ -1204,7 +1367,6 @@
             </div>
         </div>
 
-        <!-- ═══ CONTAINER ════════════════════════════════════════ -->
         <div class="container">
 
             <!-- STEP 1 — Customer Type -->
@@ -1225,144 +1387,149 @@
                 </select>
             </div>
 
-            <!-- STEP 3 — Size & Quantity -->
+            <!-- STEP 3 — Quantity -->
             <div class="card" :class="{active: step===3}" v-if="selectedProduct">
-                <div class="card-title"><span class="num">3</span>Size &amp; Quantity</div>
-
-                <!-- Row 1: 36–44 -->
-                <div class="size-group-label">Sizes 36 – 44</div>
-                <div class="size-row">
-                    <div class="size-cell" v-for="s in sizesRow1" :key="s">
-                        <div class="size-label">{{s}}</div>
-                        <input type="number" class="qty-input" min="0" :value="quantities[s]"
-                            @input="quantities[s] = +$event.target.value || 0" />
+                <div class="card-title"><span class="num">3</span>Quantity</div>
+                <div class="qty-wrap">
+                    <div class="qty-field">
+                        <div class="qty-field-label">Number of Pieces</div>
+                        <input type="number" class="qty-input-large" min="1" v-model.number="quantity"
+                            placeholder="0" />
+                    </div>
+                    <div class="qty-info-box" v-if="pricePerItem > 0">
+                        <div class="qty-info-label">Price / Piece</div>
+                        <div class="qty-info-val">₹{{fmt(pricePerItem)}}</div>
+                        <div class="qty-info-sub">Volume price for {{quantity}} pcs</div>
+                    </div>
+                    <div class="mrp-box" v-if="mrpPerItem > 0">
+                        <div class="mrp-label">MRP</div>
+                        <div class="mrp-val">₹{{fmt(mrpPerItem)}}</div>
                     </div>
                 </div>
-
-                <!-- Row 2: 46–54 -->
-                <div class="size-group-label">Sizes 46 – 54</div>
-                <div class="size-row" style="margin-bottom:20px;">
-                    <div class="size-cell" v-for="s in sizesRow2" :key="s">
-                        <div class="size-label">{{s}}</div>
-                        <input type="number" class="qty-input" min="0" :value="quantities[s]"
-                            @input="quantities[s] = +$event.target.value || 0" />
-                    </div>
+                <div class="warning" v-if="pricePerItem === 0 && quantity > 0">
+                    No pricing tier found for this product &amp; quantity.
                 </div>
-
-                <!-- Total Qty Bar -->
-                <div class="total-qty-bar">
-                    <span class="tq-label">Total Qty</span>
-                    <span class="tq-value">{{totalQty}}</span>
-                    <span class="tq-unit">pieces</span>
-                    <span style="flex:1"></span>
-                    <span v-if="pricePerItem > 0" style="font-size:13px;color:var(--muted);font-weight:600;">
-                        Base: ₹{{fmt(pricePerItem)}} / pc
-                    </span>
-                </div>
-
-                <div class="warning" v-if="pricePerItem === 0 && totalQty > 0">
-                    No pricing tier found for this product &amp; quantity combination.
+                <div class="moq-notice" v-if="screenPrintMOQWarning">
+                    Screen Print requires a minimum order of 50 pieces.
                 </div>
             </div>
 
             <!-- STEP 4 — Add-ons -->
-            <div class="card" :class="{active: step===4}" v-if="totalQty > 0">
+            <div class="card" :class="{active: step===4}"
+                v-if="quantity > 0 && selectedProduct && addonLocations.length > 0">
                 <div class="card-title"><span class="num">4</span>Decoration &amp; Add-ons</div>
                 <div class="addons-section">
                     <div class="addon-location" v-for="loc in addonLocations" :key="loc.name">
                         <div class="addon-loc-header">{{loc.name}}</div>
-                        <div class="addon-rows">
-                            <div v-for="addon in loc.addons" :key="addon.type" class="addon-row">
+                        <div class="addon-rows-wrap">
+                            <div class="addon-rows">
 
-                                <!-- Toggle + Name -->
-                                <div class="addon-type">
-                                    <div class="toggle-wrap" @click="toggleAddon(loc.name, addon.type)">
-                                        <div class="tog-sw" :class="{on: isAddonEnabled(loc.name, addon.type)}"></div>
-                                    </div>
-                                    <span>{{addon.type}}</span>
-                                </div>
-
-                                <!-- Setup Charge -->
-                                <div class="field-group">
-                                    <div class="col-label">Setup Charge</div>
-                                    <div class="info-val">{{getSetupCharge(addon.type) > 0 ? '₹' +
-                                        getSetupCharge(addon.type) : '—'}}</div>
-                                </div>
-
-                                <!-- Rate -->
-                                <div class="field-group" v-if="['DTG','DTF','Screen Print'].includes(addon.type)">
-                                    <div class="col-label">Rate/cm²</div>
-                                    <div class="info-val">₹{{getRate(addon.type)}}</div>
-                                </div>
-                                <div class="field-group" v-else-if="addon.type.startsWith('Embroidery')">
-                                    <div class="col-label">Rate/1k stitch</div>
-                                    <div class="info-val">₹{{getRate(addon.type)}}</div>
-                                </div>
-                                <div class="field-group" v-else>
-                                    <div class="col-label">Rate/pc</div>
-                                    <div class="info-val">₹{{getRate(addon.type)}}</div>
-                                </div>
-
-                                <!-- Colours (Screen Print only) -->
-                                <div class="field-group" v-if="addon.type === 'Screen Print'">
+                                <!-- Header row labels -->
+                                <div class="addon-row"
+                                    style="padding:4px 6px 2px; border-bottom: 1px solid var(--border);">
+                                    <div class="col-label">Add-on</div>
+                                    <div class="col-label">Setup</div>
+                                    <div class="col-label">Rate</div>
                                     <div class="col-label">Colours</div>
-                                    <input type="number" class="num-input" min="1"
-                                        :disabled="!isAddonEnabled(loc.name, addon.type)"
-                                        v-model.number="getAddonState(loc.name, addon.type).colours" />
-                                </div>
-                                <div v-else></div>
-
-                                <!-- Width -->
-                                <div class="field-group"
-                                    v-if="['DTG','DTF','Screen Print'].includes(addon.type) || addon.type.startsWith('Embroidery')">
                                     <div class="col-label">W (cm)</div>
-                                    <input type="number" class="num-input" min="0.1" step="0.1"
-                                        :disabled="!isAddonEnabled(loc.name, addon.type)"
-                                        v-model.number="getAddonState(loc.name, addon.type).width" />
-                                </div>
-                                <div v-else></div>
-
-                                <!-- Height -->
-                                <div class="field-group"
-                                    v-if="['DTG','DTF','Screen Print'].includes(addon.type) || addon.type.startsWith('Embroidery')">
                                     <div class="col-label">H (cm)</div>
-                                    <input type="number" class="num-input" min="0.1" step="0.1"
-                                        :disabled="!isAddonEnabled(loc.name, addon.type)"
-                                        v-model.number="getAddonState(loc.name, addon.type).height" />
-                                </div>
-                                <div v-else></div>
-
-                                <!-- Complexity (Embroidery only) -->
-                                <div class="field-group" v-if="addon.type.startsWith('Embroidery')">
                                     <div class="col-label">Complexity</div>
-                                    <select class="complexity-select" :disabled="!isAddonEnabled(loc.name, addon.type)"
-                                        v-model="getAddonState(loc.name, addon.type).complexity">
-                                        <option v-for="c in complexityOptions" :key="c" :value="c">{{c}}</option>
-                                    </select>
-                                </div>
-                                <div v-else></div>
-
-                                <!-- Total/item -->
-                                <div class="field-group">
                                     <div class="col-label">Total / item</div>
-                                    <div class="info-orange">
-                                        {{getAddonTotal(loc.name, addon.type) > 0 ? '₹' + fmt(getAddonTotal(loc.name,
-                                        addon.type)) : '—'}}
-                                    </div>
                                 </div>
 
+                                <div v-for="addon in loc.addons" :key="addon.type" class="addon-row">
+
+                                    <!-- Toggle + Name -->
+                                    <div class="addon-type">
+                                        <div class="toggle-wrap" @click="toggleAddon(loc.name, addon.type)">
+                                            <div class="tog-sw" :class="{on: isAddonEnabled(loc.name, addon.type)}">
+                                            </div>
+                                        </div>
+                                        <span>{{addon.type}}</span>
+                                    </div>
+
+                                    <!-- Setup Charge -->
+                                    <div class="field-group">
+                                        <div class="info-val">{{getSetupCharge(addon.type) > 0 ? '₹' +
+                                            getSetupCharge(addon.type) : '—'}}</div>
+                                    </div>
+
+                                    <!-- Rate -->
+                                    <div class="field-group">
+                                        <div class="info-val">
+                                            ₹{{getRate(addon.type)}}
+                                            <span style="font-size:12px;color:var(--muted);font-weight:500;">
+                                                {{addon.type.startsWith('Embroidery') ? '/1k st' : '/cm²'}}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Colours (Screen Print only) -->
+                                    <div class="field-group" v-if="addon.type === 'Screen Print'">
+                                        <input type="number" class="num-input" min="1"
+                                            :disabled="!isAddonEnabled(loc.name, addon.type)"
+                                            v-model.number="getAddonState(loc.name, addon.type).colours" />
+                                    </div>
+                                    <div v-else class="field-group">
+                                        <div class="info-val" style="color:var(--muted)">—</div>
+                                    </div>
+
+                                    <!-- Width -->
+                                    <div class="field-group">
+                                        <input type="number" class="num-input" min="0.1" step="0.1"
+                                            :disabled="!isAddonEnabled(loc.name, addon.type)"
+                                            v-model.number="getAddonState(loc.name, addon.type).width" />
+                                    </div>
+
+                                    <!-- Height -->
+                                    <div class="field-group">
+                                        <input type="number" class="num-input" min="0.1" step="0.1"
+                                            :disabled="!isAddonEnabled(loc.name, addon.type)"
+                                            v-model.number="getAddonState(loc.name, addon.type).height" />
+                                    </div>
+
+                                    <!-- Complexity (Embroidery only) -->
+                                    <div class="field-group" v-if="addon.type.startsWith('Embroidery')">
+                                        <select class="complexity-select"
+                                            :disabled="!isAddonEnabled(loc.name, addon.type)"
+                                            v-model="getAddonState(loc.name, addon.type).complexity">
+                                            <option v-for="c in complexityOptions" :key="c" :value="c">{{c}}</option>
+                                        </select>
+                                    </div>
+                                    <div v-else class="field-group">
+                                        <div class="info-val" style="color:var(--muted)">—</div>
+                                    </div>
+
+                                    <!-- Total / item -->
+                                    <div class="field-group">
+                                        <div class="info-orange">
+                                            {{getAddonTotal(loc.name, addon.type) > 0
+                                            ? '₹' + fmt(getAddonTotal(loc.name, addon.type))
+                                            : '—'}}
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ═══ PRICE SUMMARY ═══════════════════════════════════ -->
-            <div class="summary-card" v-if="totalQty > 0">
-                <div class="card-title" style="margin-bottom:22px;"><span class="num"
-                        style="background:var(--yorange)">5</span>Price Summary</div>
+            <!-- No addons notice -->
+            <div class="card" v-if="quantity > 0 && selectedProduct && addonLocations.length === 0"
+                style="background: var(--surface2);">
+                <div style="color: var(--muted); font-size: 14px; font-weight: 500;">
+                    ℹ No decoration add-ons available for this product.
+                </div>
+            </div>
 
-                <!-- KPI Grid -->
+            <!-- PRICE SUMMARY -->
+            <div class="summary-card" v-if="quantity > 0 && pricePerItem > 0">
+                <div class="card-title" style="margin-bottom:22px;">
+                    <span class="num" style="background:var(--yorange)">5</span>Price Summary
+                </div>
+
                 <div class="kpi-grid">
                     <div class="kpi-box blue-kpi">
                         <div class="kpi-label">Base Price / Item</div>
@@ -1370,18 +1537,16 @@
                     </div>
                     <div class="kpi-box orange-kpi">
                         <div class="kpi-label">Total Quantity</div>
-                        <div class="kpi-val orange">{{totalQty}}<span class="kpi-unit"> pcs</span></div>
+                        <div class="kpi-val orange">{{quantity}}<span class="kpi-unit"> pcs</span></div>
                     </div>
                 </div>
 
-                <!-- Shipping -->
                 <div class="shipping-row">
                     <label>Shipping &amp; Other Charges (₹)</label>
                     <input type="number" class="shipping-input" v-model.number="shippingCharges" min="0"
                         placeholder="0" />
                 </div>
 
-                <!-- Breakdown Table -->
                 <div class="breakdown-wrap">
                     <table class="breakdown-table">
                         <thead>
@@ -1395,22 +1560,22 @@
                             <tr>
                                 <td>Base Product Price</td>
                                 <td>{{fmt(pricePerItem)}}</td>
-                                <td>{{fmt(pricePerItem * totalQty)}}</td>
+                                <td>{{fmt(pricePerItem * quantity)}}</td>
                             </tr>
                             <tr v-for="row in addonBreakdown" :key="row.label">
                                 <td>{{row.label}}</td>
                                 <td>{{fmt(row.perItem)}}</td>
                                 <td>{{fmt(row.total)}}</td>
                             </tr>
-                            <tr>
+                            <tr v-if="totalSetupCharges > 0">
                                 <td>Setup Charges</td>
                                 <td>—</td>
                                 <td>{{fmt(totalSetupCharges)}}</td>
                             </tr>
-                            <tr>
+                            <tr v-if="shippingCharges > 0">
                                 <td>Shipping &amp; Other</td>
                                 <td>—</td>
-                                <td>{{fmt(shippingCharges || 0)}}</td>
+                                <td>{{fmt(shippingCharges)}}</td>
                             </tr>
                             <tr class="grand-row">
                                 <td>Grand Total</td>
@@ -1421,7 +1586,6 @@
                     </table>
                 </div>
 
-                <!-- Final Heroes -->
                 <div class="final-grid">
                     <div class="final-hero blue-hero">
                         <div class="f-label">Final Price Per Item</div>
@@ -1434,115 +1598,105 @@
                 </div>
             </div>
 
-        </div><!-- /container -->
-    </div><!-- /app -->
+        </div>
+    </div>
 
     <script>
         const { createApp, reactive, ref, computed } = Vue;
 
-        // ═══════════════════════════════════════════════════════════
-        // PRODUCT_DATA  — from Product_Data sheet (updated)
-        // [product, min, max, retail, corporate, reseller]
-        // Tiers now use 1-9 / 10-49 / 50-99 / 100+ breakpoints
-        // ═══════════════════════════════════════════════════════════
+        // ── PRODUCT DATA ─────────────────────────────────────────
+        // From Product_Data sheet — [product, min, max, mrp, retail, corporate, reseller]
+        // MRP is null for Cozy range
         const PRODUCT_DATA = [
-            ['Men Plain Crew Neck', 1, 9, 449, 349, 249],
-            ['Men Plain Crew Neck', 10, 49, 429, 329, 249],
-            ['Men Plain Crew Neck', 50, 99, 399, 299, 249],
-            ['Men Plain Crew Neck', 100, null, 369, 269, 249],
-            ['Men Amid Crew Neck', 1, 9, 499, 399, 299],
-            ['Men Amid Crew Neck', 10, 49, 479, 379, 299],
-            ['Men Amid Crew Neck', 50, 99, 449, 349, 299],
-            ['Men Amid Crew Neck', 100, null, 419, 319, 299],
-            ['Men SoftTouch Crew Neck', 1, 9, 599, 499, 399],
-            ['Men SoftTouch Crew Neck', 10, 49, 579, 479, 399],
-            ['Men SoftTouch Crew Neck', 50, 99, 549, 449, 399],
-            ['Men SoftTouch Crew Neck', 100, null, 519, 419, 399],
-            ['Men SoftTouch Oversized', 1, 9, 699, 599, 499],
-            ['Men SoftTouch Oversized', 10, 49, 679, 579, 499],
-            ['Men SoftTouch Oversized', 50, 99, 649, 549, 499],
-            ['Men SoftTouch Oversized', 100, null, 619, 519, 499],
-            ['Men Brisk Polo', 1, 9, 549, 449, 349],
-            ['Men Brisk Polo', 10, 49, 529, 429, 349],
-            ['Men Brisk Polo', 50, 99, 499, 399, 349],
-            ['Men Brisk Polo', 100, null, 469, 369, 349],
-            ['Men Plain Polo', 1, 9, 599, 499, 399],
-            ['Men Plain Polo', 10, 49, 579, 479, 399],
-            ['Men Plain Polo', 50, 99, 549, 449, 399],
-            ['Men Plain Polo', 100, null, 519, 419, 399],
-            ['Men Performance Polo', 1, 9, 649, 549, 449],
-            ['Men Performance Polo', 10, 49, 629, 529, 449],
-            ['Men Performance Polo', 50, 99, 599, 499, 449],
-            ['Men Performance Polo', 100, null, 569, 469, 449],
-            ['Men Flexi Polo', 1, 9, 699, 599, 499],
-            ['Men Flexi Polo', 10, 49, 679, 579, 499],
-            ['Men Flexi Polo', 50, 99, 649, 549, 499],
-            ['Men Flexi Polo', 100, null, 619, 519, 499],
-            ['Men SoftTouch Polo', 1, 9, 749, 649, 549],
-            ['Men SoftTouch Polo', 10, 49, 729, 629, 549],
-            ['Men SoftTouch Polo', 50, 99, 699, 599, 549],
-            ['Men SoftTouch Polo', 100, null, 669, 569, 549],
-            ['Men Printed Collar SoftTouch Polo', 1, 9, 799, 699, 599],
-            ['Men Printed Collar SoftTouch Polo', 10, 49, 779, 679, 599],
-            ['Men Printed Collar SoftTouch Polo', 50, 99, 749, 649, 599],
-            ['Men Printed Collar SoftTouch Polo', 100, null, 719, 619, 599],
-            ['Men Cozy Hoodie', 1, 9, 499, 424.15, 349.3],
-            ['Men Cozy Hoodie', 10, 49, 449, 381.65, 314.3],
-            ['Men Cozy Hoodie', 50, 99, 399, 339.15, 279.3],
-            ['Men Cozy Hoodie', 100, null, 349, 296.65, 244.3],
-            ['Men Cozy Zipper Hoodie', 1, 9, 499, 424.15, 349.3],
-            ['Men Cozy Zipper Hoodie', 10, 49, 449, 381.65, 314.3],
-            ['Men Cozy Zipper Hoodie', 50, 99, 399, 339.15, 279.3],
-            ['Men Cozy Zipper Hoodie', 100, null, 349, 296.65, 244.3],
-            ['Men Cozy Sweatshirt', 1, 9, 499, 424.15, 349.3],
-            ['Men Cozy Sweatshirt', 10, 49, 449, 381.65, 314.3],
-            ['Men Cozy Sweatshirt', 50, 99, 399, 339.15, 279.3],
-            ['Men Cozy Sweatshirt', 100, null, 349, 296.65, 244.3],
-            ['Men Cozy Varsity Jacket', 1, 9, 499, 424.15, 349.3],
-            ['Men Cozy Varsity Jacket', 10, 49, 449, 381.65, 314.3],
-            ['Men Cozy Varsity Jacket', 50, 99, 399, 339.15, 279.3],
-            ['Men Cozy Varsity Jacket', 100, null, 349, 296.65, 244.3],
-            ['Men Cozy Joggers', 1, 9, 499, 424.15, 349.3],
-            ['Men Cozy Joggers', 10, 49, 449, 381.65, 314.3],
-            ['Men Cozy Joggers', 50, 99, 399, 339.15, 279.3],
-            ['Men Cozy Joggers', 100, null, 349, 296.65, 244.3],
-            ['Men Cozy Shorts', 1, 9, 499, 424.15, 349.3],
-            ['Men Cozy Shorts', 10, 49, 449, 381.65, 314.3],
-            ['Men Cozy Shorts', 50, 99, 399, 339.15, 279.3],
-            ['Men Cozy Shorts', 100, null, 349, 296.65, 244.3],
-            ['Women Plain Crew Neck', 1, 9, 449, 349, 249],
-            ['Women Plain Crew Neck', 10, 49, 429, 329, 249],
-            ['Women Plain Crew Neck', 50, 99, 399, 299, 249],
-            ['Women Plain Crew Neck', 100, null, 369, 269, 249],
-            ['Women Amid Crop Top', 1, 9, 499, 399, 299],
-            ['Women Amid Crop Top', 10, 49, 479, 379, 299],
-            ['Women Amid Crop Top', 50, 99, 449, 349, 299],
-            ['Women Amid Crop Top', 100, null, 419, 319, 299],
-            ['Women Amid Crew Neck', 1, 9, 699, 560, 532],
-            ['Women Amid Crew Neck', 10, 49, 629, 504, 476],
-            ['Women Amid Crew Neck', 50, 99, 615, 493, 465],
-            ['Women Amid Crew Neck', 100, null, 594, 476, 448],
-            ['Women SoftTouch Crew Neck', 1, 9, 699, 560, 532],
-            ['Women SoftTouch Crew Neck', 10, 49, 629, 504, 476],
-            ['Women SoftTouch Crew Neck', 50, 99, 615, 493, 465],
-            ['Women SoftTouch Crew Neck', 100, null, 594, 476, 448],
-            ['Women SoftTouch Oversized', 1, 9, 699, 599, 499],
-            ['Women SoftTouch Oversized', 10, 49, 679, 579, 499],
-            ['Women SoftTouch Oversized', 50, 99, 649, 549, 499],
-            ['Women SoftTouch Oversized', 100, null, 619, 519, 499],
+            ['Men Plain Crew Neck', 1, 9, 649, 449, 349, 249],
+            ['Men Plain Crew Neck', 10, 49, 649, 429, 329, 249],
+            ['Men Plain Crew Neck', 50, 99, 649, 399, 299, 249],
+            ['Men Plain Crew Neck', 100, null, 649, 369, 269, 249],
+            ['Men Amid Crew Neck', 1, 9, 699, 499, 399, 299],
+            ['Men Amid Crew Neck', 10, 49, 699, 479, 379, 299],
+            ['Men Amid Crew Neck', 50, 99, 699, 449, 349, 299],
+            ['Men Amid Crew Neck', 100, null, 699, 419, 319, 299],
+            ['Men SoftTouch Crew Neck', 1, 9, 799, 599, 499, 399],
+            ['Men SoftTouch Crew Neck', 10, 49, 799, 579, 479, 399],
+            ['Men SoftTouch Crew Neck', 50, 99, 799, 549, 449, 399],
+            ['Men SoftTouch Crew Neck', 100, null, 799, 519, 419, 399],
+            ['Men SoftTouch Oversized', 1, 9, 899, 699, 599, 499],
+            ['Men SoftTouch Oversized', 10, 49, 899, 679, 579, 499],
+            ['Men SoftTouch Oversized', 50, 99, 899, 649, 549, 499],
+            ['Men SoftTouch Oversized', 100, null, 899, 619, 519, 499],
+            ['Men Brisk Polo', 1, 9, 749, 549, 449, 349],
+            ['Men Brisk Polo', 10, 49, 749, 529, 429, 349],
+            ['Men Brisk Polo', 50, 99, 749, 499, 399, 349],
+            ['Men Brisk Polo', 100, null, 749, 469, 369, 349],
+            ['Men Plain Polo', 1, 9, 799, 599, 499, 399],
+            ['Men Plain Polo', 10, 49, 799, 579, 479, 399],
+            ['Men Plain Polo', 50, 99, 799, 549, 449, 399],
+            ['Men Plain Polo', 100, null, 799, 519, 419, 399],
+            ['Men Performance Polo', 1, 9, 849, 649, 549, 449],
+            ['Men Performance Polo', 10, 49, 849, 629, 529, 449],
+            ['Men Performance Polo', 50, 99, 849, 599, 499, 449],
+            ['Men Performance Polo', 100, null, 849, 569, 469, 449],
+            ['Men Flexi Polo', 1, 9, 899, 699, 599, 499],
+            ['Men Flexi Polo', 10, 49, 899, 679, 579, 499],
+            ['Men Flexi Polo', 50, 99, 899, 649, 549, 499],
+            ['Men Flexi Polo', 100, null, 899, 619, 519, 499],
+            ['Men SoftTouch Polo', 1, 9, 949, 749, 649, 549],
+            ['Men SoftTouch Polo', 10, 49, 949, 729, 629, 549],
+            ['Men SoftTouch Polo', 50, 99, 949, 699, 599, 549],
+            ['Men SoftTouch Polo', 100, null, 949, 669, 569, 549],
+            ['Men Printed Collar SoftTouch Polo', 1, 9, 999, 799, 699, 599],
+            ['Men Printed Collar SoftTouch Polo', 10, 49, 999, 779, 679, 599],
+            ['Men Printed Collar SoftTouch Polo', 50, 99, 999, 749, 649, 599],
+            ['Men Printed Collar SoftTouch Polo', 100, null, 999, 719, 619, 599],
+            ['Men Cozy Hoodie', 1, 9, null, 499, 424.15, 349.3],
+            ['Men Cozy Hoodie', 10, 49, null, 449, 381.65, 314.3],
+            ['Men Cozy Hoodie', 50, 99, null, 399, 339.15, 279.3],
+            ['Men Cozy Hoodie', 100, null, null, 349, 296.65, 244.3],
+            ['Men Cozy Zipper Hoodie', 1, 9, null, 499, 424.15, 349.3],
+            ['Men Cozy Zipper Hoodie', 10, 49, null, 449, 381.65, 314.3],
+            ['Men Cozy Zipper Hoodie', 50, 99, null, 399, 339.15, 279.3],
+            ['Men Cozy Zipper Hoodie', 100, null, null, 349, 296.65, 244.3],
+            ['Men Cozy Sweatshirt', 1, 9, null, 499, 424.15, 349.3],
+            ['Men Cozy Sweatshirt', 10, 49, null, 449, 381.65, 314.3],
+            ['Men Cozy Sweatshirt', 50, 99, null, 399, 339.15, 279.3],
+            ['Men Cozy Sweatshirt', 100, null, null, 349, 296.65, 244.3],
+            ['Men Cozy Varsity Jacket', 1, 9, null, 499, 424.15, 349.3],
+            ['Men Cozy Varsity Jacket', 10, 49, null, 449, 381.65, 314.3],
+            ['Men Cozy Varsity Jacket', 50, 99, null, 399, 339.15, 279.3],
+            ['Men Cozy Varsity Jacket', 100, null, null, 349, 296.65, 244.3],
+            ['Men Cozy Joggers', 1, 9, null, 499, 424.15, 349.3],
+            ['Men Cozy Joggers', 10, 49, null, 449, 381.65, 314.3],
+            ['Men Cozy Joggers', 50, 99, null, 399, 339.15, 279.3],
+            ['Men Cozy Joggers', 100, null, null, 349, 296.65, 244.3],
+            ['Men Cozy Shorts', 1, 9, null, 499, 424.15, 349.3],
+            ['Men Cozy Shorts', 10, 49, null, 449, 381.65, 314.3],
+            ['Men Cozy Shorts', 50, 99, null, 399, 339.15, 279.3],
+            ['Men Cozy Shorts', 100, null, null, 349, 296.65, 244.3],
+            ['Women Plain Crew Neck', 1, 9, 649, 449, 349, 249],
+            ['Women Plain Crew Neck', 10, 49, 649, 429, 329, 249],
+            ['Women Plain Crew Neck', 50, 99, 649, 399, 299, 249],
+            ['Women Plain Crew Neck', 100, null, 649, 369, 269, 249],
+            ['Women Amid Crop Top', 1, 9, 599, 499, 399, 299],
+            ['Women Amid Crop Top', 10, 49, 599, 479, 379, 299],
+            ['Women Amid Crop Top', 50, 99, 599, 449, 349, 299],
+            ['Women Amid Crop Top', 100, null, 599, 419, 319, 299],
+            ['Women Amid Crew Neck', 1, 9, 899, 699, 560, 532],
+            ['Women Amid Crew Neck', 10, 49, 699, 629, 504, 476],
+            ['Women Amid Crew Neck', 50, 99, 699, 615, 493, 465],
+            ['Women Amid Crew Neck', 100, null, 699, 594, 476, 448],
+            ['Women SoftTouch Crew Neck', 1, 9, 899, 699, 560, 532],
+            ['Women SoftTouch Crew Neck', 10, 49, 699, 629, 504, 476],
+            ['Women SoftTouch Crew Neck', 50, 99, 699, 615, 493, 465],
+            ['Women SoftTouch Crew Neck', 100, null, 699, 594, 476, 448],
+            ['Women SoftTouch Oversized', 1, 9, 899, 699, 599, 499],
+            ['Women SoftTouch Oversized', 10, 49, 899, 679, 579, 499],
+            ['Women SoftTouch Oversized', 50, 99, 899, 649, 549, 499],
+            ['Women SoftTouch Oversized', 100, null, 899, 619, 519, 499],
         ];
 
-        // ═══════════════════════════════════════════════════════════
-        // RATES — from Data sheet (updated)
-        // Key changes:
-        //   • Embroidery (Standard) setup: 200/100/0/0 (was 300/250/200)
-        //   • Embroidery rates now 8/6/5/4 (Standard) and 10/8/6/6 (Coloreel)
-        //   • Loop Label & Hang Tag REMOVED — only Textile Patch remains
-        //   • Textile Patch MOQ = 100
-        // [style, addon, min, max, retail, corporate, reseller]
-        // ═══════════════════════════════════════════════════════════
+        // ── RATES ────────────────────────────────────────────────
+        // From Data sheet — [style, addon, min, max, retail, corporate, reseller]
         const RATES = [
-            // Setup Charges
             ['Setup Charge', 'Screen Print', 1, 9, 1200, 1100, 1000],
             ['Setup Charge', 'Screen Print', 10, 49, 500, 500, 500],
             ['Setup Charge', 'Screen Print', 50, 99, 500, 500, 500],
@@ -1555,7 +1709,6 @@
             ['Setup Charge', 'Embroidery (Coloreel)', 10, 49, 400, 350, 300],
             ['Setup Charge', 'Embroidery (Coloreel)', 50, 99, 400, 350, 300],
             ['Setup Charge', 'Embroidery (Coloreel)', 100, null, 400, 350, 300],
-            // Rates
             ['Rate', 'DTG', 1, 9, 1.2, 1.1, 1],
             ['Rate', 'DTG', 10, 49, 1.2, 1.1, 1],
             ['Rate', 'DTG', 50, 99, 1.2, 1.1, 1],
@@ -1576,17 +1729,19 @@
             ['Rate', 'Embroidery (Coloreel)', 10, 49, 8, 8, 8],
             ['Rate', 'Embroidery (Coloreel)', 50, 99, 6, 6, 6],
             ['Rate', 'Embroidery (Coloreel)', 100, null, 6, 6, 6],
-            ['Rate', 'Textile Patch', 1, 9, 25, 23, 20],
-            ['Rate', 'Textile Patch', 10, 49, 20, 18, 16],
-            ['Rate', 'Textile Patch', 50, 99, 15, 13, 11],
-            ['Rate', 'Textile Patch', 100, null, 10, 8, 6],
         ];
 
-        // ═══════════════════════════════════════════════════════════
-        // COMPLEXITY — from Data!J:K
-        // Used for Embroidery stitch count: Stitches = Area × 1000 × CoverageFactor
-        // Formula: =N*1000*VLOOKUP(Complexity, Data!J1:K5, 2, FALSE)
-        // ═══════════════════════════════════════════════════════════
+        // MOQ per addon type (from Data sheet MOQ rows)
+        const MOQ = {
+            'DTG': 1,
+            'DTF': 1,
+            'Screen Print': 50,
+            'Embroidery (Standard)': 1,
+            'Embroidery (Coloreel)': 1,
+        };
+
+        // ── COMPLEXITY COVERAGE FACTORS ──────────────────────────
+        // From Data!J:K
         const COMPLEXITY = {
             'Light (text/outline)': 0.7,
             'Medium (logo)': 0.85,
@@ -1594,84 +1749,66 @@
             'Patch/Badge Heavy': 1.2,
         };
 
-        // ═══════════════════════════════════════════════════════════
-        // PRODUCT_ADDONS — from Product_Addon sheet (updated)
-        // Removed: Loop Label, Hang Tag
-        // Removed products: Men Plain Crew Neck, Women Plain Crew Neck (not in Product_Addon)
-        // ═══════════════════════════════════════════════════════════
+        // ── PRODUCT → ADDONS MAPPING ─────────────────────────────
+        // From Product_Addon sheet — Textile Patch excluded
         const PRODUCT_ADDONS = {
-            'Men Amid Crew Neck': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Men SoftTouch Crew Neck': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Men SoftTouch Oversized': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Men Brisk Polo': ['DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Men Plain Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Men Performance Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Men Flexi Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Men SoftTouch Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Men Printed Collar SoftTouch Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Men Cozy Hoodie': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Men Cozy Zipper Hoodie': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Men Cozy Sweatshirt': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Men Cozy Varsity Jacket': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Men Cozy Joggers': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Men Cozy Shorts': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Women Amid Crew Neck': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Women SoftTouch Crew Neck': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Women SoftTouch Oversized': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
-            'Women Amid Crop Top': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)', 'Textile Patch'],
+            'Men Plain Crew Neck': [],
+            'Men Amid Crew Neck': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Men SoftTouch Crew Neck': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Men SoftTouch Oversized': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Men Brisk Polo': ['DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Men Plain Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Men Performance Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Men Flexi Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Men SoftTouch Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Men Printed Collar SoftTouch Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Men Cozy Hoodie': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Men Cozy Zipper Hoodie': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Men Cozy Sweatshirt': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Men Cozy Varsity Jacket': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Men Cozy Joggers': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Men Cozy Shorts': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Women Plain Crew Neck': [],
+            'Women Amid Crop Top': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Women Amid Crew Neck': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Women SoftTouch Crew Neck': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
+            'Women SoftTouch Oversized': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
         };
 
         const LOCATIONS = ['FRONT', 'BACK', 'LEFT SLEEVE', 'RIGHT SLEEVE'];
 
         createApp({
             setup() {
-                // ── Theme ──────────────────────────────────────
                 const isDark = ref(false);
                 function toggleTheme() {
                     isDark.value = !isDark.value;
                     document.body.classList.toggle('dark', isDark.value);
                 }
 
-                // ── State ──────────────────────────────────────
                 const customerTypes = ['Retail', 'Corporate', 'Reseller'];
                 const customerType = ref('Retail');
 
-                // Sizes: Row1 = 36,38,40,42,44 | Row2 = 46,48,50,52,54
-                // totalQty = SUM(K2:O2, K5:O5) — both rows combined
-                const sizesRow1 = [36, 38, 40, 42, 44];
-                const sizesRow2 = [46, 48, 50, 52, 54];
-                const sizes = [...sizesRow1, ...sizesRow2];
-
                 const products = Object.keys(PRODUCT_ADDONS);
                 const selectedProduct = ref('');
-                const quantities = reactive({});
-                sizes.forEach(s => quantities[s] = 0);
-
+                const quantity = ref(0);
                 const shippingCharges = ref(0);
                 const addonStates = reactive({});
-
-                // Complexity options from Data!J:K
                 const complexityOptions = Object.keys(COMPLEXITY);
 
-                // ── Computed ───────────────────────────────────
-                const totalQty = computed(() =>
-                    sizes.reduce((sum, s) => sum + (quantities[s] || 0), 0)
-                );
-
                 const step = computed(() => {
-                    if (!selectedProduct.value) return 2;
-                    if (totalQty.value === 0) return 3;
+                    if (!selectedProduct.value) return 1;
+                    if (!quantity.value || quantity.value <= 0) return 3;
                     return 4;
                 });
 
                 function ctIdx() {
-                    return customerType.value === 'Retail' ? 0 : customerType.value === 'Corporate' ? 1 : 2;
+                    return customerType.value === 'Retail' ? 0
+                        : customerType.value === 'Corporate' ? 1 : 2;
                 }
 
                 function lookupRate(style, addon, qty) {
                     const ci = ctIdx();
-                    const rows = RATES.filter(r => r[0] === style && r[1] === addon);
-                    for (const r of rows) {
+                    for (const r of RATES.filter(r => r[0] === style && r[1] === addon)) {
                         const [, , min, max, ret, corp, res] = r;
                         if (qty >= min && (max === null || qty <= max))
                             return [ret, corp, res][ci];
@@ -1679,20 +1816,40 @@
                     return 0;
                 }
 
+                // Base price per item
                 const pricePerItem = computed(() => {
-                    if (!selectedProduct.value || totalQty.value === 0) return 0;
+                    if (!selectedProduct.value || !quantity.value || quantity.value <= 0) return 0;
                     const ci = ctIdx();
                     for (const r of PRODUCT_DATA.filter(r => r[0] === selectedProduct.value)) {
-                        const [, min, max, ret, corp, res] = r;
-                        if (totalQty.value >= min && (max === null || totalQty.value <= max))
+                        const [, min, max, mrp, ret, corp, res] = r;
+                        if (quantity.value >= min && (max === null || quantity.value <= max))
                             return [ret, corp, res][ci];
                     }
                     return 0;
                 });
 
+                // MRP per item
+                const mrpPerItem = computed(() => {
+                    if (!selectedProduct.value || !quantity.value || quantity.value <= 0) return 0;
+                    for (const r of PRODUCT_DATA.filter(r => r[0] === selectedProduct.value)) {
+                        const [, min, max, mrp] = r;
+                        if (quantity.value >= min && (max === null || quantity.value <= max))
+                            return mrp || 0;
+                    }
+                    return 0;
+                });
+
+                // Show MOQ warning if qty < 50 and Screen Print would be relevant
+                const screenPrintMOQWarning = computed(() => {
+                    const addons = PRODUCT_ADDONS[selectedProduct.value] || [];
+                    return addons.includes('Screen Print') && quantity.value > 0 && quantity.value < 50;
+                });
+
+                // Addon locations
                 const addonLocations = computed(() => {
                     if (!selectedProduct.value) return [];
                     const addons = PRODUCT_ADDONS[selectedProduct.value] || [];
+                    if (!addons.length) return [];
                     return LOCATIONS.map(loc => ({ name: loc, addons: addons.map(type => ({ type })) }));
                 });
 
@@ -1700,67 +1857,75 @@
 
                 function getAddonState(loc, type) {
                     const k = addonKey(loc, type);
-                    if (!addonStates[k])
+                    if (!addonStates[k]) {
                         addonStates[k] = reactive({
                             enabled: false,
                             width: 4,
                             height: 4,
                             colours: 1,
-                            // Default complexity = 'Light (text/outline)' (first in Data!J:K)
-                            complexity: 'Light (text/outline)'
+                            complexity: 'Light (text/outline)',
                         });
+                    }
                     return addonStates[k];
                 }
 
                 function isAddonEnabled(loc, type) { return getAddonState(loc, type).enabled; }
-                function toggleAddon(loc, type) { getAddonState(loc, type).enabled ^= 1; }
 
-                function getSetupCharge(type) { return lookupRate('Setup Charge', type, totalQty.value); }
-                function getRate(type) { return lookupRate('Rate', type, totalQty.value); }
+                function toggleAddon(loc, type) {
+                    // Screen Print: enforce MOQ of 50
+                    if (type === 'Screen Print' && quantity.value < MOQ['Screen Print']) return;
+                    const s = getAddonState(loc, type);
+                    s.enabled = !s.enabled;
+                }
+
+                function getSetupCharge(type) { return lookupRate('Setup Charge', type, quantity.value); }
+                function getRate(type) { return lookupRate('Rate', type, quantity.value); }
 
                 function getAddonTotal(loc, type) {
                     const s = getAddonState(loc, type);
                     if (!s.enabled) return 0;
                     const rate = getRate(type);
-                    const w = s.width || 4, h = s.height || 4;
-                    const area = w * h;  // cm²
+                    const w = s.width || 4;
+                    const h = s.height || 4;
+                    const area = w * h; // cm²
 
                     if (type === 'DTG') {
-                        // =IF((N*F)<80, 80, (N*F))
                         return Math.max(80, area * rate);
                     }
                     if (type === 'DTF') {
-                        // =IF((N*F)<40, 40, (N*F))
                         return Math.max(40, area * rate);
                     }
                     if (type === 'Screen Print') {
-                        // =IF((N*F)<20, 20, (N*F))
-                        return Math.max(20, area * rate);
+                        // Rate is per cm² per colour
+                        const cols = s.colours || 1;
+                        return Math.max(20, area * rate * cols);
                     }
                     if (type === 'Embroidery (Standard)') {
-                        // Stitches = N*1000*VLOOKUP(Complexity, Data!J1:K5, 2, FALSE)
-                        // Total = IF(((Stitches/1000)*F)<30, 30, ((Stitches/1000)*F))
                         const cf = COMPLEXITY[s.complexity] || 0.7;
                         const stitches = area * 1000 * cf;
                         return Math.max(30, (stitches / 1000) * rate);
                     }
                     if (type === 'Embroidery (Coloreel)') {
-                        // Same formula as Standard, min = 40
                         const cf = COMPLEXITY[s.complexity] || 0.7;
                         const stitches = area * 1000 * cf;
                         return Math.max(40, (stitches / 1000) * rate);
                     }
-                    // Textile Patch: flat rate per piece
-                    return rate;
+                    return 0;
                 }
 
                 const addonBreakdown = computed(() => {
+                    if (!selectedProduct.value) return [];
                     const rows = [];
-                    for (const loc of LOCATIONS)
+                    for (const loc of LOCATIONS) {
                         for (const type of (PRODUCT_ADDONS[selectedProduct.value] || [])) {
                             const t = getAddonTotal(loc, type);
-                            if (t > 0) rows.push({ label: `${loc} — ${type}`, perItem: t, total: t * totalQty.value });
+                            if (t > 0) rows.push({
+                                label: `${loc} — ${type}`,
+                                perItem: t,
+                                total: t * quantity.value,
+                            });
                         }
+                    }
                     return rows;
                 });
 
@@ -1770,32 +1935,34 @@
 
                 const totalSetupCharges = computed(() => {
                     let total = 0;
-                    for (const loc of LOCATIONS)
+                    for (const loc of LOCATIONS) {
                         for (const type of (PRODUCT_ADDONS[selectedProduct.value] || [])) {
                             const s = getAddonState(loc, type);
                             if (s.enabled) {
                                 const sc = getSetupCharge(type);
-                                // Screen Print: setup × colours; others: flat setup
+                                // Screen Print: setup × colours; others: flat per location
                                 total += type === 'Screen Print' ? sc * (s.colours || 1) : sc;
                             }
                         }
+                    }
                     return total;
                 });
 
                 const grandTotal = computed(() =>
-                    pricePerItem.value * totalQty.value
-                    + totalAddonPerItem.value * totalQty.value
+                    pricePerItem.value * quantity.value
+                    + totalAddonPerItem.value * quantity.value
                     + totalSetupCharges.value
                     + (shippingCharges.value || 0)
                 );
 
                 const finalPricePerItem = computed(() =>
-                    totalQty.value === 0 ? 0 : grandTotal.value / totalQty.value
+                    quantity.value <= 0 ? 0 : grandTotal.value / quantity.value
                 );
 
                 function setCustomerType(ct) { customerType.value = ct; }
 
                 function onProductChange() {
+                    quantity.value = 0;
                     Object.keys(addonStates).forEach(k => delete addonStates[k]);
                 }
 
@@ -1808,14 +1975,14 @@
                 return {
                     isDark, toggleTheme,
                     customerTypes, customerType, setCustomerType,
-                    sizesRow1, sizesRow2, sizes, quantities,
                     products, selectedProduct, onProductChange,
-                    step, totalQty, pricePerItem,
+                    quantity, shippingCharges,
+                    step, pricePerItem, mrpPerItem, screenPrintMOQWarning,
                     addonLocations, complexityOptions,
                     isAddonEnabled, toggleAddon, getAddonState,
                     getSetupCharge, getRate, getAddonTotal,
                     addonBreakdown, totalAddonPerItem, totalSetupCharges,
-                    shippingCharges, grandTotal, finalPricePerItem,
+                    grandTotal, finalPricePerItem,
                     fmt,
                 };
             }
