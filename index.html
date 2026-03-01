@@ -1506,7 +1506,97 @@
         .addon-location:nth-child(4) {
             animation-delay: .20s;
         }
-        
+
+        /* ─── LOCATION PICKER ─── */
+        .loc-picker {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .loc-picker-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-right: 4px;
+            flex-shrink: 0;
+        }
+
+        .loc-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1.5px solid var(--border2);
+            background: var(--surface);
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--text2);
+            transition: border-color .15s, background .15s, color .15s;
+            user-select: none;
+        }
+
+        .loc-chip:has(input:checked) {
+            border-color: var(--yblue);
+            background: var(--yblue-lt);
+            color: var(--yblue);
+        }
+
+        .loc-chip input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border: 1.5px solid var(--border2);
+            border-radius: 4px;
+            background: var(--surface);
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background .15s, border-color .15s;
+            position: relative;
+        }
+
+        .loc-chip input[type="checkbox"]:checked {
+            background: var(--yblue);
+            border-color: var(--yblue);
+        }
+
+        .loc-chip input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 3.5px;
+            width: 4px;
+            height: 7px;
+            border: 2px solid #fff;
+            border-top: none;
+            border-left: none;
+            transform: rotate(45deg);
+        }
+
+        .loc-empty-hint {
+            text-align: center;
+            padding: 28px;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 500;
+            background: var(--surface2);
+            border: 1.5px dashed var(--border2);
+            border-radius: 12px;
+        }
+
     </style>
 </head>
 
@@ -1592,8 +1682,22 @@
             <div class="card" :class="{active: step===4}"
                 v-if="quantity > 0 && selectedProduct && addonLocations.length > 0">
                 <div class="card-title"><span class="num">4</span>Decoration &amp; Add-ons</div>
+                <!-- Location picker -->
+                <div class="loc-picker">
+                    <span class="loc-picker-label">Locations:</span>
+                    <label class="loc-chip" v-for="loc in addonLocations" :key="loc.name">
+                        <input type="checkbox" :checked="enabledLocations[loc.name]" @change="toggleLocation(loc.name)" />
+                        {{loc.name}}
+                    </label>
+                </div>
+
+                <!-- Empty hint when nothing selected -->
+                <div class="loc-empty-hint" v-if="addonLocations.every(l => !enabledLocations[l.name])">
+                    Select a location above to configure decorations
+                </div>
+
                 <div class="addons-section">
-                    <div class="addon-location" v-for="loc in addonLocations" :key="loc.name">
+                    <div class="addon-location" v-for="loc in addonLocations" :key="loc.name" v-show="enabledLocations[loc.name]">
                         <div class="addon-loc-header">{{loc.name}}</div>
                         <div class="addon-rows-wrap">
                             <div class="addon-rows">
@@ -1987,6 +2091,7 @@
                 const quantity = ref(0);
                 const shippingCharges = ref(0);
                 const addonStates = reactive({});
+                const enabledLocations = reactive(Object.fromEntries(LOCATIONS.map(l => [l, false])));
                 const complexityOptions = Object.keys(COMPLEXITY);
 
                 const step = computed(() => {
@@ -2070,6 +2175,18 @@
                     if (type === 'Screen Print' && quantity.value < MOQ['Screen Print']) return;
                     const s = getAddonState(loc, type);
                     s.enabled = !s.enabled;
+                }
+
+                function toggleLocation(loc) {
+                    enabledLocations[loc] = !enabledLocations[loc];
+                    if (!enabledLocations[loc]) {
+                        // Disable all addons for this location when unchecked
+                        const addons = PRODUCT_ADDONS[selectedProduct.value] || [];
+                        for (const type of addons) {
+                            const s = getAddonState(loc, type);
+                            s.enabled = false;
+                        }
+                    }
                 }
 
                 function getSetupCharge(type) { return lookupRate('Setup Charge', type, quantity.value); }
@@ -2158,6 +2275,7 @@
                 function onProductChange() {
                     quantity.value = 0;
                     Object.keys(addonStates).forEach(k => delete addonStates[k]);
+                    LOCATIONS.forEach(l => enabledLocations[l] = false);
                 }
 
                 function fmt(val) {
@@ -2355,7 +2473,7 @@
                     products, selectedProduct, onProductChange,
                     quantity, shippingCharges,
                     step, pricePerItem, mrpPerItem, screenPrintMOQWarning,
-                    addonLocations, complexityOptions,
+                    addonLocations, enabledLocations, toggleLocation, complexityOptions,
                     isAddonEnabled, toggleAddon, getAddonState,
                     getSetupCharge, getRate, getAddonTotal,
                     addonBreakdown, totalAddonPerItem, totalSetupCharges,
