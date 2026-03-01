@@ -756,6 +756,10 @@
             min-width: 0;
         }
 
+        .mobile-label {
+            display: none;
+        }
+
         .info-val {
             font-size: 14px;
             font-weight: 600;
@@ -1267,6 +1271,102 @@
             .tog-label {
                 display: none;
             }
+
+            /* Addon rows → card layout */
+            .addon-rows {
+                min-width: 0;
+                padding: 8px 8px 12px;
+            }
+
+            .addon-row-header  .col-label{
+                /* display: none; */
+                visibility: hidden;
+                height: 0;
+            }
+            
+
+            .addon-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0;
+                padding: 0;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                margin-bottom: 12px;
+                overflow: hidden;
+            }
+
+            .addon-row:last-child {
+                margin-bottom: 0;
+            }
+
+            .addon-type {
+                grid-column: 1 / -1;
+                padding: 10px 12px;
+                background: var(--surface3);
+                border-bottom: 1px solid var(--border);
+                font-size: 15px;
+            }
+
+            .addon-row > .field-group {
+                padding: 8px 12px;
+                border-bottom: 1px solid var(--border);
+                border-right: 1px solid var(--border);
+            }
+
+            .addon-row > .field-group:nth-child(odd) {
+                border-right: 1px solid var(--border);
+            }
+
+            .addon-row > .field-group:nth-child(even) {
+                border-right: none;
+            }
+
+            .mobile-label {
+                display: block;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.6px;
+                text-transform: uppercase;
+                color: var(--text2);
+                margin-bottom: 4px;
+            }
+
+            .addon-placeholder {
+                display: none;
+            }
+
+            .addon-total-cell {
+                grid-column: 1 / -1;
+                background: var(--surface3);
+                border-bottom: none;
+                border-right: none;
+                padding: 10px 12px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .addon-total-cell .mobile-label {
+                margin-bottom: 0;
+                font-size: 12px;
+            }
+
+            body.dark .addon-total-cell {
+                background: var(--surface2);
+            }
+
+            /* Breakdown table → fluid */
+            .breakdown-table {
+                min-width: 0;
+            }
+
+            .breakdown-table td:first-child,
+            .breakdown-table th:first-child {
+                word-break: break-word;
+                white-space: normal;
+            }
         }
 
         /* Mobile */
@@ -1348,6 +1448,31 @@
             .shipping-input {
                 width: 130px;
             }
+
+            /* Tighter addon cards on small phones */
+            .addon-rows {
+                padding: 6px 4px 10px;
+            }
+
+            .addon-type {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+
+            .addon-row > .field-group {
+                padding: 6px 10px;
+            }
+
+            .addon-total-cell {
+                padding: 8px 10px;
+            }
+
+            /* Tighter breakdown table */
+            .breakdown-table th,
+            .breakdown-table td {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
         }
 
         .card:nth-child(1) {
@@ -1381,6 +1506,7 @@
         .addon-location:nth-child(4) {
             animation-delay: .20s;
         }
+        
     </style>
 </head>
 
@@ -1473,7 +1599,7 @@
                             <div class="addon-rows">
 
                                 <!-- Header row labels -->
-                                <div class="addon-row"
+                                <div class="addon-row addon-row-header"
                                     style="padding:4px 6px 2px; border-bottom: 1px solid var(--border);">
                                     <div class="col-label">Add-on</div>
                                     <div class="col-label">Setup</div>
@@ -1498,32 +1624,37 @@
 
                                     <!-- Setup Charge -->
                                     <div class="field-group">
+                                        <span class="mobile-label">Setup</span>
                                         <div class="info-val">{{getSetupCharge(addon.type) > 0 ? '₹' +
                                             getSetupCharge(addon.type) : '—'}}</div>
                                     </div>
 
                                     <!-- Rate -->
                                     <div class="field-group">
+                                        <span class="mobile-label">Rate</span>
                                         <div class="info-val">
                                             ₹{{getRate(addon.type)}}
                                             <span style="font-size:12px;color:var(--muted);font-weight:500;">
-                                                {{addon.type.startsWith('Embroidery') ? '/1k st' : '/cm²'}}
+                                                {{addon.type.startsWith('Embroidery') ? '/1k st' : '/inch'}}
                                             </span>
                                         </div>
                                     </div>
 
                                     <!-- Colours (Screen Print only) -->
                                     <div class="field-group" v-if="addon.type === 'Screen Print'">
+                                        <span class="mobile-label">Colours</span>
                                         <input type="number" class="num-input" min="1"
                                             :disabled="!isAddonEnabled(loc.name, addon.type)"
                                             v-model.number="getAddonState(loc.name, addon.type).colours" />
                                     </div>
-                                    <div v-else class="field-group">
+                                    <div v-else class="field-group addon-placeholder">
+                                        <span class="mobile-label">Colours</span>
                                         <div class="info-val" style="color:var(--muted)">—</div>
                                     </div>
 
                                     <!-- Width -->
                                     <div class="field-group">
+                                        <span class="mobile-label">W (inch)</span>
                                         <input type="number" class="num-input" min="0.1" step="0.1"
                                             :disabled="!isAddonEnabled(loc.name, addon.type)"
                                             v-model.number="getAddonState(loc.name, addon.type).width" />
@@ -1531,6 +1662,7 @@
 
                                     <!-- Height -->
                                     <div class="field-group">
+                                        <span class="mobile-label">H (inch)</span>
                                         <input type="number" class="num-input" min="0.1" step="0.1"
                                             :disabled="!isAddonEnabled(loc.name, addon.type)"
                                             v-model.number="getAddonState(loc.name, addon.type).height" />
@@ -1538,18 +1670,21 @@
 
                                     <!-- Complexity (Embroidery only) -->
                                     <div class="field-group" v-if="addon.type.startsWith('Embroidery')">
+                                        <span class="mobile-label">Complexity</span>
                                         <select class="complexity-select"
                                             :disabled="!isAddonEnabled(loc.name, addon.type)"
                                             v-model="getAddonState(loc.name, addon.type).complexity">
                                             <option v-for="c in complexityOptions" :key="c" :value="c">{{c}}</option>
                                         </select>
                                     </div>
-                                    <div v-else class="field-group">
+                                    <div v-else class="field-group addon-placeholder">
+                                        <span class="mobile-label">Complexity</span>
                                         <div class="info-val" style="color:var(--muted)">—</div>
                                     </div>
 
                                     <!-- Total / item -->
-                                    <div class="field-group">
+                                    <div class="field-group addon-total-cell">
+                                        <span class="mobile-label">Total / item</span>
                                         <div class="info-orange">
                                             {{getAddonTotal(loc.name, addon.type) > 0
                                             ? '₹' + fmt(getAddonTotal(loc.name, addon.type))
@@ -1946,7 +2081,7 @@
                     const rate = getRate(type);
                     const w = s.width || 4;
                     const h = s.height || 4;
-                    const area = w * h; // cm²
+                    const area = w * h; // inch
 
                     if (type === 'DTG') {
                         return Math.max(80, area * rate);
@@ -1955,7 +2090,7 @@
                         return Math.max(40, area * rate);
                     }
                     if (type === 'Screen Print') {
-                        // Rate is per cm² per colour
+                        // Rate is per inch per colour
                         const cols = s.colours || 1;
                         return Math.max(20, area * rate * cols);
                     }
@@ -2164,30 +2299,37 @@
 
                 function exportPDF() {
                     var html = buildEstimationHTML();
-                    var container = document.createElement('div');
-                    container.style.position = 'fixed';
-                    container.style.left = '0';
-                    container.style.top = '0';
-                    container.style.width = '210mm';
-                    container.style.background = '#fff';
-                    container.style.zIndex = '-9999';
-                    container.innerHTML = html;
-                    document.body.appendChild(container);
 
-                    var filename = 'Yoode_Estimate_' + selectedProduct.value.replace(/\s+/g, '_') + '_' + quantity.value + 'pcs.pdf';
+                    var printFrame = document.createElement('iframe');
+                    printFrame.style.position = 'fixed';
+                    printFrame.style.right = '0';
+                    printFrame.style.bottom = '0';
+                    printFrame.style.width = '0';
+                    printFrame.style.height = '0';
+                    printFrame.style.border = 'none';
+                    document.body.appendChild(printFrame);
 
-                    // Wait for layout before capturing
-                    setTimeout(function() {
-                        html2pdf().set({
-                            margin: [10, 10, 10, 10],
-                            filename: filename,
-                            image: { type: 'jpeg', quality: 0.98 },
-                            html2canvas: { scale: 2, useCORS: true, scrollY: 0, windowWidth: 794 },
-                            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                        }).from(container).save().then(function() {
-                            document.body.removeChild(container);
-                        });
-                    }, 300);
+                    var doc = printFrame.contentDocument || printFrame.contentWindow.document;
+                    doc.open();
+                    doc.write('<!DOCTYPE html><html><head><meta charset="utf-8">'
+                        + '<title>Yoode Price Estimation<\/title>'
+                        + '<style>'
+                        + '@page { size: A4; margin: 10mm; }'
+                        + 'body { margin: 0; background: #fff; }'
+                        + '@media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }'
+                        + '<\/style>'
+                        + '<\/head><body>' + html + '<\/body><\/html>');
+                    doc.close();
+
+                    printFrame.onload = function() {
+                        setTimeout(function() {
+                            printFrame.contentWindow.focus();
+                            printFrame.contentWindow.print();
+                            setTimeout(function() {
+                                document.body.removeChild(printFrame);
+                            }, 1000);
+                        }, 300);
+                    };
                 }
 
                 function exportWord() {
