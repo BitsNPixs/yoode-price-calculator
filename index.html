@@ -38,27 +38,27 @@
         }
 
         body.dark {
-            --bg: #0d0e14;
-            --surface: #13151f;
-            --surface2: #1a1c2a;
-            --surface3: #22253a;
-            --border: #272b3f;
-            --border2: #323660;
-            --text: #edeef8;
-            --text2: #a8aacc;
-            --muted: #5d6082;
-            --yblue: #4c5ef5;
-            --yblue-lt: rgba(76, 94, 245, 0.12);
-            --yblue-mid: rgba(76, 94, 245, 0.18);
-            --yorange: #ff7340;
-            --yor-lt: rgba(255, 115, 64, 0.10);
-            --yor-mid: rgba(255, 115, 64, 0.16);
-            --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.35);
-            --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.45);
-            --ring: rgba(76, 94, 245, 0.22);
-            --ring-or: rgba(255, 115, 64, 0.22);
-            --tog-bg: #1e2038;
+            --bg: #0d0f1e;
+            --surface: #141829;
+            --surface2: #1d2240;
+            --surface3: #262c52;
+            --border: #2f3568;
+            --border2: #424d8c;
+            --text: #eef0ff;
+            --text2: #bcc2ec;
+            --muted: #828abf;
+            --yblue: #7080ff;
+            --yblue-lt: rgba(112, 128, 255, 0.14);
+            --yblue-mid: rgba(112, 128, 255, 0.26);
+            --yorange: #ff8c55;
+            --yor-lt: rgba(255, 140, 85, 0.13);
+            --yor-mid: rgba(255, 140, 85, 0.24);
+            --shadow-sm: 0 1px 6px rgba(0, 0, 0, 0.55), 0 2px 12px rgba(0, 0, 0, 0.25);
+            --shadow-md: 0 4px 28px rgba(0, 0, 0, 0.6), 0 1px 6px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 44px rgba(0, 0, 0, 0.7);
+            --ring: rgba(112, 128, 255, 0.32);
+            --ring-or: rgba(255, 140, 85, 0.3);
+            --tog-bg: #1d2240;
         }
 
         * {
@@ -250,7 +250,7 @@
         }
 
         body.dark .tog-track {
-            background: #2a2e50;
+            background: #262c52;
         }
 
         .tog-thumb {
@@ -271,8 +271,8 @@
 
         body.dark .tog-thumb {
             transform: translateX(0);
-            background: #9ba4f5;
-            box-shadow: 0 0 8px rgba(155, 164, 245, .5);
+            background: #8c9aff;
+            box-shadow: 0 0 10px rgba(140, 154, 255, .6);
         }
 
         .tog-icon {
@@ -1179,6 +1179,17 @@
             box-shadow: 0 0 0 3px var(--ring-or);
         }
 
+        .export-btn.wa-btn:hover {
+            background: #e8fdf0;
+            border-color: #25D366;
+            color: #128c4c;
+            box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.22);
+        }
+
+        .export-btn.wa-btn:hover svg {
+            fill: #25D366;
+        }
+
         /* ─── RESPONSIVE ─── */
         /* Large screens — wider layout */
         @media (min-width: 1200px) {
@@ -1278,12 +1289,12 @@
                 padding: 8px 8px 12px;
             }
 
-            .addon-row-header  .col-label{
+            .addon-row-header .col-label {
                 /* display: none; */
                 visibility: hidden;
                 height: 0;
             }
-            
+
 
             .addon-row {
                 display: grid;
@@ -1308,17 +1319,17 @@
                 font-size: 15px;
             }
 
-            .addon-row > .field-group {
+            .addon-row>.field-group {
                 padding: 8px 12px;
                 border-bottom: 1px solid var(--border);
                 border-right: 1px solid var(--border);
             }
 
-            .addon-row > .field-group:nth-child(odd) {
+            .addon-row>.field-group:nth-child(odd) {
                 border-right: 1px solid var(--border);
             }
 
-            .addon-row > .field-group:nth-child(even) {
+            .addon-row>.field-group:nth-child(even) {
                 border-right: none;
             }
 
@@ -1485,7 +1496,7 @@
                 font-size: 14px;
             }
 
-            .addon-row > .field-group {
+            .addon-row>.field-group {
                 padding: 6px 10px;
             }
 
@@ -1622,7 +1633,6 @@
             border: 1.5px dashed var(--border2);
             border-radius: 12px;
         }
-
     </style>
 </head>
 
@@ -1712,7 +1722,8 @@
                 <div class="loc-picker">
                     <span class="loc-picker-label">Locations:</span>
                     <label class="loc-chip" v-for="loc in addonLocations" :key="loc.name">
-                        <input type="checkbox" :checked="enabledLocations[loc.name]" @change="toggleLocation(loc.name)" />
+                        <input type="checkbox" :checked="enabledLocations[loc.name]"
+                            @change="toggleLocation(loc.name)" />
                         {{loc.name}}
                     </label>
                 </div>
@@ -1723,7 +1734,8 @@
                 </div>
 
                 <div class="addons-section">
-                    <div class="addon-location" v-for="loc in addonLocations" :key="loc.name" v-show="enabledLocations[loc.name]">
+                    <div class="addon-location" v-for="loc in addonLocations" :key="loc.name"
+                        v-show="enabledLocations[loc.name]">
                         <div class="addon-loc-header">{{loc.name}}</div>
                         <div class="addon-rows-wrap">
                             <div class="addon-rows">
@@ -1912,12 +1924,32 @@
 
                 <div class="export-row">
                     <button class="export-btn pdf-btn" @click="exportPDF">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                            <line x1="12" y1="18" x2="12" y2="12" />
+                            <polyline points="9 15 12 18 15 15" />
+                        </svg>
                         Export PDF
                     </button>
                     <button class="export-btn word-btn" @click="exportWord">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                            <line x1="16" y1="13" x2="8" y2="13" />
+                            <line x1="16" y1="17" x2="8" y2="17" />
+                            <polyline points="10 9 9 9 8 9" />
+                        </svg>
                         Export Word
+                    </button>
+                    <button class="export-btn wa-btn" @click="shareWhatsApp">
+                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        </svg>
+                        Share via WhatsApp
                     </button>
                 </div>
             </div>
@@ -2465,15 +2497,46 @@
                         + '<\/head><body>' + html + '<\/body><\/html>');
                     doc.close();
 
-                    printFrame.onload = function() {
-                        setTimeout(function() {
+                    printFrame.onload = function () {
+                        setTimeout(function () {
                             printFrame.contentWindow.focus();
                             printFrame.contentWindow.print();
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 document.body.removeChild(printFrame);
                             }, 1000);
                         }, 300);
                     };
+                }
+
+                function shareWhatsApp() {
+                    var rs = '\u20B9';
+                    var today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+                    var lines = [];
+                    lines.push('*YOODE Price Estimate* \u2014 ' + today);
+                    lines.push('\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500');
+                    lines.push('*Product:* ' + selectedProduct.value);
+                    lines.push('*Customer Type:* ' + customerType.value);
+                    lines.push('*Quantity:* ' + quantity.value + ' pcs');
+                    lines.push('*Base Price / Item:* ' + rs + fmt(pricePerItem.value));
+                    if (addonBreakdown.value.length > 0) {
+                        lines.push('\n*Add-on Breakdown:*');
+                        for (var i = 0; i < addonBreakdown.value.length; i++) {
+                            var row = addonBreakdown.value[i];
+                            lines.push('  \u2022 ' + row.label + ': ' + rs + fmt(row.perItem) + '/item (' + rs + fmt(row.total) + ' total)');
+                        }
+                    }
+                    if (totalSetupCharges.value > 0) {
+                        lines.push('*Setup Charges:* ' + rs + fmt(totalSetupCharges.value));
+                    }
+                    if (shippingCharges.value > 0) {
+                        lines.push('*Shipping & Other:* ' + rs + fmt(shippingCharges.value));
+                    }
+                    lines.push('\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500');
+                    lines.push('*Final Price / Item:* ' + rs + fmt(finalPricePerItem.value));
+                    lines.push('*Grand Total:* ' + rs + fmt(grandTotal.value));
+                    lines.push('\n_Generated by Yoode Price Estimator_');
+                    var text = lines.join('\n');
+                    window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
                 }
 
                 function exportWord() {
@@ -2504,7 +2567,7 @@
                     getSetupCharge, getRate, getAddonTotal,
                     addonBreakdown, totalAddonPerItem, totalSetupCharges,
                     grandTotal, finalPricePerItem,
-                    fmt, exportPDF, exportWord,
+                    fmt, exportPDF, exportWord, shareWhatsApp,
                 };
             }
         }).mount('#app');
