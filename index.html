@@ -427,7 +427,7 @@
         }
 
         .seg-btn {
-            padding: 10px 30px;
+            padding: 10px 24px;
             border-radius: 9px;
             border: none;
             background: transparent;
@@ -463,7 +463,7 @@
             outline: none;
             cursor: pointer;
             width: 100%;
-            max-width: 480px;
+            max-width: 560px;
             transition: border-color .2s, box-shadow .2s, background .4s;
             -webkit-appearance: none;
             appearance: none;
@@ -599,47 +599,6 @@
             line-height: 1;
         }
 
-        /* ─── WARNING / NOTICE ─── */
-        .warning {
-            margin-top: 14px;
-            background: var(--yor-lt);
-            border: 1.5px solid var(--ring-or);
-            border-radius: 10px;
-            padding: 12px 16px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--yorange);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .warning::before {
-            content: '⚠';
-            font-size: 16px;
-            flex-shrink: 0;
-        }
-
-        .moq-notice {
-            margin-top: 14px;
-            background: var(--yblue-lt);
-            border: 1.5px solid var(--ring);
-            border-radius: 10px;
-            padding: 12px 16px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--yblue);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .moq-notice::before {
-            content: 'ℹ';
-            font-size: 16px;
-            flex-shrink: 0;
-        }
-
         /* ─── ADDONS ─── */
         .addons-section {
             display: flex;
@@ -684,7 +643,6 @@
             flex-shrink: 0;
         }
 
-        /* Scrollable addon table wrapper */
         .addon-rows-wrap {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -701,13 +659,13 @@
 
         .addon-rows {
             padding: 4px 16px 16px;
-            min-width: 900px;
+            min-width: 820px;
         }
 
-        /* Fixed column widths that won't collapse */
+        /* Adjusted grid: removed colours col, added fabric colour col for DTG */
         .addon-row {
             display: grid;
-            grid-template-columns: 210px 90px 120px 76px 76px 76px 152px 115px;
+            grid-template-columns: 220px 90px 130px 100px 76px 76px 152px 115px;
             gap: 8px;
             align-items: center;
             padding: 12px 8px;
@@ -847,7 +805,7 @@
             cursor: not-allowed;
         }
 
-        /* ─── COMPLEXITY SELECT ─── */
+        /* ─── COMPLEXITY / FABRIC COLOUR SELECT ─── */
         .complexity-select {
             background: var(--surface);
             border: 1.5px solid var(--border);
@@ -1190,360 +1148,6 @@
             fill: #25D366;
         }
 
-        /* ─── RESPONSIVE ─── */
-        /* Large screens — wider layout */
-        @media (min-width: 1200px) {
-            .container {
-                padding: 40px 60px 80px;
-            }
-
-            .addon-row {
-                grid-template-columns: 230px 100px 130px 82px 82px 82px 162px 125px;
-            }
-        }
-
-        /* Medium screens */
-        @media (max-width: 1024px) {
-            .container {
-                padding: 28px 28px 70px;
-            }
-
-            .header {
-                padding: 0 24px;
-            }
-        }
-
-        /* Tablet */
-        @media (max-width: 768px) {
-            .header {
-                padding: 0 16px;
-                height: auto;
-                min-height: 64px;
-                flex-wrap: wrap;
-                padding-top: 8px;
-                padding-bottom: 8px;
-                gap: 10px;
-            }
-
-            .step-trail {
-                margin-left: 0;
-                order: 3;
-                width: 100%;
-                justify-content: center;
-                padding-bottom: 4px;
-            }
-
-            .container {
-                padding: 20px 16px 60px;
-            }
-
-            .card {
-                padding: 20px 18px;
-            }
-
-            .summary-card {
-                padding: 20px 18px;
-            }
-
-            .card-title {
-                font-size: 16px;
-            }
-
-            .kpi-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .kpi-val {
-                font-size: 28px;
-            }
-
-            .final-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .final-hero .f-val {
-                font-size: 30px;
-            }
-
-            .qty-wrap {
-                gap: 12px;
-            }
-
-            .qty-input-large {
-                width: 140px;
-                font-size: 24px;
-            }
-
-            .seg-btn {
-                padding: 9px 18px;
-                font-size: 13px;
-            }
-
-            .tog-label {
-                display: none;
-            }
-
-            /* Addon rows → card layout */
-            .addon-rows {
-                min-width: 0;
-                padding: 8px 8px 12px;
-            }
-
-            .addon-row-header .col-label {
-                /* display: none; */
-                visibility: hidden;
-                height: 0;
-            }
-
-
-            .addon-row {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 0;
-                padding: 0;
-                border: 1px solid var(--border);
-                border-radius: 10px;
-                margin-bottom: 12px;
-                overflow: hidden;
-            }
-
-            .addon-row:last-child {
-                margin-bottom: 0;
-            }
-
-            .addon-type {
-                grid-column: 1 / -1;
-                padding: 10px 12px;
-                background: var(--surface3);
-                border-bottom: 1px solid var(--border);
-                font-size: 15px;
-            }
-
-            .addon-row>.field-group {
-                padding: 8px 12px;
-                border-bottom: 1px solid var(--border);
-                border-right: 1px solid var(--border);
-            }
-
-            .addon-row>.field-group:nth-child(odd) {
-                border-right: 1px solid var(--border);
-            }
-
-            .addon-row>.field-group:nth-child(even) {
-                border-right: none;
-            }
-
-            .mobile-label {
-                display: block;
-                font-size: 11px;
-                font-weight: 700;
-                letter-spacing: 0.6px;
-                text-transform: uppercase;
-                color: var(--text2);
-                margin-bottom: 4px;
-            }
-
-            .addon-placeholder {
-                display: none;
-            }
-
-            .addon-total-cell {
-                grid-column: 1 / -1;
-                background: var(--surface3);
-                border-bottom: none;
-                border-right: none;
-                padding: 10px 12px;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-            }
-
-            .addon-total-cell .mobile-label {
-                margin-bottom: 0;
-                font-size: 12px;
-            }
-
-            body.dark .addon-total-cell {
-                background: var(--surface2);
-            }
-
-            /* Breakdown table → fluid */
-            .breakdown-table {
-                min-width: 0;
-            }
-
-            .breakdown-table td:first-child,
-            .breakdown-table th:first-child {
-                word-break: break-word;
-                white-space: normal;
-            }
-        }
-
-        /* Mobile */
-        @media (max-width: 480px) {
-            .header {
-                padding: 8px 12px;
-                gap: 8px;
-            }
-
-            .header-logo {
-                font-size: 18px;
-            }
-
-            .header-sub {
-                font-size: 10px;
-                letter-spacing: 1px;
-            }
-
-            .container {
-                padding: 14px 12px 50px;
-            }
-
-            .card {
-                padding: 16px 14px;
-            }
-
-            .summary-card {
-                padding: 16px 14px;
-            }
-
-            .kpi-grid {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-
-            .final-grid {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-
-            .kpi-val {
-                font-size: 32px;
-            }
-
-            .final-hero .f-val {
-                font-size: 34px;
-            }
-
-            .qty-wrap {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .qty-input-large {
-                width: 100%;
-            }
-
-            .qty-info-box,
-            .mrp-box {
-                min-width: unset;
-                width: 100%;
-            }
-
-            .custom-select {
-                max-width: 100%;
-            }
-
-            .seg-ctrl {
-                width: 100%;
-            }
-
-            .seg-btn {
-                flex: 1;
-                padding: 10px 10px;
-                font-size: 13px;
-                text-align: center;
-            }
-
-            .shipping-input {
-                width: 130px;
-            }
-
-            /* Compact location picker on small phones */
-            .loc-picker {
-                gap: 6px;
-                padding: 8px 10px;
-                margin-bottom: 12px;
-            }
-
-            .loc-picker-label {
-                font-size: 10px;
-                width: 100%;
-                margin-right: 0;
-                margin-bottom: 2px;
-            }
-
-            .loc-chip {
-                padding: 4px 10px;
-                font-size: 10px;
-                letter-spacing: 0.8px;
-                gap: 5px;
-            }
-
-            .loc-chip input[type="checkbox"] {
-                width: 12px;
-                height: 12px;
-            }
-
-            /* Tighter addon cards on small phones */
-            .addon-rows {
-                padding: 6px 4px 10px;
-            }
-
-            .addon-type {
-                padding: 8px 10px;
-                font-size: 14px;
-            }
-
-            .addon-row>.field-group {
-                padding: 6px 10px;
-            }
-
-            .addon-total-cell {
-                padding: 8px 10px;
-            }
-
-            /* Tighter breakdown table */
-            .breakdown-table th,
-            .breakdown-table td {
-                padding: 8px 10px;
-                font-size: 13px;
-            }
-        }
-
-        .card:nth-child(1) {
-            animation-delay: .05s;
-        }
-
-        .card:nth-child(2) {
-            animation-delay: .10s;
-        }
-
-        .card:nth-child(3) {
-            animation-delay: .15s;
-        }
-
-        .card:nth-child(4) {
-            animation-delay: .20s;
-        }
-
-        .addon-location:nth-child(1) {
-            animation-delay: .05s;
-        }
-
-        .addon-location:nth-child(2) {
-            animation-delay: .10s;
-        }
-
-        .addon-location:nth-child(3) {
-            animation-delay: .15s;
-        }
-
-        .addon-location:nth-child(4) {
-            animation-delay: .20s;
-        }
-
         /* ─── LOCATION PICKER ─── */
         .loc-picker {
             display: flex;
@@ -1633,6 +1237,350 @@
             border: 1.5px dashed var(--border2);
             border-radius: 12px;
         }
+
+        /* ─── RESPONSIVE ─── */
+        @media (min-width: 1200px) {
+            .container {
+                padding: 40px 60px 80px;
+            }
+
+            .addon-row {
+                grid-template-columns: 240px 100px 140px 110px 82px 82px 162px 125px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                padding: 28px 28px 70px;
+            }
+
+            .header {
+                padding: 0 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 16px;
+                height: auto;
+                min-height: 64px;
+                flex-wrap: wrap;
+                padding-top: 8px;
+                padding-bottom: 8px;
+                gap: 10px;
+            }
+
+            .step-trail {
+                margin-left: 0;
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                padding-bottom: 4px;
+            }
+
+            .container {
+                padding: 20px 16px 60px;
+            }
+
+            .card {
+                padding: 20px 18px;
+            }
+
+            .summary-card {
+                padding: 20px 18px;
+            }
+
+            .card-title {
+                font-size: 16px;
+            }
+
+            .kpi-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .kpi-val {
+                font-size: 28px;
+            }
+
+            .final-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .final-hero .f-val {
+                font-size: 30px;
+            }
+
+            .qty-wrap {
+                gap: 12px;
+            }
+
+            .qty-input-large {
+                width: 140px;
+                font-size: 24px;
+            }
+
+            .seg-btn {
+                padding: 9px 14px;
+                font-size: 13px;
+            }
+
+            .tog-label {
+                display: none;
+            }
+
+            /* Addon rows card layout */
+            .addon-rows {
+                min-width: 0;
+                padding: 8px 8px 12px;
+            }
+
+            .addon-row-header .col-label {
+                visibility: hidden;
+                height: 0;
+            }
+
+            .addon-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0;
+                padding: 0;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                margin-bottom: 12px;
+                overflow: hidden;
+            }
+
+            .addon-row:last-child {
+                margin-bottom: 0;
+            }
+
+            .addon-type {
+                grid-column: 1 / -1;
+                padding: 10px 12px;
+                background: var(--surface3);
+                border-bottom: 1px solid var(--border);
+                font-size: 15px;
+            }
+
+            .addon-row>.field-group {
+                padding: 8px 12px;
+                border-bottom: 1px solid var(--border);
+                border-right: 1px solid var(--border);
+            }
+
+            .addon-row>.field-group:nth-child(odd) {
+                border-right: 1px solid var(--border);
+            }
+
+            .addon-row>.field-group:nth-child(even) {
+                border-right: none;
+            }
+
+            .mobile-label {
+                display: block;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.6px;
+                text-transform: uppercase;
+                color: var(--text2);
+                margin-bottom: 4px;
+            }
+
+            .addon-placeholder {
+                display: none;
+            }
+
+            .addon-total-cell {
+                grid-column: 1 / -1;
+                background: var(--surface3);
+                border-bottom: none;
+                border-right: none;
+                padding: 10px 12px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .addon-total-cell .mobile-label {
+                margin-bottom: 0;
+                font-size: 12px;
+            }
+
+            body.dark .addon-total-cell {
+                background: var(--surface2);
+            }
+
+            .breakdown-table {
+                min-width: 0;
+            }
+
+            .breakdown-table td:first-child,
+            .breakdown-table th:first-child {
+                word-break: break-word;
+                white-space: normal;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 8px 12px;
+                gap: 8px;
+            }
+
+            .header-logo {
+                font-size: 18px;
+            }
+
+            .header-sub {
+                font-size: 10px;
+                letter-spacing: 1px;
+            }
+
+            .container {
+                padding: 14px 12px 50px;
+            }
+
+            .card {
+                padding: 16px 14px;
+            }
+
+            .summary-card {
+                padding: 16px 14px;
+            }
+
+            .kpi-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .final-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .kpi-val {
+                font-size: 32px;
+            }
+
+            .final-hero .f-val {
+                font-size: 34px;
+            }
+
+            .qty-wrap {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .qty-input-large {
+                width: 100%;
+            }
+
+            .qty-info-box,
+            .mrp-box {
+                min-width: unset;
+                width: 100%;
+            }
+
+            .custom-select {
+                max-width: 100%;
+            }
+
+            .seg-ctrl {
+                width: 100%;
+            }
+
+            .seg-btn {
+                flex: 1;
+                padding: 10px 8px;
+                font-size: 12px;
+                text-align: center;
+            }
+
+            .shipping-input {
+                width: 130px;
+            }
+
+            .loc-picker {
+                gap: 6px;
+                padding: 8px 10px;
+                margin-bottom: 12px;
+            }
+
+            .loc-picker-label {
+                font-size: 10px;
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 2px;
+            }
+
+            .loc-chip {
+                padding: 4px 10px;
+                font-size: 10px;
+                letter-spacing: 0.8px;
+                gap: 5px;
+            }
+
+            .loc-chip input[type="checkbox"] {
+                width: 12px;
+                height: 12px;
+            }
+
+            .addon-rows {
+                padding: 6px 4px 10px;
+            }
+
+            .addon-type {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+
+            .addon-row>.field-group {
+                padding: 6px 10px;
+            }
+
+            .addon-total-cell {
+                padding: 8px 10px;
+            }
+
+            .breakdown-table th,
+            .breakdown-table td {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+        }
+
+        .card:nth-child(1) {
+            animation-delay: .05s;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: .10s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: .15s;
+        }
+
+        .card:nth-child(4) {
+            animation-delay: .20s;
+        }
+
+        .addon-location:nth-child(1) {
+            animation-delay: .05s;
+        }
+
+        .addon-location:nth-child(2) {
+            animation-delay: .10s;
+        }
+
+        .addon-location:nth-child(3) {
+            animation-delay: .15s;
+        }
+
+        .addon-location:nth-child(4) {
+            animation-delay: .20s;
+        }
     </style>
 </head>
 
@@ -1699,18 +1647,12 @@
                     <div class="qty-info-box" v-if="pricePerItem > 0">
                         <div class="qty-info-label">Price / Piece</div>
                         <div class="qty-info-val">₹{{fmt(pricePerItem)}}</div>
-                        <div class="qty-info-sub">Volume price for {{quantity}} pcs</div>
+                        <div class="qty-info-sub">{{customerType}} price</div>
                     </div>
                     <div class="mrp-box" v-if="mrpPerItem > 0">
                         <div class="mrp-label">MRP</div>
                         <div class="mrp-val">₹{{fmt(mrpPerItem)}}</div>
                     </div>
-                </div>
-                <div class="warning" v-if="pricePerItem === 0 && quantity > 0">
-                    No pricing tier found for this product &amp; quantity.
-                </div>
-                <div class="moq-notice" v-if="screenPrintMOQWarning">
-                    Screen Print requires a minimum order of 50 pieces.
                 </div>
             </div>
 
@@ -1718,6 +1660,7 @@
             <div class="card" :class="{active: step===4}"
                 v-if="quantity > 0 && selectedProduct && addonLocations.length > 0">
                 <div class="card-title"><span class="num">4</span>Decoration &amp; Add-ons</div>
+
                 <!-- Location picker -->
                 <div class="loc-picker">
                     <span class="loc-picker-label">Locations:</span>
@@ -1728,7 +1671,6 @@
                     </label>
                 </div>
 
-                <!-- Empty hint when nothing selected -->
                 <div class="loc-empty-hint" v-if="addonLocations.every(l => !enabledLocations[l.name])">
                     Select a location above to configure decorations
                 </div>
@@ -1740,13 +1682,13 @@
                         <div class="addon-rows-wrap">
                             <div class="addon-rows">
 
-                                <!-- Header row labels -->
+                                <!-- Header row -->
                                 <div class="addon-row addon-row-header"
                                     style="padding:4px 6px 2px; border-bottom: 1px solid var(--border);">
                                     <div class="col-label">Add-on</div>
                                     <div class="col-label">Setup</div>
                                     <div class="col-label">Rate</div>
-                                    <div class="col-label">Colours</div>
+                                    <div class="col-label">Fabric Colour</div>
                                     <div class="col-label">W (inch)</div>
                                     <div class="col-label">H (inch)</div>
                                     <div class="col-label">Complexity</div>
@@ -1767,30 +1709,34 @@
                                     <!-- Setup Charge -->
                                     <div class="field-group">
                                         <span class="mobile-label">Setup</span>
-                                        <div class="info-val">{{getSetupCharge(addon.type) > 0 ? '₹' +
-                                            getSetupCharge(addon.type) : '—'}}</div>
+                                        <div class="info-val">
+                                            {{getSetupCharge(addon.type) > 0 ? '₹' + getSetupCharge(addon.type) : '—'}}
+                                        </div>
                                     </div>
 
                                     <!-- Rate -->
                                     <div class="field-group">
                                         <span class="mobile-label">Rate</span>
                                         <div class="info-val">
-                                            ₹{{getRate(addon.type)}}
+                                            ₹{{getRate(loc.name, addon.type)}}
                                             <span style="font-size:12px;color:var(--muted);font-weight:500;">
-                                                {{addon.type.startsWith('Embroidery') ? '/1k st' : '/inch'}}
+                                                {{addon.type.startsWith('Embroidery') ? '/1k st' : '/sq.in'}}
                                             </span>
                                         </div>
                                     </div>
 
-                                    <!-- Colours (Screen Print only) -->
-                                    <div class="field-group" v-if="addon.type === 'Screen Print'">
-                                        <span class="mobile-label">Colours</span>
-                                        <input type="number" class="num-input" min="1"
+                                    <!-- Fabric Colour (DTG only) -->
+                                    <div class="field-group" v-if="addon.type === 'DTG'">
+                                        <span class="mobile-label">Fabric Colour</span>
+                                        <select class="complexity-select"
                                             :disabled="!isAddonEnabled(loc.name, addon.type)"
-                                            v-model.number="getAddonState(loc.name, addon.type).colours" />
+                                            v-model="getAddonState(loc.name, addon.type).fabricColour">
+                                            <option v-for="fc in fabricColourOptions" :key="fc" :value="fc">{{fc}}
+                                            </option>
+                                        </select>
                                     </div>
                                     <div v-else class="field-group addon-placeholder">
-                                        <span class="mobile-label">Colours</span>
+                                        <span class="mobile-label">Fabric Colour</span>
                                         <div class="info-val" style="color:var(--muted)">—</div>
                                     </div>
 
@@ -1838,14 +1784,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- No addons notice -->
-            <div class="card" v-if="quantity > 0 && selectedProduct && addonLocations.length === 0"
-                style="background: var(--surface2);">
-                <div style="color: var(--muted); font-size: 14px; font-weight: 500;">
-                    ℹ No decoration add-ons available for this product.
                 </div>
             </div>
 
@@ -1960,144 +1898,156 @@
     <script>
         const { createApp, reactive, ref, computed } = Vue;
 
-        // ── PRODUCT DATA ─────────────────────────────────────────
-        // From Product_Data sheet — [product, min, max, mrp, retail, corporate, reseller]
-        // MRP is null for Cozy range
+        // ── PRODUCT DATA ──────────────────────────────────────────────────────────
+        // [product_name, mrp, retail, corporate, special_corporate, dropshipper]
+        // Single flat price per product — no quantity tiers
         const PRODUCT_DATA = [
-            ['Men Plain Crew Neck', 1, 9, 649, 449, 349, 249],
-            ['Men Plain Crew Neck', 10, 49, 649, 429, 329, 249],
-            ['Men Plain Crew Neck', 50, 99, 649, 399, 299, 249],
-            ['Men Plain Crew Neck', 100, null, 649, 369, 269, 249],
-            ['Men Amid Crew Neck', 1, 9, 699, 499, 399, 299],
-            ['Men Amid Crew Neck', 10, 49, 699, 479, 379, 299],
-            ['Men Amid Crew Neck', 50, 99, 699, 449, 349, 299],
-            ['Men Amid Crew Neck', 100, null, 699, 419, 319, 299],
-            ['Men SoftTouch Crew Neck', 1, 9, 799, 599, 499, 399],
-            ['Men SoftTouch Crew Neck', 10, 49, 799, 579, 479, 399],
-            ['Men SoftTouch Crew Neck', 50, 99, 799, 549, 449, 399],
-            ['Men SoftTouch Crew Neck', 100, null, 799, 519, 419, 399],
-            ['Men SoftTouch Oversized', 1, 9, 899, 699, 599, 499],
-            ['Men SoftTouch Oversized', 10, 49, 899, 679, 579, 499],
-            ['Men SoftTouch Oversized', 50, 99, 899, 649, 549, 499],
-            ['Men SoftTouch Oversized', 100, null, 899, 619, 519, 499],
-            ['Men Brisk Polo', 1, 9, 749, 549, 449, 349],
-            ['Men Brisk Polo', 10, 49, 749, 529, 429, 349],
-            ['Men Brisk Polo', 50, 99, 749, 499, 399, 349],
-            ['Men Brisk Polo', 100, null, 749, 469, 369, 349],
-            ['Men Plain Polo', 1, 9, 799, 599, 499, 399],
-            ['Men Plain Polo', 10, 49, 799, 579, 479, 399],
-            ['Men Plain Polo', 50, 99, 799, 549, 449, 399],
-            ['Men Plain Polo', 100, null, 799, 519, 419, 399],
-            ['Men Performance Polo', 1, 9, 849, 649, 549, 449],
-            ['Men Performance Polo', 10, 49, 849, 629, 529, 449],
-            ['Men Performance Polo', 50, 99, 849, 599, 499, 449],
-            ['Men Performance Polo', 100, null, 849, 569, 469, 449],
-            ['Men Flexi Polo', 1, 9, 899, 699, 599, 499],
-            ['Men Flexi Polo', 10, 49, 899, 679, 579, 499],
-            ['Men Flexi Polo', 50, 99, 899, 649, 549, 499],
-            ['Men Flexi Polo', 100, null, 899, 619, 519, 499],
-            ['Men SoftTouch Polo', 1, 9, 949, 749, 649, 549],
-            ['Men SoftTouch Polo', 10, 49, 949, 729, 629, 549],
-            ['Men SoftTouch Polo', 50, 99, 949, 699, 599, 549],
-            ['Men SoftTouch Polo', 100, null, 949, 669, 569, 549],
-            ['Men Printed Collar SoftTouch Polo', 1, 9, 999, 799, 699, 599],
-            ['Men Printed Collar SoftTouch Polo', 10, 49, 999, 779, 679, 599],
-            ['Men Printed Collar SoftTouch Polo', 50, 99, 999, 749, 649, 599],
-            ['Men Printed Collar SoftTouch Polo', 100, null, 999, 719, 619, 599],
-            ['Men Cozy Hoodie', 1, 9, null, 499, 424.15, 349.3],
-            ['Men Cozy Hoodie', 10, 49, null, 449, 381.65, 314.3],
-            ['Men Cozy Hoodie', 50, 99, null, 399, 339.15, 279.3],
-            ['Men Cozy Hoodie', 100, null, null, 349, 296.65, 244.3],
-            ['Men Cozy Zipper Hoodie', 1, 9, null, 499, 424.15, 349.3],
-            ['Men Cozy Zipper Hoodie', 10, 49, null, 449, 381.65, 314.3],
-            ['Men Cozy Zipper Hoodie', 50, 99, null, 399, 339.15, 279.3],
-            ['Men Cozy Zipper Hoodie', 100, null, null, 349, 296.65, 244.3],
-            ['Men Cozy Sweatshirt', 1, 9, null, 499, 424.15, 349.3],
-            ['Men Cozy Sweatshirt', 10, 49, null, 449, 381.65, 314.3],
-            ['Men Cozy Sweatshirt', 50, 99, null, 399, 339.15, 279.3],
-            ['Men Cozy Sweatshirt', 100, null, null, 349, 296.65, 244.3],
-            ['Men Cozy Varsity Jacket', 1, 9, null, 499, 424.15, 349.3],
-            ['Men Cozy Varsity Jacket', 10, 49, null, 449, 381.65, 314.3],
-            ['Men Cozy Varsity Jacket', 50, 99, null, 399, 339.15, 279.3],
-            ['Men Cozy Varsity Jacket', 100, null, null, 349, 296.65, 244.3],
-            ['Men Cozy Joggers', 1, 9, null, 499, 424.15, 349.3],
-            ['Men Cozy Joggers', 10, 49, null, 449, 381.65, 314.3],
-            ['Men Cozy Joggers', 50, 99, null, 399, 339.15, 279.3],
-            ['Men Cozy Joggers', 100, null, null, 349, 296.65, 244.3],
-            ['Men Cozy Shorts', 1, 9, null, 499, 424.15, 349.3],
-            ['Men Cozy Shorts', 10, 49, null, 449, 381.65, 314.3],
-            ['Men Cozy Shorts', 50, 99, null, 399, 339.15, 279.3],
-            ['Men Cozy Shorts', 100, null, null, 349, 296.65, 244.3],
-            ['Women Plain Crew Neck', 1, 9, 649, 449, 349, 249],
-            ['Women Plain Crew Neck', 10, 49, 649, 429, 329, 249],
-            ['Women Plain Crew Neck', 50, 99, 649, 399, 299, 249],
-            ['Women Plain Crew Neck', 100, null, 649, 369, 269, 249],
-            ['Women Amid Crop Top', 1, 9, 599, 499, 399, 299],
-            ['Women Amid Crop Top', 10, 49, 599, 479, 379, 299],
-            ['Women Amid Crop Top', 50, 99, 599, 449, 349, 299],
-            ['Women Amid Crop Top', 100, null, 599, 419, 319, 299],
-            ['Women Amid Crew Neck', 1, 9, 899, 699, 560, 532],
-            ['Women Amid Crew Neck', 10, 49, 699, 629, 504, 476],
-            ['Women Amid Crew Neck', 50, 99, 699, 615, 493, 465],
-            ['Women Amid Crew Neck', 100, null, 699, 594, 476, 448],
-            ['Women SoftTouch Crew Neck', 1, 9, 899, 699, 560, 532],
-            ['Women SoftTouch Crew Neck', 10, 49, 699, 629, 504, 476],
-            ['Women SoftTouch Crew Neck', 50, 99, 699, 615, 493, 465],
-            ['Women SoftTouch Crew Neck', 100, null, 699, 594, 476, 448],
-            ['Women SoftTouch Oversized', 1, 9, 899, 699, 599, 499],
-            ['Women SoftTouch Oversized', 10, 49, 899, 679, 579, 499],
-            ['Women SoftTouch Oversized', 50, 99, 899, 649, 549, 499],
-            ['Women SoftTouch Oversized', 100, null, 899, 619, 519, 499],
+            ["Men's Crew Neck Set-in Half Sleeve T-Shirt - Single Jersey 180 GSM", 480, 340, 320, 290, 270],
+            ["Men's Crew Neck Raglan Full Sleeve T-Shirt - Single Jersey 180 GSM", 590, 420, 390, 360, 330],
+            ["Men's Crew Neck Set-in Half Sleeve T-Shirt - Interlock 220 GSM", 660, 470, 430, 400, 370],
+            ["Men's Crew Neck Raglan Full Sleeve T-Shirt - Interlock 220 GSM", 840, 590, 550, 510, 470],
+            ["Men's Crew Neck Set-in Half Sleeve Oversized T-Shirt - Interlock 220 GSM", 780, 550, 510, 470, 430],
+            ["Men's Crew Neck Raglan Half Sleeve Oversized T-Shirt - Interlock 220 GSM", 780, 550, 510, 470, 430],
+            ["Men's Crew Neck Set-in Half Sleeve Oversized T-Shirt - French Terry 250 GSM", 720, 510, 470, 440, 400],
+            ["Men's Crew Neck Raglan Half Sleeve Oversized T-Shirt - French Terry 250 GSM", 720, 510, 470, 440, 400],
+            ["Men's Extended Shoulder Patch T-Shirt", 600, 420, 390, 360, 330],
+            ["Men's Shoulder Patch Piping T-Shirt", 520, 370, 340, 320, 290],
+            ["Men's Key Pocket T-Shirt", 540, 380, 360, 330, 300],
+            ["Men's Shoulder Patch T-Shirt", 540, 380, 360, 330, 300],
+            ["Men's Side Strip T-Shirt", 560, 400, 370, 340, 310],
+            ["Men's Patterned Raglan Sleeve T-Shirt", 540, 380, 360, 330, 300],
+            ["Men's Fly-Dry Side Slits Tank Top", 480, 340, 320, 290, 270],
+            ["Men's Regular Side Slits Tank Top", 480, 340, 320, 290, 270],
+            ["Men's Set-in Half Sleeve Polo - Airtex 260 GSM", 800, 560, 520, 480, 440],
+            ["Men's Raglan Half Sleeve Polo - Airtex 260 GSM", 800, 560, 520, 480, 440],
+            ["Men's Set-in Half Sleeve Polo - Mars 200 GSM", 600, 420, 390, 360, 330],
+            ["Men's Raglan Half Sleeve Polo - Mars 200 GSM", 600, 420, 390, 360, 330],
+            ["Men's Set-in Half Sleeve Polo With Tipping - Airtex 260 GSM", 800, 560, 520, 480, 440],
+            ["Men's Raglan Half Sleeve Polo With Tipping - Airtex 260 GSM", 800, 560, 520, 480, 440],
+            ["Men's Set-in Half Sleeve With Zipper Polo - Mars 200 GSM", 620, 440, 410, 380, 350],
+            ["Men's Raglan Half Sleeve With Zipper Polo - Mars 200 GSM", 620, 440, 410, 380, 350],
+            ["Men's Set-in Half Sleeve Polo With Zipper - Airtex 260 GSM", 820, 580, 540, 500, 460],
+            ["Men's Raglan Half Sleeve Polo With Zipper - Airtex 260 GSM", 820, 580, 540, 500, 460],
+            ["Men's Set-in Sleeve Economic Hoodie - Fleece 300 GSM", 1310, 930, 860, 800, 730],
+            ["Men's Raglan Sleeve Economic Hoodie - Fleece 300 GSM", 1310, 930, 860, 800, 730],
+            ["Men's Set-in Sleeve Premium Hoodie - Fleece 320 GSM", 1970, 1390, 1290, 1190, 1090],
+            ["Men's Raglan Sleeve Premium Hoodie - Fleece 320 GSM", 1970, 1390, 1290, 1190, 1090],
+            ["Men's Set-in Sleeve Premium Oversized Hoodie - Fleece 320 GSM", 2330, 1570, 1470, 1370, 1270],
+            ["Men's Raglan Sleeve Premium Oversized Hoodie - Fleece 320 GSM", 2330, 1570, 1470, 1370, 1270],
+            ["Men's Set-in Sleeve Economic Oversized Hoodie - Fleece 300 GSM", 1520, 1070, 990, 920, 840],
+            ["Men's Raglan Sleeve Economic Oversized Hoodie - Fleece 300 GSM", 1520, 1070, 990, 920, 840],
+            ["Men's Set-in Sleeve Economic Zipper Hoodie - Fleece 300 GSM", 1550, 1090, 1020, 940, 860],
+            ["Men's Raglan Sleeve Economic Zipper Hoodie - Fleece 300 GSM", 1550, 1090, 1020, 940, 860],
+            ["Men's Set-in Sleeve Premium Zipper Hoodie - Fleece 320 GSM", 2170, 1490, 1390, 1290, 1190],
+            ["Men's Raglan Sleeve Premium Zipper Hoodie - Fleece 320 GSM", 2170, 1490, 1390, 1290, 1190],
+            ["Men's Set-in Sleeve Economic Sweat Shirt - Fleece 300 GSM", 1090, 770, 720, 660, 610],
+            ["Men's Raglan Sleeve Economic Sweat Shirt - Fleece 300 GSM", 1090, 770, 720, 660, 610],
+            ["Men's Set-in Sleeve Premium Sweat Shirt - Fleece 320 GSM", 1670, 1180, 1100, 1010, 930],
+            ["Men's Raglan Sleeve Premium Sweat Shirt - Fleece 320 GSM", 1670, 1180, 1100, 1010, 930],
+            ["Men's Rugs Printed Cuban Collar Shirt", 820, 580, 540, 500, 460],
+            ["Men's High Neck Jacket - French Terry 250 GSM", 1230, 870, 810, 750, 690],
+            ["Men's High Neck Jacket - Fleece 300 GSM", 1540, 1080, 1010, 930, 850],
+            ["Men's Woven Cuban Collar Shirt", 850, 600, 560, 520, 480],
+            ["Men's Fleece Shorts - Fleece 300 GSM", 600, 420, 390, 360, 330],
+            ["Men's Joggers - Fleece 300 GSM", 900, 600, 540, 500, 500],
+            ["Women's Crew Neck Set-in Half Sleeve T-Shirt - Single Jersey 180 GSM", 440, 310, 290, 270, 250],
+            ["Women's Crew Neck Raglan Full Sleeve T-Shirt - Single Jersey 180 GSM", 510, 370, 340, 320, 290],
+            ["Women's Crew Neck Set-in Half Sleeve T-Shirt - Interlock 220 GSM", 560, 400, 370, 340, 310],
+            ["Women's Crew Neck Raglan Full Sleeve T-Shirt - Interlock 220 GSM", 720, 510, 470, 440, 400],
+            ["Women's Crew Neck Set-in Half Sleeve Oversized T-Shirt - Interlock 220 GSM", 580, 410, 380, 350, 320],
+            ["Women's Crew Neck Raglan Half Sleeve Oversized T-Shirt - Interlock 220 GSM", 580, 410, 380, 350, 320],
+            ["Women's Crew Neck Set-in Half Sleeve Oversized T-Shirt - French Terry 250 GSM", 540, 380, 360, 330, 300],
+            ["Women's Crew Neck Raglan Half Sleeve Oversized T-Shirt - French Terry 250 GSM", 540, 380, 360, 330, 300],
+            ["Women's Set-in Half Sleeve Polo - Airtex 260 GSM", 700, 490, 460, 420, 390],
+            ["Women's Raglan Half Sleeve Polo - Airtex 260 GSM", 700, 490, 460, 420, 390],
+            ["Women's Set-in Half Sleeve Polo - Mars 200 GSM", 440, 310, 290, 270, 250],
+            ["Women's Raglan Half Sleeve Polo - Mars 200 GSM", 440, 310, 290, 270, 250],
+            ["Women's Set-in Half Sleeve Polo With Tipping - Airtex 260 GSM", 700, 490, 460, 420, 390],
+            ["Women's Raglan Half Sleeve Polo With Tipping - Airtex 260 GSM", 700, 490, 460, 420, 390],
+            ["Women's Set-in Half Sleeve With Zipper Polo - Mars 200 GSM", 460, 330, 300, 280, 260],
+            ["Women's Raglan Half Sleeve With Zipper Polo - Mars 200 GSM", 460, 330, 300, 280, 260],
+            ["Women's Set-in Half Sleeve Polo With Zipper - Airtex 260 GSM", 720, 510, 470, 440, 400],
+            ["Women's Raglan Half Sleeve Polo With Zipper - Airtex 260 GSM", 720, 510, 470, 440, 400],
+            ["Women's Set-in Sleeve Economic Hoodie - Fleece 300 GSM", 1230, 870, 810, 750, 690],
+            ["Women's Raglan Sleeve Economic Hoodie - Fleece 300 GSM", 1230, 870, 810, 750, 690],
+            ["Women's Set-in Sleeve Premium Hoodie - Fleece 320 GSM", 1870, 1320, 1230, 1130, 1040],
+            ["Women's Raglan Sleeve Premium Hoodie - Fleece 320 GSM", 1870, 1320, 1230, 1130, 1040],
+            ["Women's Set-in Sleeve Premium Oversized Hoodie - Fleece 320 GSM", 1910, 1350, 1250, 1160, 1060],
+            ["Women's Raglan Sleeve Premium Oversized Hoodie - Fleece 320 GSM", 1910, 1350, 1250, 1160, 1060],
+            ["Women's Set-in Sleeve Economic Oversized Hoodie - Fleece 300 GSM", 1270, 900, 840, 770, 710],
+            ["Women's Raglan Sleeve Economic Oversized Hoodie - Fleece 300 GSM", 1270, 900, 840, 770, 710],
+            ["Women's Set-in Sleeve Economic Zipper Hoodie - Fleece 300 GSM", 1330, 940, 870, 810, 740],
+            ["Women's Raglan Sleeve Economic Zipper Hoodie - Fleece 300 GSM", 1330, 940, 870, 810, 740],
+            ["Women's Set-in Sleeve Premium Zipper Hoodie - Fleece 320 GSM", 1890, 1330, 1240, 1140, 1050],
+            ["Women's Raglan Sleeve Premium Zipper Hoodie - Fleece 320 GSM", 1890, 1330, 1240, 1140, 1050],
+            ["Women's Set-in Sleeve Economic Sweat Shirt - Fleece 300 GSM", 930, 660, 610, 570, 520],
+            ["Women's Raglan Sleeve Economic Sweat Shirt - Fleece 300 GSM", 930, 660, 610, 570, 520],
+            ["Women's Set-in Sleeve Premium Sweat Shirt - Fleece 320 GSM", 1390, 980, 910, 840, 770],
+            ["Women's Raglan Sleeve Premium Sweat Shirt - Fleece 320 GSM", 1390, 980, 910, 840, 770],
+            ["Women's Rugs Printed Cuban Collar Shirt", 820, 580, 540, 500, 460],
+            ["Women's Rugs Printed Cuban Collar Crop Shirt", 800, 560, 520, 480, 440],
+            ["Women's Fleece Shorts - Fleece 300 GSM", 600, 420, 390, 360, 330],
+            ["Women's Joggers - Fleece 300 GSM", 1000, 700, 600, 550, 500],
+            ["Women's High Neck Jacket - French Terry 250 GSM", 1150, 810, 760, 700, 640],
+            ["Women's High Neck Jacket - Fleece 300 GSM", 1460, 1030, 950, 880, 810],
+            ["Varsity Jacket", 1670, 1180, 1100, 1010, 930],
+            ["Fashion Hoodie", 2000, 1600, 1200, 1100, 1000],
+            ["Fashion Polo", 800, 600, 500, 400, 350],
+            ["Polyester Zipper Polo", 800, 600, 500, 400, 350],
+            ["Wide Neck Zipper Crew Neck - Black", 900, 600, 500, 400, 350],
         ];
 
-        // ── RATES ────────────────────────────────────────────────
-        // From Data sheet — [style, addon, min, max, retail, corporate, reseller]
+        // ── RATES ─────────────────────────────────────────────────────────────────
+        // [style, addon, variant, min, max, rate]
+        // Rates are the same for ALL customer types.
+        // variant: 'Dark' | 'White' for DTG; null for others.
+        // style: 'Setup Charge' | 'Rate' | 'Min Rate'
         const RATES = [
-            ['Setup Charge', 'Screen Print', 1, 9, 1200, 1100, 1000],
-            ['Setup Charge', 'Screen Print', 10, 49, 500, 500, 500],
-            ['Setup Charge', 'Screen Print', 50, 99, 500, 500, 500],
-            ['Setup Charge', 'Screen Print', 100, null, 500, 500, 500],
-            ['Setup Charge', 'Embroidery (Standard)', 1, 9, 200, 200, 200],
-            ['Setup Charge', 'Embroidery (Standard)', 10, 49, 100, 100, 100],
-            ['Setup Charge', 'Embroidery (Standard)', 50, 99, 0, 0, 0],
-            ['Setup Charge', 'Embroidery (Standard)', 100, null, 0, 0, 0],
-            ['Setup Charge', 'Embroidery (Coloreel)', 1, 9, 400, 350, 300],
-            ['Setup Charge', 'Embroidery (Coloreel)', 10, 49, 400, 350, 300],
-            ['Setup Charge', 'Embroidery (Coloreel)', 50, 99, 400, 350, 300],
-            ['Setup Charge', 'Embroidery (Coloreel)', 100, null, 400, 350, 300],
-            ['Rate', 'DTG', 1, 9, 1.2, 1.1, 1],
-            ['Rate', 'DTG', 10, 49, 1.2, 1.1, 1],
-            ['Rate', 'DTG', 50, 99, 1.2, 1.1, 1],
-            ['Rate', 'DTG', 100, null, 1.2, 1.1, 1],
-            ['Rate', 'DTF', 1, 9, 0.5, 0.5, 0.5],
-            ['Rate', 'DTF', 10, 49, 0.5, 0.5, 0.5],
-            ['Rate', 'DTF', 50, 99, 0.5, 0.5, 0.5],
-            ['Rate', 'DTF', 100, null, 0.5, 0.5, 0.5],
-            ['Rate', 'Screen Print', 1, 9, 4, 4, 4],
-            ['Rate', 'Screen Print', 10, 49, 4, 4, 4],
-            ['Rate', 'Screen Print', 50, 99, 4, 4, 4],
-            ['Rate', 'Screen Print', 100, null, 4, 4, 4],
-            ['Rate', 'Embroidery (Standard)', 1, 9, 8, 8, 8],
-            ['Rate', 'Embroidery (Standard)', 10, 49, 6, 6, 6],
-            ['Rate', 'Embroidery (Standard)', 50, 99, 5, 5, 5],
-            ['Rate', 'Embroidery (Standard)', 100, null, 4, 4, 4],
-            ['Rate', 'Embroidery (Coloreel)', 1, 9, 10, 10, 10],
-            ['Rate', 'Embroidery (Coloreel)', 10, 49, 8, 8, 8],
-            ['Rate', 'Embroidery (Coloreel)', 50, 99, 6, 6, 6],
-            ['Rate', 'Embroidery (Coloreel)', 100, null, 6, 6, 6],
+            // Setup Charges — flat ₹200 for all embroidery, all qty tiers
+            ['Setup Charge', 'Embroidery (Standard)', null, 1, 9, 200],
+            ['Setup Charge', 'Embroidery (Standard)', null, 10, 49, 200],
+            ['Setup Charge', 'Embroidery (Standard)', null, 50, 99, 200],
+            ['Setup Charge', 'Embroidery (Standard)', null, 100, null, 200],
+            ['Setup Charge', 'Embroidery (Coloreel)', null, 1, 9, 200],
+            ['Setup Charge', 'Embroidery (Coloreel)', null, 10, 49, 200],
+            ['Setup Charge', 'Embroidery (Coloreel)', null, 50, 99, 200],
+            ['Setup Charge', 'Embroidery (Coloreel)', null, 100, null, 200],
+            // DTG Rates — per sq. inch, varies by fabric colour + qty
+            ['Rate', 'DTG', 'Dark', 1, 9, 1.2],
+            ['Rate', 'DTG', 'Dark', 10, 49, 1.1],
+            ['Rate', 'DTG', 'Dark', 50, 99, 1.0],
+            ['Rate', 'DTG', 'Dark', 100, null, 0.9],
+            ['Rate', 'DTG', 'White', 1, 9, 0.8],
+            ['Rate', 'DTG', 'White', 10, 49, 0.7],
+            ['Rate', 'DTG', 'White', 50, 99, 0.6],
+            ['Rate', 'DTG', 'White', 100, null, 0.5],
+            // DTF Rates — per sq. inch, varies by qty
+            ['Rate', 'DTF', null, 1, 9, 0.50],
+            ['Rate', 'DTF', null, 10, 49, 0.45],
+            ['Rate', 'DTF', null, 50, 99, 0.40],
+            ['Rate', 'DTF', null, 100, null, 0.35],
+            // Embroidery Standard Rates — per 1000 stitches, varies by qty
+            ['Rate', 'Embroidery (Standard)', null, 1, 9, 8],
+            ['Rate', 'Embroidery (Standard)', null, 10, 49, 7],
+            ['Rate', 'Embroidery (Standard)', null, 50, 99, 6],
+            ['Rate', 'Embroidery (Standard)', null, 100, null, 6],
+            // Embroidery Coloreel Rates — per 1000 stitches, varies by qty
+            ['Rate', 'Embroidery (Coloreel)', null, 1, 9, 10],
+            ['Rate', 'Embroidery (Coloreel)', null, 10, 49, 9],
+            ['Rate', 'Embroidery (Coloreel)', null, 50, 99, 8],
+            ['Rate', 'Embroidery (Coloreel)', null, 100, null, 8],
+            // Min Rates for Embroidery — varies by qty tier
+            ['Min Rate', 'Embroidery (Standard)', null, 1, 9, 100],
+            ['Min Rate', 'Embroidery (Standard)', null, 10, 49, 80],
+            ['Min Rate', 'Embroidery (Standard)', null, 50, 99, 70],
+            ['Min Rate', 'Embroidery (Standard)', null, 100, null, 60],
+            ['Min Rate', 'Embroidery (Coloreel)', null, 1, 9, 120],
+            ['Min Rate', 'Embroidery (Coloreel)', null, 10, 49, 100],
+            ['Min Rate', 'Embroidery (Coloreel)', null, 50, 99, 90],
+            ['Min Rate', 'Embroidery (Coloreel)', null, 100, null, 80],
         ];
 
-        // MOQ per addon type (from Data sheet MOQ rows)
-        const MOQ = {
-            'DTG': 1,
-            'DTF': 1,
-            'Screen Print': 50,
-            'Embroidery (Standard)': 1,
-            'Embroidery (Coloreel)': 1,
-        };
-
-        // ── COMPLEXITY COVERAGE FACTORS ──────────────────────────
-        // From Data!J:K
+        // ── COMPLEXITY COVERAGE FACTORS ───────────────────────────────────────────
         const COMPLEXITY = {
             'Light (text/outline)': 0.7,
             'Medium (logo)': 0.85,
@@ -2105,34 +2055,15 @@
             'Patch/Badge Heavy': 1.2,
         };
 
-        // ── PRODUCT → ADDONS MAPPING ─────────────────────────────
-        // From Product_Addon sheet — Textile Patch excluded
-        const PRODUCT_ADDONS = {
-            'Men Plain Crew Neck': [],
-            'Men Amid Crew Neck': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Men SoftTouch Crew Neck': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Men SoftTouch Oversized': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Men Brisk Polo': ['DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Men Plain Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Men Performance Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Men Flexi Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Men SoftTouch Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Men Printed Collar SoftTouch Polo': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Men Cozy Hoodie': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Men Cozy Zipper Hoodie': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Men Cozy Sweatshirt': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Men Cozy Varsity Jacket': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Men Cozy Joggers': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Men Cozy Shorts': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Women Plain Crew Neck': [],
-            'Women Amid Crop Top': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Women Amid Crew Neck': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Women SoftTouch Crew Neck': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-            'Women SoftTouch Oversized': ['DTG', 'DTF', 'Screen Print', 'Embroidery (Standard)', 'Embroidery (Coloreel)'],
-        };
+        // ── ALL ADDONS (same for every product) ───────────────────────────────────
+        const ALL_ADDONS = ['DTG', 'DTF', 'Embroidery (Standard)', 'Embroidery (Coloreel)'];
 
         const LOCATIONS = ['FRONT', 'BACK', 'LEFT SLEEVE', 'RIGHT SLEEVE'];
 
+        // ── UPDATE LOGO_B64 with your actual base64 string ────────────────────────
+        const LOGO_B64 = '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';
+
+        // ─────────────────────────────────────────────────────────────────────────
         createApp({
             setup() {
                 const isDark = ref(false);
@@ -2141,16 +2072,17 @@
                     document.body.classList.toggle('dark', isDark.value);
                 }
 
-                const customerTypes = ['Retail', 'Corporate', 'Reseller'];
+                const customerTypes = ['Retail', 'Corporate', 'Special Corporate', 'Dropshipper'];
                 const customerType = ref('Retail');
 
-                const products = Object.keys(PRODUCT_ADDONS);
+                const products = PRODUCT_DATA.map(r => r[0]);
                 const selectedProduct = ref('');
                 const quantity = ref(0);
                 const shippingCharges = ref(0);
                 const addonStates = reactive({});
                 const enabledLocations = reactive(Object.fromEntries(LOCATIONS.map(l => [l, false])));
                 const complexityOptions = Object.keys(COMPLEXITY);
+                const fabricColourOptions = ['Dark', 'White'];
 
                 const step = computed(() => {
                     if (!selectedProduct.value) return 1;
@@ -2158,56 +2090,50 @@
                     return 4;
                 });
 
+                // Customer type index: 0=Retail, 1=Corporate, 2=Special Corporate, 3=Dropshipper
                 function ctIdx() {
                     return customerType.value === 'Retail' ? 0
-                        : customerType.value === 'Corporate' ? 1 : 2;
+                        : customerType.value === 'Corporate' ? 1
+                            : customerType.value === 'Special Corporate' ? 2
+                                : 3;
                 }
 
-                function lookupRate(style, addon, qty) {
-                    const ci = ctIdx();
-                    for (const r of RATES.filter(r => r[0] === style && r[1] === addon)) {
-                        const [, , min, max, ret, corp, res] = r;
-                        if (qty >= min && (max === null || qty <= max))
-                            return [ret, corp, res][ci];
+                // Rate lookup — variant used for DTG (Dark/White), null for others
+                function lookupRate(style, addon, qty, variant) {
+                    variant = variant || null;
+                    for (const r of RATES) {
+                        const [rs, ra, rv, rmin, rmax, rate] = r;
+                        if (rs !== style || ra !== addon) continue;
+                        if (variant !== null && rv !== variant) continue;
+                        if (qty >= rmin && (rmax === null || qty <= rmax)) return rate;
                     }
                     return 0;
                 }
 
-                // Base price per item
+                // ── Base Price (flat — no quantity tiers) ─────────────────────────
                 const pricePerItem = computed(() => {
                     if (!selectedProduct.value || !quantity.value || quantity.value <= 0) return 0;
                     const ci = ctIdx();
-                    for (const r of PRODUCT_DATA.filter(r => r[0] === selectedProduct.value)) {
-                        const [, min, max, mrp, ret, corp, res] = r;
-                        if (quantity.value >= min && (max === null || quantity.value <= max))
-                            return [ret, corp, res][ci];
-                    }
-                    return 0;
+                    const row = PRODUCT_DATA.find(r => r[0] === selectedProduct.value);
+                    if (!row) return 0;
+                    // row: [name, mrp, retail, corporate, special_corporate, dropshipper]
+                    return [row[2], row[3], row[4], row[5]][ci];
                 });
 
-                // MRP per item
+                // ── MRP ───────────────────────────────────────────────────────────
                 const mrpPerItem = computed(() => {
-                    if (!selectedProduct.value || !quantity.value || quantity.value <= 0) return 0;
-                    for (const r of PRODUCT_DATA.filter(r => r[0] === selectedProduct.value)) {
-                        const [, min, max, mrp] = r;
-                        if (quantity.value >= min && (max === null || quantity.value <= max))
-                            return mrp || 0;
-                    }
-                    return 0;
+                    if (!selectedProduct.value) return 0;
+                    const row = PRODUCT_DATA.find(r => r[0] === selectedProduct.value);
+                    return (row && row[1]) ? row[1] : 0;
                 });
 
-                // Show MOQ warning if qty < 50 and Screen Print would be relevant
-                const screenPrintMOQWarning = computed(() => {
-                    const addons = PRODUCT_ADDONS[selectedProduct.value] || [];
-                    return addons.includes('Screen Print') && quantity.value > 0 && quantity.value < 50;
-                });
-
-                // Addon locations
+                // ── Addon locations — all products get all 4 addons ───────────────
                 const addonLocations = computed(() => {
                     if (!selectedProduct.value) return [];
-                    const addons = PRODUCT_ADDONS[selectedProduct.value] || [];
-                    if (!addons.length) return [];
-                    return LOCATIONS.map(loc => ({ name: loc, addons: addons.map(type => ({ type })) }));
+                    return LOCATIONS.map(loc => ({
+                        name: loc,
+                        addons: ALL_ADDONS.map(type => ({ type })),
+                    }));
                 });
 
                 function addonKey(loc, type) { return `${loc}||${type}`; }
@@ -2219,8 +2145,8 @@
                             enabled: false,
                             width: 4,
                             height: 4,
-                            colours: 1,
-                            complexity: 'Light (text/outline)',
+                            fabricColour: 'Dark',   // DTG: Dark | White
+                            complexity: 'Light (text/outline)', // Embroidery
                         });
                     }
                     return addonStates[k];
@@ -2229,8 +2155,6 @@
                 function isAddonEnabled(loc, type) { return getAddonState(loc, type).enabled; }
 
                 function toggleAddon(loc, type) {
-                    // Screen Print: enforce MOQ of 50
-                    if (type === 'Screen Print' && quantity.value < MOQ['Screen Print']) return;
                     const s = getAddonState(loc, type);
                     s.enabled = !s.enabled;
                 }
@@ -2238,46 +2162,53 @@
                 function toggleLocation(loc) {
                     enabledLocations[loc] = !enabledLocations[loc];
                     if (!enabledLocations[loc]) {
-                        // Disable all addons for this location when unchecked
-                        const addons = PRODUCT_ADDONS[selectedProduct.value] || [];
-                        for (const type of addons) {
-                            const s = getAddonState(loc, type);
-                            s.enabled = false;
+                        for (const type of ALL_ADDONS) {
+                            getAddonState(loc, type).enabled = false;
                         }
                     }
                 }
 
-                function getSetupCharge(type) { return lookupRate('Setup Charge', type, quantity.value); }
-                function getRate(type) { return lookupRate('Rate', type, quantity.value); }
+                function getSetupCharge(type) {
+                    return lookupRate('Setup Charge', type, quantity.value, null);
+                }
 
+                // Rate depends on fabric colour for DTG
+                function getRate(loc, type) {
+                    if (type === 'DTG') {
+                        const s = getAddonState(loc, type);
+                        return lookupRate('Rate', type, quantity.value, s.fabricColour || 'Dark');
+                    }
+                    return lookupRate('Rate', type, quantity.value, null);
+                }
+
+                // ── Addon cost per item ───────────────────────────────────────────
                 function getAddonTotal(loc, type) {
                     const s = getAddonState(loc, type);
                     if (!s.enabled) return 0;
-                    const rate = getRate(type);
+                    const rate = getRate(loc, type);
                     const w = s.width || 4;
                     const h = s.height || 4;
-                    const area = w * h; // inch
+                    const area = w * h; // sq. inches
 
                     if (type === 'DTG') {
-                        return Math.max(80, area * rate);
+                        // area × rate (no fixed minimum — rate accounts for colour variant)
+                        return area * rate;
                     }
                     if (type === 'DTF') {
-                        return Math.max(40, area * rate);
-                    }
-                    if (type === 'Screen Print') {
-                        // Rate is per inch per colour
-                        const cols = s.colours || 1;
-                        return Math.max(20, area * rate * cols);
+                        // area × rate, tiered by qty
+                        return area * rate;
                     }
                     if (type === 'Embroidery (Standard)') {
                         const cf = COMPLEXITY[s.complexity] || 0.7;
                         const stitches = area * 1000 * cf;
-                        return Math.max(30, (stitches / 1000) * rate);
+                        const minRate = lookupRate('Min Rate', type, quantity.value, null);
+                        return Math.max(minRate, (stitches / 1000) * rate);
                     }
                     if (type === 'Embroidery (Coloreel)') {
                         const cf = COMPLEXITY[s.complexity] || 0.7;
                         const stitches = area * 1000 * cf;
-                        return Math.max(40, (stitches / 1000) * rate);
+                        const minRate = lookupRate('Min Rate', type, quantity.value, null);
+                        return Math.max(minRate, (stitches / 1000) * rate);
                     }
                     return 0;
                 }
@@ -2286,7 +2217,7 @@
                     if (!selectedProduct.value) return [];
                     const rows = [];
                     for (const loc of LOCATIONS) {
-                        for (const type of (PRODUCT_ADDONS[selectedProduct.value] || [])) {
+                        for (const type of ALL_ADDONS) {
                             const t = getAddonTotal(loc, type);
                             if (t > 0) rows.push({
                                 label: `${loc} — ${type}`,
@@ -2305,12 +2236,10 @@
                 const totalSetupCharges = computed(() => {
                     let total = 0;
                     for (const loc of LOCATIONS) {
-                        for (const type of (PRODUCT_ADDONS[selectedProduct.value] || [])) {
+                        for (const type of ALL_ADDONS) {
                             const s = getAddonState(loc, type);
                             if (s.enabled) {
-                                const sc = getSetupCharge(type);
-                                // Screen Print: setup × colours; others: flat per location
-                                total += type === 'Screen Print' ? sc * (s.colours || 1) : sc;
+                                total += getSetupCharge(type); // flat per enabled location
                             }
                         }
                     }
@@ -2342,18 +2271,23 @@
                     return n % 1 === 0 ? n.toLocaleString('en-IN') : n.toFixed(2);
                 }
 
-                // ── EXPORT HELPERS ──────────────────────────────────────
+                // ── EXPORT HELPERS ────────────────────────────────────────────────
                 function getEnabledAddonDetails() {
                     var details = [];
                     for (var li = 0; li < LOCATIONS.length; li++) {
                         var loc = LOCATIONS[li];
-                        var addons = PRODUCT_ADDONS[selectedProduct.value] || [];
-                        for (var ai = 0; ai < addons.length; ai++) {
-                            var type = addons[ai];
+                        for (var ai = 0; ai < ALL_ADDONS.length; ai++) {
+                            var type = ALL_ADDONS[ai];
                             var s = getAddonState(loc, type);
                             if (s.enabled) {
-                                var detail = { location: loc, type: type, width: s.width, height: s.height, rate: getRate(type), setup: getSetupCharge(type), total: getAddonTotal(loc, type) };
-                                if (type === 'Screen Print') detail.colours = s.colours;
+                                var detail = {
+                                    location: loc, type: type,
+                                    width: s.width, height: s.height,
+                                    rate: getRate(loc, type),
+                                    setup: getSetupCharge(type),
+                                    total: getAddonTotal(loc, type),
+                                };
+                                if (type === 'DTG') detail.fabricColour = s.fabricColour;
                                 if (type.indexOf('Embroidery') === 0) detail.complexity = s.complexity;
                                 details.push(detail);
                             }
@@ -2370,20 +2304,24 @@
                     var r = '<\/tr>';
                     var th = '<\/th>';
 
-                    // Addon detail rows for breakdown table
                     var addonRows = '';
                     for (var i = 0; i < addonBreakdown.value.length; i++) {
                         var row = addonBreakdown.value[i];
-                        addonRows += '<tr><td style="padding:10px 12px;border-bottom:1px solid #eee;">' + row.label + c + '<td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">' + rs + fmt(row.perItem) + c + '<td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">' + rs + fmt(row.total) + c + r;
+                        addonRows += '<tr><td style="padding:10px 12px;border-bottom:1px solid #eee;">' + row.label + c
+                            + '<td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">' + rs + fmt(row.perItem) + c
+                            + '<td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">' + rs + fmt(row.total) + c + r;
                     }
                     if (totalSetupCharges.value > 0) {
-                        addonRows += '<tr><td style="padding:10px 12px;border-bottom:1px solid #eee;">Setup Charges' + c + '<td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">' + dash + c + '<td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">' + rs + fmt(totalSetupCharges.value) + c + r;
+                        addonRows += '<tr><td style="padding:10px 12px;border-bottom:1px solid #eee;">Setup Charges' + c
+                            + '<td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">' + dash + c
+                            + '<td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">' + rs + fmt(totalSetupCharges.value) + c + r;
                     }
                     if (shippingCharges.value > 0) {
-                        addonRows += '<tr><td style="padding:10px 12px;border-bottom:1px solid #eee;">Shipping &amp; Other' + c + '<td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">' + dash + c + '<td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">' + rs + fmt(shippingCharges.value) + c + r;
+                        addonRows += '<tr><td style="padding:10px 12px;border-bottom:1px solid #eee;">Shipping &amp; Other' + c
+                            + '<td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">' + dash + c
+                            + '<td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">' + rs + fmt(shippingCharges.value) + c + r;
                     }
 
-                    // Addon specification rows
                     var addonDetails = getEnabledAddonDetails();
                     var addonSpecHTML = '';
                     if (addonDetails.length > 0) {
@@ -2399,11 +2337,10 @@
                             + '<th style="padding:8px 10px;text-align:right;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#7b7fa0;border-bottom:2px solid #dde0f0;">Setup' + th
                             + '<th style="padding:8px 10px;text-align:right;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#7b7fa0;border-bottom:2px solid #dde0f0;">Cost/Item' + th
                             + r + '<\/thead><tbody>';
-
                         for (var d = 0; d < addonDetails.length; d++) {
                             var a = addonDetails[d];
                             var extra = '';
-                            if (a.colours) extra = a.colours + ' colour' + (a.colours > 1 ? 's' : '');
+                            if (a.fabricColour) extra = a.fabricColour + ' fabric';
                             if (a.complexity) extra = a.complexity;
                             addonSpecHTML += '<tr>'
                                 + '<td style="padding:8px 10px;border-bottom:1px solid #eee;">' + a.location + c
@@ -2419,13 +2356,11 @@
                     }
 
                     return '<div style="font-family:Segoe UI,Arial,sans-serif;color:#1a1a2e;max-width:700px;margin:0 auto;padding:30px;">'
-                        // Header
                         + '<div style="text-align:center;margin-bottom:28px;">'
-                        + '<h1 style="margin:0;font-size:28px;color:#2937cc;letter-spacing:1px;">YOODE<\/h1>'
+                        + (LOGO_B64 ? '<img src="data:image/png;base64,' + LOGO_B64 + '" style="height:56px;display:block;margin:0 auto;" alt="Yoode" />' : '<div style="font-family:Poppins,sans-serif;font-size:28px;font-weight:800;color:#2937cc;">Yoode<\/div>')
                         + '<p style="margin:4px 0 0;font-size:11px;letter-spacing:3px;color:#7b7fa0;text-transform:uppercase;">Price Estimation<\/p>'
                         + '<p style="margin:8px 0 0;font-size:12px;color:#999;">Date: ' + today + '<\/p>'
                         + '<\/div>'
-                        // Order info
                         + '<table style="width:100%;border-collapse:collapse;margin-bottom:24px;border:1px solid #dde0f0;border-radius:8px;">'
                         + '<tr style="background:#f0f1f9;">'
                         + '<td style="padding:10px 14px;font-size:12px;color:#7b7fa0;font-weight:700;width:25%;">Customer Type' + c
@@ -2438,11 +2373,8 @@
                         + '<td style="padding:10px 14px;font-size:14px;font-weight:700;">' + quantity.value + ' pcs' + c
                         + '<td style="padding:10px 14px;font-size:12px;color:#7b7fa0;font-weight:700;">Base Price / Item' + c
                         + '<td style="padding:10px 14px;font-size:14px;font-weight:700;">' + rs + fmt(pricePerItem.value) + c
-                        + r
-                        + '<\/table>'
-                        // Addon specifications
+                        + r + '<\/table>'
                         + addonSpecHTML
-                        // Cost breakdown
                         + '<h3 style="margin:0 0 12px;font-size:14px;color:#2937cc;letter-spacing:1.5px;text-transform:uppercase;">Cost Breakdown<\/h3>'
                         + '<table style="width:100%;border-collapse:collapse;margin-bottom:24px;font-size:13px;">'
                         + '<thead><tr style="background:#f0f1f9;">'
@@ -2450,24 +2382,23 @@
                         + '<th style="padding:10px 12px;text-align:right;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#7b7fa0;border-bottom:2px solid #dde0f0;">Per Item (' + rs + ')' + th
                         + '<th style="padding:10px 12px;text-align:right;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#7b7fa0;border-bottom:2px solid #dde0f0;">Total (' + rs + ')' + th
                         + r + '<\/thead><tbody>'
-                        + '<tr><td style="padding:10px 12px;border-bottom:1px solid #eee;">Base Product Price' + c + '<td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">' + rs + fmt(pricePerItem.value) + c + '<td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">' + rs + fmt(pricePerItem.value * quantity.value) + c + r
+                        + '<tr><td style="padding:10px 12px;border-bottom:1px solid #eee;">Base Product Price' + c
+                        + '<td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">' + rs + fmt(pricePerItem.value) + c
+                        + '<td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;">' + rs + fmt(pricePerItem.value * quantity.value) + c + r
                         + addonRows
                         + '<tr style="background:#fff1ec;font-weight:700;font-size:14px;color:#f65e21;">'
                         + '<td style="padding:12px;border-top:2px solid #f65e21;">Grand Total' + c
                         + '<td style="padding:12px;border-top:2px solid #f65e21;text-align:right;">' + rs + fmt(finalPricePerItem.value) + c
                         + '<td style="padding:12px;border-top:2px solid #f65e21;text-align:right;">' + rs + fmt(grandTotal.value) + c
                         + r + '<\/tbody><\/table>'
-                        // Final summary boxes
                         + '<table style="width:100%;border-collapse:collapse;">'
                         + '<tr>'
                         + '<td style="width:50%;padding:16px;background:#2937cc;color:#fff;text-align:center;">'
                         + '<div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;opacity:.7;margin-bottom:6px;">Final Price Per Item<\/div>'
-                        + '<div style="font-size:28px;font-weight:800;">' + rs + fmt(finalPricePerItem.value) + '<\/div>'
-                        + c
+                        + '<div style="font-size:28px;font-weight:800;">' + rs + fmt(finalPricePerItem.value) + '<\/div>' + c
                         + '<td style="width:50%;padding:16px;background:#f65e21;color:#fff;text-align:center;">'
                         + '<div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;opacity:.7;margin-bottom:6px;">Grand Total<\/div>'
-                        + '<div style="font-size:28px;font-weight:800;">' + rs + fmt(grandTotal.value) + '<\/div>'
-                        + c
+                        + '<div style="font-size:28px;font-weight:800;">' + rs + fmt(grandTotal.value) + '<\/div>' + c
                         + r + '<\/table>'
                         + '<p style="text-align:center;margin-top:30px;font-size:11px;color:#aaa;">Generated by Yoode Price Estimator<\/p>'
                         + '<\/div>';
@@ -2475,35 +2406,20 @@
 
                 function exportPDF() {
                     var html = buildEstimationHTML();
-
                     var printFrame = document.createElement('iframe');
-                    printFrame.style.position = 'fixed';
-                    printFrame.style.right = '0';
-                    printFrame.style.bottom = '0';
-                    printFrame.style.width = '0';
-                    printFrame.style.height = '0';
-                    printFrame.style.border = 'none';
+                    printFrame.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:none;';
                     document.body.appendChild(printFrame);
-
                     var doc = printFrame.contentDocument || printFrame.contentWindow.document;
                     doc.open();
-                    doc.write('<!DOCTYPE html><html><head><meta charset="utf-8">'
-                        + '<title>Yoode Price Estimation<\/title>'
-                        + '<style>'
-                        + '@page { size: A4; margin: 10mm; }'
-                        + 'body { margin: 0; background: #fff; }'
-                        + '@media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }'
-                        + '<\/style>'
+                    doc.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Yoode Price Estimation<\/title>'
+                        + '<style>@page{size:A4;margin:10mm}body{margin:0;background:#fff}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}<\/style>'
                         + '<\/head><body>' + html + '<\/body><\/html>');
                     doc.close();
-
                     printFrame.onload = function () {
                         setTimeout(function () {
                             printFrame.contentWindow.focus();
                             printFrame.contentWindow.print();
-                            setTimeout(function () {
-                                document.body.removeChild(printFrame);
-                            }, 1000);
+                            setTimeout(function () { document.body.removeChild(printFrame); }, 1000);
                         }, 300);
                     };
                 }
@@ -2525,31 +2441,31 @@
                             lines.push('  \u2022 ' + row.label + ': ' + rs + fmt(row.perItem) + '/item (' + rs + fmt(row.total) + ' total)');
                         }
                     }
-                    if (totalSetupCharges.value > 0) {
-                        lines.push('*Setup Charges:* ' + rs + fmt(totalSetupCharges.value));
-                    }
-                    if (shippingCharges.value > 0) {
-                        lines.push('*Shipping & Other:* ' + rs + fmt(shippingCharges.value));
-                    }
+                    if (totalSetupCharges.value > 0) lines.push('*Setup Charges:* ' + rs + fmt(totalSetupCharges.value));
+                    if (shippingCharges.value > 0) lines.push('*Shipping & Other:* ' + rs + fmt(shippingCharges.value));
                     lines.push('\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500');
                     lines.push('*Final Price / Item:* ' + rs + fmt(finalPricePerItem.value));
                     lines.push('*Grand Total:* ' + rs + fmt(grandTotal.value));
                     lines.push('\n_Generated by Yoode Price Estimator_');
-                    var text = lines.join('\n');
-                    window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+                    window.open('https://wa.me/?text=' + encodeURIComponent(lines.join('\n')), '_blank');
                 }
 
                 function exportWord() {
                     var html = buildEstimationHTML();
-                    var fullHtml = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">'
+                    var boundary = 'YOODE_MHTML_BOUNDARY_001';
+                    var mhtml = 'MIME-Version: 1.0\r\n'
+                        + 'Content-Type: multipart/related; type="text/html"; boundary="' + boundary + '"\r\n\r\n'
+                        + '--' + boundary + '\r\n'
+                        + 'Content-Type: text/html; charset="utf-8"\r\nContent-Transfer-Encoding: 8bit\r\n\r\n'
+                        + '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">'
                         + '<head><meta charset="utf-8"><title>Yoode Price Estimation<\/title><\/head>'
-                        + '<body>' + html + '<\/body><\/html>';
-
-                    var blob = new Blob(['\ufeff', fullHtml], { type: 'application/msword' });
+                        + '<body>' + html + '<\/body><\/html>\r\n'
+                        + '--' + boundary + '--\r\n';
+                    var blob = new Blob([mhtml], { type: 'message/rfc822' });
                     var url = URL.createObjectURL(blob);
                     var link = document.createElement('a');
                     link.href = url;
-                    link.download = 'Yoode_Estimate_' + selectedProduct.value.replace(/\s+/g, '_') + '_' + quantity.value + 'pcs.doc';
+                    link.download = 'Yoode_Estimate_' + selectedProduct.value.replace(/\s+/g, '_') + '_' + quantity.value + 'pcs.mht';
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
@@ -2561,8 +2477,9 @@
                     customerTypes, customerType, setCustomerType,
                     products, selectedProduct, onProductChange,
                     quantity, shippingCharges,
-                    step, pricePerItem, mrpPerItem, screenPrintMOQWarning,
-                    addonLocations, enabledLocations, toggleLocation, complexityOptions,
+                    step, pricePerItem, mrpPerItem,
+                    addonLocations, enabledLocations, toggleLocation,
+                    complexityOptions, fabricColourOptions,
                     isAddonEnabled, toggleAddon, getAddonState,
                     getSetupCharge, getRate, getAddonTotal,
                     addonBreakdown, totalAddonPerItem, totalSetupCharges,
