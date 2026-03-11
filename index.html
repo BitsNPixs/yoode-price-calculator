@@ -513,6 +513,7 @@
             width: 180px;
             transition: border-color .2s, box-shadow .2s, background .2s;
             -moz-appearance: textfield;
+            appearance: textfield;
         }
 
         .qty-input-large::-webkit-outer-spin-button,
@@ -786,6 +787,7 @@
             outline: none;
             width: 100%;
             -moz-appearance: textfield;
+            appearance: textfield;
             transition: border-color .2s, box-shadow .2s;
             text-align: center;
         }
@@ -960,6 +962,7 @@
             outline: none;
             width: 160px;
             -moz-appearance: textfield;
+            appearance: textfield;
             transition: border-color .2s, box-shadow .2s;
             text-align: right;
         }
@@ -1899,8 +1902,8 @@
         const { createApp, reactive, ref, computed } = Vue;
 
         // ── PRODUCT DATA ──────────────────────────────────────────────────────────
-        // [product_name, mrp, retail, corporate, special_corporate, dropshipper]
-        // Single flat price per product — no quantity tiers
+        // [product_name, mrp, retail, corporate, registered, dropshipper]
+        // Source: Product_Data sheet columns: Product, MRP, Retail, Corporates, Registered, Dropshipper
         const PRODUCT_DATA = [
             ["Men's Crew Neck Set-in Half Sleeve T-Shirt - Single Jersey 180 GSM", 480, 340, 320, 290, 270],
             ["Men's Crew Neck Raglan Full Sleeve T-Shirt - Single Jersey 180 GSM", 590, 420, 390, 360, 330],
@@ -1912,12 +1915,12 @@
             ["Men's Crew Neck Raglan Half Sleeve Oversized T-Shirt - French Terry 250 GSM", 720, 510, 470, 440, 400],
             ["Men's Extended Shoulder Patch T-Shirt", 600, 420, 390, 360, 330],
             ["Men's Shoulder Patch Piping T-Shirt", 520, 370, 340, 320, 290],
-            ["Men's Key Pocket T-Shirt", 540, 380, 360, 330, 300],
+            ["Men\u2019s Key Pocket T-Shirt", 540, 380, 360, 330, 300],
             ["Men's Shoulder Patch T-Shirt", 540, 380, 360, 330, 300],
-            ["Men's Side Strip T-Shirt", 560, 400, 370, 340, 310],
-            ["Men's Patterned Raglan Sleeve T-Shirt", 540, 380, 360, 330, 300],
-            ["Men's Fly-Dry Side Slits Tank Top", 480, 340, 320, 290, 270],
-            ["Men's Regular Side Slits Tank Top", 480, 340, 320, 290, 270],
+            ["Men\u2019s Side Strip T-Shirt", 560, 400, 370, 340, 310],
+            ["Men\u2019s Patterned Raglan Sleeve T-Shirt", 540, 380, 360, 330, 300],
+            ["Men\u2019s Fly-Dry Side Slits Tank Top", 480, 340, 320, 290, 270],
+            ["Men\u2019s Regular Side Slits Tank Top", 480, 340, 320, 290, 270],
             ["Men's Set-in Half Sleeve Polo - Airtex 260 GSM", 800, 560, 520, 480, 440],
             ["Men's Raglan Half Sleeve Polo - Airtex 260 GSM", 800, 560, 520, 480, 440],
             ["Men's Set-in Half Sleeve Polo - Mars 200 GSM", 600, 420, 390, 360, 330],
@@ -1998,10 +2001,9 @@
         ];
 
         // ── RATES ─────────────────────────────────────────────────────────────────
-        // [style, addon, variant, min, max, rate]
-        // Rates are the same for ALL customer types.
-        // variant: 'Dark' | 'White' for DTG; null for others.
-        // style: 'Setup Charge' | 'Rate' | 'Min Rate'
+        // Source: Data sheet columns: Style, Addon, Variant, Min, Max, Rate
+        // NOTE: DTF Min Rate rows in the Data sheet use variant='White' (not null).
+        //       This is preserved exactly as in the Excel source.
         const RATES = [
             // Setup Charges — flat ₹200 for all embroidery, all qty tiers
             ['Setup Charge', 'Embroidery (Standard)', null, 1, 9, 200],
@@ -2045,7 +2047,7 @@
             ['Min Rate', 'Embroidery (Coloreel)', null, 10, 49, 100],
             ['Min Rate', 'Embroidery (Coloreel)', null, 50, 99, 90],
             ['Min Rate', 'Embroidery (Coloreel)', null, 100, null, 80],
-            // Min Rates for DTG — flat across all qty tiers, varies by fabric colour
+            // Min Rates for DTG — flat ₹80 (Dark) / ₹60 (White) across all qty tiers
             ['Min Rate', 'DTG', 'Dark', 1, 9, 80],
             ['Min Rate', 'DTG', 'Dark', 10, 49, 80],
             ['Min Rate', 'DTG', 'Dark', 50, 99, 80],
@@ -2054,14 +2056,16 @@
             ['Min Rate', 'DTG', 'White', 10, 49, 60],
             ['Min Rate', 'DTG', 'White', 50, 99, 60],
             ['Min Rate', 'DTG', 'White', 100, null, 60],
-            // Min Rates for DTF — flat across all qty tiers
-            ['Min Rate', 'DTF', null, 1, 9, 60],
-            ['Min Rate', 'DTF', null, 10, 49, 60],
-            ['Min Rate', 'DTF', null, 50, 99, 60],
-            ['Min Rate', 'DTF', null, 100, null, 60],
+            // Min Rates for DTF — flat ₹60 across all qty tiers
+            // NOTE: variant is 'White' in the Data sheet (rows 46-49) — preserved as-is
+            ['Min Rate', 'DTF', 'White', 1, 9, 60],
+            ['Min Rate', 'DTF', 'White', 10, 49, 60],
+            ['Min Rate', 'DTF', 'White', 50, 99, 60],
+            ['Min Rate', 'DTF', 'White', 100, null, 60],
         ];
 
         // ── COMPLEXITY COVERAGE FACTORS ───────────────────────────────────────────
+        // Source: Data sheet columns: Complexity, CoverageFactor
         const COMPLEXITY = {
             'Light (text/outline)': 0.7,
             'Medium (logo)': 0.85,
@@ -2104,7 +2108,10 @@
                     return 4;
                 });
 
-                // Customer type index: 0=Retail, 1=Corporate, 2=Special Corporate, 3=Dropshipper
+                // Customer type index:
+                // 0=Retail, 1=Corporate, 2=Special Corporate (Registered), 3=Dropshipper
+                // Maps to Product_Data columns: [name, mrp, retail, corporate, registered, dropshipper]
+                // i.e. row[2]=Retail, row[3]=Corporate, row[4]=Registered, row[5]=Dropshipper
                 function ctIdx() {
                     return customerType.value === 'Retail' ? 0
                         : customerType.value === 'Corporate' ? 1
@@ -2112,13 +2119,14 @@
                                 : 3;
                 }
 
-                // Rate lookup — variant used for DTG (Dark/White), null for others
+                // Rate lookup — variant used for DTG (Dark/White) and DTF Min Rate ('White'), null for others
                 function lookupRate(style, addon, qty, variant) {
                     variant = variant || null;
                     for (const r of RATES) {
                         const [rs, ra, rv, rmin, rmax, rate] = r;
                         if (rs !== style || ra !== addon) continue;
                         if (variant !== null && rv !== variant) continue;
+                        if (variant === null && rv !== null) continue;
                         if (qty >= rmin && (rmax === null || qty <= rmax)) return rate;
                     }
                     return 0;
@@ -2130,7 +2138,7 @@
                     const ci = ctIdx();
                     const row = PRODUCT_DATA.find(r => r[0] === selectedProduct.value);
                     if (!row) return 0;
-                    // row: [name, mrp, retail, corporate, special_corporate, dropshipper]
+                    // row: [name, mrp, retail, corporate, registered, dropshipper]
                     return [row[2], row[3], row[4], row[5]][ci];
                 });
 
@@ -2186,7 +2194,7 @@
                     return lookupRate('Setup Charge', type, quantity.value, null);
                 }
 
-                // Rate depends on fabric colour for DTG
+                // Rate depends on fabric colour for DTG; null variant for all others
                 function getRate(loc, type) {
                     if (type === 'DTG') {
                         const s = getAddonState(loc, type);
@@ -2196,6 +2204,12 @@
                 }
 
                 // ── Addon cost per item ───────────────────────────────────────────
+                // Logic mirrors the Excel calculation sheets exactly:
+                //   DTG:  cost = max(minRate, area × rate)   [minRate applies at ALL locations]
+                //   DTF:  cost = max(minRate, area × rate)   [minRate applies at ALL locations]
+                //         DTF minRate lookup uses variant='White' (as stored in Data sheet)
+                //   Emb:  stitches = area × 1000 × coverageFactor
+                //         cost = max(minRate, (stitches / 1000) × rate)
                 function getAddonTotal(loc, type) {
                     const s = getAddonState(loc, type);
                     if (!s.enabled) return 0;
@@ -2205,13 +2219,14 @@
                     const area = w * h; // sq. inches
 
                     if (type === 'DTG') {
-                        // Min rate applies only at FRONT location; other locations use area × rate directly
-                        const minRate = loc === 'FRONT' ? lookupRate('Min Rate', type, quantity.value, s.fabricColour || 'Dark') : 0;
+                        // Min rate applies at ALL locations (Excel Min Rate col = 80 for every location)
+                        const minRate = lookupRate('Min Rate', type, quantity.value, s.fabricColour || 'Dark');
                         return Math.max(minRate, area * rate);
                     }
                     if (type === 'DTF') {
-                        // Min rate applies only at FRONT location; other locations use area × rate directly
-                        const minRate = loc === 'FRONT' ? lookupRate('Min Rate', type, quantity.value, null) : 0;
+                        // Min rate applies at ALL locations (Excel Min Rate col = 60 for every location)
+                        // DTF Min Rate rows in Data sheet use variant='White' — pass 'White' to match
+                        const minRate = lookupRate('Min Rate', type, quantity.value, 'White');
                         return Math.max(minRate, area * rate);
                     }
                     if (type === 'Embroidery (Standard)') {
@@ -2255,7 +2270,7 @@
                         for (const type of ALL_ADDONS) {
                             const s = getAddonState(loc, type);
                             if (s.enabled) {
-                                total += getSetupCharge(type); // flat per enabled location
+                                total += getSetupCharge(type); // flat per enabled addon
                             }
                         }
                     }
